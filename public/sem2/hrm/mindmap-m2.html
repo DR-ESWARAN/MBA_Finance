@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HRM Module 2 — Mind Map</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --card2:#1c2330;
+    --accent:#58a6ff; --accent2:#3fb950; --accent3:#f778ba;
+    --accent4:#d29922; --accent5:#a371f7; --accent6:#ff7b72;
+    --text:#e6edf3; --muted:#8b949e; --line:#30363d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;padding:14px;font-size:15px;}
+  header{text-align:center;padding:16px 12px;margin-bottom:14px;
+    background:linear-gradient(135deg,#1f6feb33,#a371f733);
+    border:1px solid var(--line);border-radius:16px;}
+  header .sub{color:var(--accent);font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+  header h1{font-size:21px;margin-top:4px;}
+  header .tag{color:var(--muted);font-size:12px;margin-top:6px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px;border-left:5px solid var(--accent);}
+  .node h2{font-size:17px;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .node h2 .n{background:var(--accent);color:#0d1117;border-radius:50%;
+    width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:700;flex-shrink:0;}
+  .c1{border-left-color:var(--accent);} .c1 h2 .n{background:var(--accent);}
+  .c2{border-left-color:var(--accent2);} .c2 h2 .n{background:var(--accent2);}
+  .c3{border-left-color:var(--accent3);} .c3 h2 .n{background:var(--accent3);}
+  .c4{border-left-color:var(--accent4);} .c4 h2 .n{background:var(--accent4);}
+  .c5{border-left-color:var(--accent5);} .c5 h2 .n{background:var(--accent5);}
+  .c6{border-left-color:var(--accent6);} .c6 h2 .n{background:var(--accent6);}
+  .c7{border-left-color:#56d4dd;} .c7 h2 .n{background:#56d4dd;}
+  .c8{border-left-color:#e3b341;} .c8 h2 .n{background:#e3b341;}
+  ul{list-style:none;}
+  li{padding:6px 0 6px 18px;position:relative;font-size:14px;border-bottom:1px solid #21262d;}
+  li:last-child{border-bottom:none;}
+  li::before{content:"▸";position:absolute;left:0;color:var(--muted);}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);
+    border-radius:20px;padding:5px 11px;margin:4px 4px 0 0;font-size:12.5px;}
+  b,strong{color:#fff;}
+  .key{color:var(--accent2);font-weight:600;}
+  .sub2{color:var(--muted);font-size:12.5px;display:block;margin-top:2px;}
+  .analogy{background:#1f6feb1a;border:1px dashed var(--accent);border-radius:10px;
+    padding:9px 11px;margin-top:10px;font-size:12.5px;color:#c9d6e6;}
+  .analogy b{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  td{padding:6px 5px;border-bottom:1px solid #21262d;vertical-align:top;}
+  td:first-child{color:var(--accent);font-weight:600;white-space:nowrap;padding-right:8px;}
+  .v{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin:8px 0 2px;}
+  footer{text-align:center;color:var(--muted);font-size:11.5px;margin-top:18px;padding:12px;}
+</style>
+</head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#0d1117ee;border-bottom:1px solid #30363d;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#58a6ff;text-decoration:none">‹ HRM</a><span style="flex:1"></span><a href="notes-m2.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m2.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m1.html" style="color:#c9d1d9;text-decoration:none">‹ M1</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">M3 ›</a></div>
+<header>
+  <div class="sub">Human Resource Management</div>
+  <h1>Module 2 · Human Resource Planning</h1>
+  <div class="tag">Mind Map · Source: Module 2 Ebook + LMS Study Notes</div>
+</header>
+
+<div class="grid">
+
+  <div class="node c1">
+    <h2><span class="n">1</span> Concept of HRP</h2>
+    <ul>
+      <li><b>Continuous</b> planning for optimum use of <b>quality employees</b></li>
+      <li>Best fit people ↔ jobs; avoids <b>shortage / surplus</b></li>
+      <li><b>Bridges</b> the gap: org plans ↔ HRM</li>
+      <li>Groundwork for <b>manpower procurement</b></li>
+    </ul>
+    <div style="margin-top:8px">
+      <span class="pill"><b>Dale S. Beach</b>: adequate qualified persons, proper times, satisfaction</span>
+      <span class="pill"><b>Decenzo &amp; Robbins</b>: right number &amp; kind, place, time</span>
+    </div>
+    <div class="analogy"><b>Clinical:</b> HRP = cath lab rota. Forecast case load, count staff and leavers, then hire, cross-train or adjust shifts.</div>
+  </div>
+
+  <div class="node c2">
+    <h2><span class="n">2</span> Types (2) + Objectives</h2>
+    <table>
+      <tr><td>Macro</td><td>HR strategic planning / org design &amp; dev; aligns with mission</td></tr>
+      <tr><td>Micro</td><td>tactics; right number + KSA mix per dept</td></tr>
+    </table>
+    <span class="sub2">Macro drives micro · "3 types" = False</span>
+    <span class="v">Ebook: 12 objectives</span>
+    <ul>
+      <li>Forecast needs · utilise existing HR · availability</li>
+      <li>Surplus/shortage · technology impact · labour + housing cost</li>
+      <li>Recruitment &amp; training levels · mgmt development · productivity</li>
+    </ul>
+    <span class="v">Study Notes: 5</span>
+    <div><span class="pill">Forecast</span><span class="pill">Align</span><span class="pill">Skill gaps</span><span class="pill">Flexibility</span><span class="pill">Resource use</span></div>
+  </div>
+
+  <div class="node c3">
+    <h2><span class="n">3</span> Factors affecting HRP</h2>
+    <span class="v">Ebook</span>
+    <table>
+      <tr><td>External (3)</td><td>Economic · Govt policies · Technological</td></tr>
+      <tr><td>Internal (5)</td><td>Policies · <b>Time horizons</b> · <b>Info type &amp; quality</b> · Trade unions · HR systems</td></tr>
+    </table>
+    <span class="sub2">Short plan 6m–1y · long 3–20y · more uncertainty = shorter horizon</span>
+    <span class="v">Study Notes</span>
+    <table>
+      <tr><td>Internal</td><td>workforce · culture · strategic objectives</td></tr>
+      <tr><td>External</td><td>labour market · economy · tech · regulation · globalisation</td></tr>
+      <tr><td>Organisational</td><td>strategy fit · innovation · market position · structure &amp; culture</td></tr>
+    </table>
+    <div class="analogy"><b>Trap:</b> Info quality is <b>internal</b>, not external.</div>
+  </div>
+
+  <div class="node c4">
+    <h2><span class="n">4</span> Process of HRP</h2>
+    <span class="v">Ebook: 6 steps</span>
+    <ul>
+      <li>1 Environmental scanning</li>
+      <li>2 Demand forecasting (quantity + quality)</li>
+      <li>3 Supply forecasting (internal + external)</li>
+      <li>4 Matching demand &amp; supply</li>
+      <li>5 Action plan</li>
+      <li>6 Monitoring, control &amp; feedback</li>
+    </ul>
+    <span class="v">Study Notes: 8 steps</span>
+    <span class="sub2">Assess workforce → Scan → Forecast → Skill gaps → Strategies → Implement → Monitor &amp; evaluate → Feedback &amp; adapt</span>
+    <div class="analogy"><b>Trap:</b> LMS key says "process begins with forecasting" = True. Demand forecast is not "solely historical".</div>
+  </div>
+
+  <div class="node c5">
+    <h2><span class="n">5</span> Forecasting techniques (11)</h2>
+    <table>
+      <tr><td>Bottom-up</td><td>lowest level upward</td></tr>
+      <tr><td>Top-down</td><td>market data downward</td></tr>
+      <tr><td>Delphi</td><td>expert panel, rounds converge</td></tr>
+      <tr><td>NGT</td><td>structured group brainstorming</td></tr>
+      <tr><td>Ratios</td><td>business variable : staff</td></tr>
+      <tr><td>Regression</td><td>dependent from independent</td></tr>
+    </table>
+    <div style="margin-top:6px"><span class="pill">Trend</span><span class="pill">Math models</span><span class="pill">Workload</span><span class="pill">Brainstorming (DMAIC)</span><span class="pill">Sales force estimate</span></div>
+    <span class="sub2">Study Notes · Quant: trend, ratio, workload, regression · Qual: expert, Delphi, scenario, focus groups</span>
+  </div>
+
+  <div class="node c6">
+    <h2><span class="n">6</span> HR flows &amp; supply</h2>
+    <span class="sub2">In: recruits, promotions, transfers · Out: retire, terminate, resign, death, layoff, downsizing, exit</span>
+    <span class="v">Internal supply (6)</span>
+    <div><span class="pill">Staffing tables</span><span class="pill">Skills inventory</span><span class="pill">HRIS</span><span class="pill">Succession planning</span><span class="pill">Replacement charts</span><span class="pill">Renewal analysis</span></div>
+    <span class="v">External supply (4)</span>
+    <div><span class="pill">Labour markets</span><span class="pill">Demographics</span><span class="pill">Contingent workforce</span><span class="pill">Industry trends</span></div>
+    <div class="analogy"><b>Remember:</b> Renewal analysis starts at the <b>top</b>. Contingent workers are <b>not on payroll</b>.</div>
+  </div>
+
+  <div class="node c7">
+    <h2><span class="n">7</span> Gap analysis &amp; actions</h2>
+    <table>
+      <tr><td>S = D</td><td>balance</td></tr>
+      <tr><td>S &lt; D</td><td><b>shortage</b> → hire, train</td></tr>
+      <tr><td>S &gt; D</td><td><b>surplus</b> → reduce</td></tr>
+    </table>
+    <span class="v">Action plans (7)</span>
+    <ul>
+      <li>Layoffs · Downsizing · Early retirement · Reduced hours · Hiring</li>
+      <li><b>Attrition</b>: gradual, leavers not replaced</li>
+      <li><b>Outplacement</b>: terminate with dignity</li>
+    </ul>
+    <div class="analogy"><b>Trading:</b> Gap analysis = portfolio rebalancing. Underweight → buy (hire). Overweight → trim (attrition, outplacement).</div>
+  </div>
+
+  <div class="node c8">
+    <h2><span class="n">8</span> Implement · Evaluate · Traps</h2>
+    <span class="sub2">Execution: communication · T&amp;D · recruitment &amp; onboarding · downsizing with sensitivity · leadership support · change mgmt</span>
+    <span class="sub2">Evaluate: goal alignment · workforce capability · cost-effectiveness · employee satisfaction</span>
+    <span class="v">Misconceptions</span>
+    <ul>
+      <li>Not just filling vacancies</li>
+      <li>Not one-time: <b>ongoing cycle</b></li>
+      <li>Not only for large firms</li>
+      <li>Talent = hire <b>and</b> retain</li>
+      <li>HRP <b>bridges</b>, never widens</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>Dr. Eswaran · MBA Finance Sem 2 · HRM Module 2 · Revise on the go</footer>
+</body>
+</html>

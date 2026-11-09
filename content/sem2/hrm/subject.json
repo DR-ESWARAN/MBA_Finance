@@ -1,0 +1,11 @@
+{
+  "modules": [
+    {"n": 1, "title": "Introduction & Scope"},
+    {"n": 2, "title": "Human Resource Planning"},
+    {"n": 3, "title": "Job Design & Its Techniques"},
+    {"n": 4, "title": "Job Analysis & Description"},
+    {"n": 5, "title": "Human Resource Procurement"}
+  ],
+  "lmsPractice": null,
+  "lmsGraded": null
+}
