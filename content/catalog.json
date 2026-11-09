@@ -3,32 +3,107 @@
   "tagline": "Notes, mind maps and mock exams for the DY Patil Online MBA (Finance). Free and open to all.",
   "semesters": [
     {
-      "id": "sem1", "name": "Semester 1", "status": "done",
+      "id": "sem1",
+      "name": "Semester 1",
+      "status": "done",
       "note": "Exams over. Content will be added later for juniors.",
       "subjects": [
-        {"id": "ob", "code": "OB", "name": "Organizational Behavior"},
-        {"id": "acct", "code": "ACCT", "name": "Principles of Accounting"},
-        {"id": "econ", "code": "ECON", "name": "Managerial Economics"},
-        {"id": "mgmt", "code": "MGMT", "name": "Principles of Management"},
-        {"id": "qt", "code": "QT", "name": "Quantitative Techniques"},
-        {"id": "bizcom", "code": "BIZCOM", "name": "Business Communication", "elective": true},
-        {"id": "blcg", "code": "BLCG", "name": "Business Law & Corporate Governance"}
+        {
+          "id": "ob",
+          "code": "OB",
+          "name": "Organizational Behavior"
+        },
+        {
+          "id": "acct",
+          "code": "ACCT",
+          "name": "Principles of Accounting"
+        },
+        {
+          "id": "econ",
+          "code": "ECON",
+          "name": "Managerial Economics"
+        },
+        {
+          "id": "mgmt",
+          "code": "MGMT",
+          "name": "Principles of Management"
+        },
+        {
+          "id": "qt",
+          "code": "QT",
+          "name": "Quantitative Techniques"
+        },
+        {
+          "id": "bizcom",
+          "code": "BIZCOM",
+          "name": "Business Communication",
+          "elective": true
+        },
+        {
+          "id": "blcg",
+          "code": "BLCG",
+          "name": "Business Law & Corporate Governance"
+        }
       ]
     },
     {
-      "id": "sem2", "name": "Semester 2", "status": "live",
-      "note": "Exam: 20 Nov 2026 · 70 MCQs in 90 minutes per subject",
+      "id": "sem2",
+      "name": "Semester 2",
+      "status": "live",
+      "note": "Exam: 20 Nov 2026 \u00b7 70 MCQs in 90 minutes per subject",
       "subjects": [
-        {"id": "hrm", "code": "HRM", "name": "Human Resource Management", "live": true},
-        {"id": "fm", "code": "FM", "name": "Financial Management"},
-        {"id": "mkt", "code": "MKT", "name": "Principles of Marketing"},
-        {"id": "pom", "code": "POM", "name": "Production & Operations Management"},
-        {"id": "sm", "code": "SM", "name": "Strategic Management"},
-        {"id": "mis", "code": "MIS", "name": "Management Information Systems", "elective": true},
-        {"id": "sales", "code": "SALES", "name": "Sales Management", "elective": true}
-      ]
+        {
+          "id": "hrm",
+          "code": "HRM",
+          "name": "Human Resource Management",
+          "live": true
+        },
+        {
+          "id": "fm",
+          "code": "FM",
+          "name": "Financial Management"
+        },
+        {
+          "id": "mkt",
+          "code": "MKT",
+          "name": "Principles of Marketing"
+        },
+        {
+          "id": "pom",
+          "code": "POM",
+          "name": "Production & Operations Management"
+        },
+        {
+          "id": "sm",
+          "code": "SM",
+          "name": "Strategic Management"
+        },
+        {
+          "id": "mis",
+          "code": "MIS",
+          "name": "Management Information Systems",
+          "elective": true
+        },
+        {
+          "id": "sales",
+          "code": "SALES",
+          "name": "Sales Management",
+          "elective": true
+        }
+      ],
+      "examDate": "2026-11-20"
     },
-    {"id": "sem3", "name": "Semester 3", "status": "soon", "subjects": []},
-    {"id": "sem4", "name": "Semester 4", "status": "soon", "subjects": []}
+    {
+      "id": "sem3",
+      "name": "Semester 3",
+      "status": "soon",
+      "subjects": []
+    },
+    {
+      "id": "sem4",
+      "name": "Semester 4",
+      "status": "soon",
+      "subjects": []
+    }
   ]
 }

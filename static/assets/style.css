@@ -1,35 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700;800&display=swap");
 :root{
-  --bg:#f6f7fb; --card:#ffffff; --text:#1b1f2a; --muted:#646b7a; --line:#e2e5ee;
-  --brand:#2357d9; --brand-soft:#e8eefc; --ok:#178a43; --ok-soft:#e5f6ec;
-  --bad:#c0352b; --bad-soft:#fdeceb; --warn:#a86b00; --warn-soft:#fff4dc;
-  --flag:#7a3fe0; --shadow:0 6px 22px rgba(20,30,60,.07); --radius:16px;
+  --bg:#f7f4fb; --card:#ffffff; --text:#22173a; --muted:#6c6283; --line:#e7e0f1;
+  --brand:#5b2a9e; --brand-2:#3b1670; --brand-soft:#f0e9fa; --gold:#c9971c; --gold-2:#e9c25a; --gold-soft:#fbf3dc;
+  --ok:#178a43; --ok-soft:#e5f6ec; --bad:#c0352b; --bad-soft:#fdeceb; --warn:#9a6a00; --warn-soft:#fbf3dc;
+  --flag:#c9971c; --shadow:0 10px 30px rgba(59,22,112,.08); --radius:18px;
+  --hero:linear-gradient(135deg,#2a0f55 0%,#4b1f8a 55%,#6b35b5 100%);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0f1218; --card:#181c25; --text:#e8ebf2; --muted:#9aa2b3; --line:#2a303d;
-    --brand:#7aa2ff; --brand-soft:#1d2840; --ok:#4cc27a; --ok-soft:#14291d;
-    --bad:#ff7a6e; --bad-soft:#341a19; --warn:#f0b54a; --warn-soft:#33280f;
-    --flag:#b48cff; --shadow:none;
+    --bg:#120b1f; --card:#1d1430; --text:#f1ecfa; --muted:#a99cc4; --line:#33264d;
+    --brand:#b48cff; --brand-2:#d4bcff; --brand-soft:#2a1d45; --gold:#e9c25a; --gold-2:#f3d683; --gold-soft:#33280f;
+    --ok:#4cc27a; --ok-soft:#14291d; --bad:#ff7a6e; --bad-soft:#341a19; --warn:#e9c25a; --warn-soft:#33280f;
+    --flag:#e9c25a; --shadow:none;
+    --hero:linear-gradient(135deg,#1c0a3a 0%,#33165f 60%,#4a2389 100%);
   }
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
 a{color:var(--brand);text-decoration:none}
-.wrap{max-width:860px;margin:0 auto;padding:16px 16px 60px}
-.top{display:flex;align-items:center;gap:10px;margin:4px 0 18px;flex-wrap:wrap}
+.bar{background:#22093f;border-bottom:2px solid var(--gold-2);position:sticky;top:0;z-index:20}
+.bar .in{max-width:960px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:10px}
+.logo{display:flex;align-items:center;gap:9px;color:#fff;font-weight:800;letter-spacing:.2px}
+.logo .mk{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--gold-2),#b8860b);color:#2a0f55;display:inline-flex;align-items:center;justify-content:center;font:800 13px Inter,sans-serif}
+.logo span b{color:var(--gold-2)}
+.bar .sp{flex:1}
+.bar .lnk{color:#e6dcf7;font-size:14px;font-weight:600}
+.wrap{max-width:960px;margin:0 auto;padding:16px 16px 60px}
+.hero{background:var(--hero);color:#fff;border-radius:22px;padding:26px 20px;margin:4px 0 22px;position:relative;overflow:hidden;box-shadow:0 18px 40px rgba(42,15,85,.25)}
+.hero::after{content:"";position:absolute;right:-60px;top:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(233,194,90,.35),transparent 70%)}
+.hero .eyebrow{font-size:12px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold-2);margin-bottom:6px}
+.hero h1{font-family:"Playfair Display",Georgia,serif;font-size:30px;line-height:1.15;margin:0 0 8px;color:#fff}
+.hero p{margin:0;color:#e3d8f5;font-size:15px;max-width:560px;position:relative;z-index:1}
+.hero .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;position:relative;z-index:1}
+.pillg{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(233,194,90,.5);color:#fff;border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600}
+.pillg b{color:var(--gold-2)}
+.hero .cta{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;position:relative;z-index:1}
+.btn.gold{background:linear-gradient(135deg,var(--gold-2),#c9971c);color:#2a0f55}
+.btn.line{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+.top{display:flex;align-items:center;gap:10px;margin:4px 0 14px;flex-wrap:wrap}
 .crumb{font-size:14px;color:var(--muted)}
 .crumb a{color:var(--muted)}
 .crumb a:hover{color:var(--brand)}
 h1{font-size:24px;line-height:1.25;margin:0 0 6px}
 .sub{color:var(--muted);margin:0 0 20px;font-size:15px}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
-.tile{display:block;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);color:var(--text);position:relative;min-height:92px}
-a.tile:hover{border-color:var(--brand)}
-.tile h3{margin:0 0 4px;font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.tile{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);color:var(--text);position:relative;min-height:96px;transition:transform .15s,border-color .15s}
+a.tile:hover{border-color:var(--gold);transform:translateY(-2px)}
+a.tile::after{content:"›";position:absolute;right:16px;top:50%;transform:translateY(-50%);font-size:26px;color:var(--gold);font-weight:700}
+.tile .ic{flex:0 0 46px;height:46px;border-radius:13px;background:var(--hero);color:var(--gold-2);display:inline-flex;align-items:center;justify-content:center;font:800 14px Inter,sans-serif;letter-spacing:.3px}
+.tile.off .ic{background:var(--line);color:var(--muted)}
+.tile .bd{flex:1;min-width:0;padding-right:16px}
+.tile h3{margin:0 0 3px;font-size:17px}
 .tile p{margin:0;color:var(--muted);font-size:14px}
-.tile.off{opacity:.55;pointer-events:none}
-.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;border-radius:999px;padding:3px 8px;margin-bottom:8px}
+.tile.off{opacity:.6;pointer-events:none;box-shadow:none}
+.tile.feat{border:1.5px solid var(--gold)}
+.badge{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;border-radius:999px;padding:3px 8px;margin-bottom:6px}
 .b-live{background:var(--ok-soft);color:var(--ok)}
 .b-soon{background:var(--warn-soft);color:var(--warn)}
 .b-done{background:var(--brand-soft);color:var(--brand)}
@@ -122,3 +148,21 @@ a.tile:hover{border-color:var(--brand)}
 .filters button{border:1px solid var(--line);background:var(--card);color:var(--text);border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;font-weight:600;cursor:pointer}
 .filters button.on{background:var(--brand);border-color:var(--brand);color:#fff}
 .hidden{display:none!important}
+/* purple & gold extras */
+.section{display:flex;align-items:center;gap:10px;color:var(--brand)}
+.section::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--gold),transparent)}
+.row{border-radius:16px;padding:12px 14px}
+.row .num{flex:0 0 38px;height:38px;border-radius:11px;background:var(--gold-soft);color:var(--gold);display:inline-flex;align-items:center;justify-content:center;font-weight:800}
+.chip:hover{border-color:var(--gold);color:var(--brand)}
+.doc h2{border-bottom-color:var(--gold-soft)}
+.doc h2::before{content:"";display:inline-block;width:6px;height:18px;border-radius:3px;background:var(--gold);margin-right:8px;vertical-align:-2px}
+.doc blockquote{border-left-color:var(--gold);background:var(--gold-soft)}
+.tabs a.on{background:var(--brand);border-color:var(--brand)}
+.foot{border-top:1px solid var(--line);padding-top:16px}
+.foot b{color:var(--gold)}
+.qbar{background:var(--bg)}
+.timer{color:var(--brand)}
+.progress i{background:linear-gradient(90deg,var(--brand),var(--gold))}
+.score .big{font-family:"Playfair Display",Georgia,serif;color:var(--brand)}
+@media (max-width:480px){.hero{padding:22px 16px;border-radius:18px}.hero h1{font-size:26px}.tile{padding:14px}}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn:not(.ghost):not(.gold):not(.line),:root:not([data-theme="light"]) .tabs a.on,:root:not([data-theme="light"]) .filters button.on{background:#6b35b5;border-color:#6b35b5;color:#fff}:root:not([data-theme="light"]) .opt.sel .l{color:#1d1430}}
