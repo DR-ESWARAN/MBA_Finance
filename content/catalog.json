@@ -61,7 +61,8 @@
         {
           "id": "fm",
           "code": "FM",
-          "name": "Financial Management"
+          "name": "Financial Management",
+          "live": true
         },
         {
           "id": "mkt",
