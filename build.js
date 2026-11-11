@@ -136,7 +136,7 @@ for (const sem of cat.semesters) {
     }));
 
     // Subject hub
-    const rows = cfg.modules.map(m => `<div class="row"><span class="num">${m.n}</span><div class="t">Module ${m.n}<small>${esc(m.title)}</small></div><div class="chips"><a class="chip" href="notes-m${m.n}.html">Notes</a><a class="chip" href="cheat-m${m.n}.html">Cheat sheet</a><a class="chip" href="mindmap-m${m.n}.html">Mind map</a><a class="chip" href="quiz.html?mode=practice&m=${m.n}">Practice</a>${hasLms ? `<a class="chip" href="lms.html?mode=mock&m=${m.n}">LMS test</a>` : ""}</div></div>`).join("");
+    const rows = cfg.modules.map(m => `<div class="row"><span class="num">${m.n}</span><div class="t">Module ${m.n}<small>${esc(m.title)}</small></div><div class="chips"><a class="chip" href="notes-m${m.n}.html">Notes</a><a class="chip" href="cheat-m${m.n}.html">Cheat sheet</a><a class="chip" href="mindmap-m${m.n}.html">Mind map</a><a class="chip" href="quiz.html?mode=practice&m=${m.n}">AI Ques</a>${hasLms ? `<a class="chip" href="lms.html?mode=mock&m=${m.n}">Practice Assignment</a>` : ""}</div></div>`).join("");
     const lms = (x, name, n) => x
       ? `<a class="tile" href="quiz.html?mode=${x}">${ic(String(n))}<div class="bd">${badge("live")}<h3>${name}</h3><p>${n} questions</p></div></a>`
       : `<div class="tile off">${ic(String(n))}<div class="bd">${badge("soon")}<h3>${name}</h3><p>${n} questions from the LMS</p></div></div>`;
@@ -151,8 +151,7 @@ ${hasLms ? "" : lms(null, "LMS practice set", 75)}
 ${lms(cfg.lmsGraded, "LMS graded assignments", 30)}
 </div>
 ${hasLms ? `<div class="section">LMS practice assignments</div><div class="grid">
-<a class="tile feat" href="lms.html?mode=mock">${ic(String(nL))}<div class="bd"><span class="badge b-live">All modules · timed</span><h3>LMS all-module test</h3><p>All ${nL} practice-assignment questions · ${Math.ceil(nL * 90 / 70)} minutes · explanations at the end</p></div></a>
-<a class="tile" href="lms.html?mode=mock&m=1">${ic("15")}<div class="bd"><span class="badge b-done">Per module · timed</span><h3>LMS module tests</h3><p>15 questions each · 20 minutes · pick a module inside</p></div></a>
+<a class="tile feat" href="lms.html?mode=mock">${ic(String(nL))}<div class="bd"><span class="badge b-live">All modules · timed</span><h3>Practice assignment test</h3><p>All ${nL} questions, or pick one module inside · timed · explanations at the end</p></div></a>
 <a class="tile" href="lms.html?mode=practice">${ic("?")}<div class="bd"><span class="badge b-done">Untimed</span><h3>Learn the LMS questions</h3><p>Instant answer, explanation, other options and related concepts</p></div></a>
 </div>` : ""}
 <div class="section">Modules</div><div class="list">${rows}</div>
