@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FM Module 2 — Mind Map</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --card2:#1c2330;
+    --accent:#58a6ff; --accent2:#3fb950; --accent3:#f778ba;
+    --accent4:#d29922; --accent5:#a371f7; --accent6:#ff7b72;
+    --text:#e6edf3; --muted:#8b949e; --line:#30363d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;padding:14px;font-size:15px;}
+  header{text-align:center;padding:16px 12px;margin-bottom:14px;
+    background:linear-gradient(135deg,#1f6feb33,#a371f733);
+    border:1px solid var(--line);border-radius:16px;}
+  header .sub{color:var(--accent);font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+  header h1{font-size:21px;margin-top:4px;}
+  header .tag{color:var(--muted);font-size:12px;margin-top:6px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px;border-left:5px solid var(--accent);}
+  .node h2{font-size:17px;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .node h2 .n{background:var(--accent);color:#0d1117;border-radius:50%;
+    width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:700;flex-shrink:0;}
+  .c1{border-left-color:var(--accent);} .c1 h2 .n{background:var(--accent);}
+  .c2{border-left-color:var(--accent2);} .c2 h2 .n{background:var(--accent2);}
+  .c3{border-left-color:var(--accent3);} .c3 h2 .n{background:var(--accent3);}
+  .c4{border-left-color:var(--accent4);} .c4 h2 .n{background:var(--accent4);}
+  .c5{border-left-color:var(--accent5);} .c5 h2 .n{background:var(--accent5);}
+  .c6{border-left-color:var(--accent6);} .c6 h2 .n{background:var(--accent6);}
+  .c7{border-left-color:#56d4dd;} .c7 h2 .n{background:#56d4dd;}
+  .c8{border-left-color:#e3b341;} .c8 h2 .n{background:#e3b341;}
+  ul{list-style:none;}
+  li{padding:6px 0 6px 18px;position:relative;font-size:14px;border-bottom:1px solid #21262d;}
+  li:last-child{border-bottom:none;}
+  li::before{content:"▸";position:absolute;left:0;color:var(--muted);}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);
+    border-radius:20px;padding:5px 11px;margin:4px 4px 0 0;font-size:12.5px;}
+  b,strong{color:#fff;}
+  .key{color:var(--accent2);font-weight:600;}
+  .sub2{color:var(--muted);font-size:12.5px;display:block;margin-top:2px;}
+  .analogy{background:#1f6feb1a;border:1px dashed var(--accent);border-radius:10px;
+    padding:9px 11px;margin-top:10px;font-size:12.5px;color:#c9d6e6;}
+  .analogy b{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  td{padding:6px 5px;border-bottom:1px solid #21262d;vertical-align:top;}
+  td:first-child{color:var(--accent);font-weight:600;white-space:nowrap;padding-right:8px;}
+  .v{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin:8px 0 2px;}
+  footer{text-align:center;color:var(--muted);font-size:11.5px;margin-top:18px;padding:12px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="sub">Financial Management</div>
+  <h1>Module 2 · TVM &amp; Capital Budgeting</h1>
+  <div class="tag">Mind Map · Source: Module 2 Ebook + LMS Study Notes</div>
+</header>
+
+<div class="grid">
+
+  <div class="node c1">
+    <h2><span class="n">1</span> Time Value of Money</h2>
+    <ul>
+      <li>Money now &gt; same money later · <b>earning capacity</b></li>
+      <li>Linked to <b>time preference</b></li>
+      <li>Also called present discounted value · DCF = TVM</li>
+    </ul>
+    <span class="v">Study Notes · 5 components</span>
+    <div><span class="pill">Rate</span><span class="pill">Time (n)</span><span class="pill">PV</span><span class="pill">FV</span><span class="pill">PMT</span></div>
+    <div class="analogy"><b>Clinic:</b> early PCI beats delayed PCI. Benefit starts compounding now.</div>
+  </div>
+
+  <div class="node c2">
+    <h2><span class="n">2</span> Formulas</h2>
+    <table>
+      <tr><td>FV</td><td>PV × (1+R)<sup>n</sup></td></tr>
+      <tr><td>FV annuity</td><td>A × [(1+R)<sup>n</sup> − 1] / R</td></tr>
+      <tr><td>PV</td><td>FV / (1+R)<sup>n</sup></td></tr>
+      <tr><td>PV annuity</td><td>A × [(1+R)<sup>n</sup> − 1] / [R(1+R)<sup>n</sup>]</td></tr>
+      <tr><td>PMT</td><td>P·r·(1+r)<sup>n</sup> / [(1+r)<sup>n</sup> − 1]</td></tr>
+    </table>
+    <span class="sub2">Compounding → FV · Discounting → PV (SN has these swapped: wrong)</span>
+  </div>
+
+  <div class="node c3">
+    <h2><span class="n">3</span> Inflation (SN)</h2>
+    <ul>
+      <li>Fall in purchasing power · CPI (consumer) · PPI (producer)</li>
+      <li>(P2 − P1)/P1 × 100</li>
+      <li>Moderate = healthy · Hyper · Deflation</li>
+      <li><b>Pensioners worst hit</b></li>
+    </ul>
+    <span class="sub2">Factors: panic buying · familiarity, confirmation, recency bias · loss aversion · demand-supply · production &amp; labour cost</span>
+  </div>
+
+  <div class="node c4">
+    <h2><span class="n">4</span> Capital Budgeting</h2>
+    <span class="sub2">Evaluate large long-term investments = <b>investment appraisal</b></span>
+    <span class="v">Ebook · 6 factors</span>
+    <span class="sub2">Technology · demand forecast · competition · <b>type of management</b> · cash flow · fiscal/political</span>
+    <span class="v">Nature</span>
+    <span class="sub2">Current funds for future benefits · non-flexible · huge · <b>irreversible</b> · strategic</span>
+    <span class="v">Significance</span>
+    <span class="sub2">Long-term commitment · irreversible · large · difficult · profitability</span>
+  </div>
+
+  <div class="node c5">
+    <h2><span class="n">5</span> Non-DCF Techniques</h2>
+    <table>
+      <tr><td>Payback</td><td>outlay ÷ annual inflow · liquidity · <b>ignores post-payback flows</b></td></tr>
+      <tr><td>ARR</td><td>avg income ÷ avg investment · <b>profits not cash</b></td></tr>
+    </table>
+    <span class="sub2">Both ignore TVM</span>
+  </div>
+
+  <div class="node c6">
+    <h2><span class="n">6</span> DCF Techniques</h2>
+    <table>
+      <tr><td>IRR</td><td>NPV = 0 · no cost of capital needed · <b>multiple rates</b> possible</td></tr>
+      <tr><td>NPV</td><td>PV in − PV out at <b>cost of capital</b> · weak for unequal sizes</td></tr>
+      <tr><td>PI</td><td>PV in ÷ outlay · &gt;1 accept · =1 indifferent · BC ratio</td></tr>
+    </table>
+    <div class="analogy"><b>Trading:</b> NPV = edge in rupees · IRR = break-even return % · payback = how fast margin comes back.</div>
+  </div>
+
+  <div class="node c8">
+    <h2><span class="n">7</span> Exam Traps</h2>
+    <ul>
+      <li>FV from PV? <b>Compounding</b></li>
+      <li>Investment's own return? <b>IRR</b></li>
+      <li>DCF also called? <b>TVM</b></li>
+      <li>Why time value? <b>Risk-free return possible today</b></li>
+      <li>Investment appraisal, not "annual" appraisal</li>
+      <li>QB Q1 key: future value "higher than" (concept: lower)</li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>Dr. Eswaran · MBA Finance Sem 2 · FM Module 2 · Revise on the go</footer>
+</body>
+</html>

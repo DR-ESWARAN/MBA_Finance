@@ -1,0 +1,11 @@
+{
+  "modules": [
+    {"n": 1, "title": "Nature & Scope"},
+    {"n": 2, "title": "Time Value of Money & Capital Budgeting"},
+    {"n": 3, "title": "Ratio Analysis"},
+    {"n": 4, "title": "Financial Statement Analysis"},
+    {"n": 5, "title": "Working Capital Management"}
+  ],
+  "lmsPractice": null,
+  "lmsGraded": null
+}
