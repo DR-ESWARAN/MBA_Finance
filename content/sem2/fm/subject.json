@@ -6,6 +6,6 @@
     {"n": 4, "title": "Financial Statement Analysis"},
     {"n": 5, "title": "Working Capital Management"}
   ],
-  "lmsPractice": null,
+  "lmsPractice": "lms.js",
   "lmsGraded": null
 }
