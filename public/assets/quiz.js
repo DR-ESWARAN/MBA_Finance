@@ -4,7 +4,7 @@
   "use strict";
   var B = window.QBANK, CFG = window.QUIZ_CFG || {};
   var KEY = CFG.key || "quiz";
-  var MOCK_N = 70, MOCK_MIN = 90;
+  var MOCK_N = CFG.mockN || 70, MOCK_MIN = CFG.mockMin || 90, LABEL = CFG.label || "Mock exam";
   var app = document.getElementById("app");
   var params = new URLSearchParams(location.search);
   var MODE = params.get("mode") || "mock";
@@ -14,7 +14,7 @@
   function sget(k, d) { try { var v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } }
   function sset(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
   function sdel(k) { try { localStorage.removeItem(k); } catch (e) {} }
-  var WKEY = "wrong:" + KEY, SKEY = "mock:" + KEY, HKEY = "hist:" + KEY;
+  var WKEY = "wrong:" + KEY, SKEY = "mock:" + KEY + (MOD ? ":m" + MOD : ""), HKEY = "hist:" + KEY + (MOD ? ":m" + MOD : "");
 
   // ---------- helpers ----------
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
@@ -25,7 +25,7 @@
   // ---------- build question objects ----------
   var ALL = B.rows.map(function (r) {
     var opts = r[2] === "TF" ? ["True", "False"] : r[2];
-    return { id: hash(r[0] + "|" + r[1]), m: r[0], q: r[1], opts: opts, a: r[3], why: r[4], src: r[5], tf: r[2] === "TF" };
+    return { id: hash(r[0] + "|" + r[1]), m: r[0], q: r[1], opts: opts, a: r[3], why: r[4], src: r[5], more: r[6] || "", tf: r[2] === "TF" };
   });
   var BYID = {}; ALL.forEach(function (q) { BYID[q.id] = q; });
   function optOrder(q) {
@@ -33,10 +33,12 @@
     var fixed = q.tf || q.opts.some(function (o) { return /all of (the )?above|none of (the )?above|both/i.test(o); });
     return fixed ? idx : shuffle(idx);
   }
-  function srcLabel(s) { return s === "QB" ? "LMS Objective QB" : s === "SN" ? "Study Notes" : "Ebook"; }
+  function srcLabel(s) { return s === "QB" ? "LMS Objective QB" : s === "SN" ? "Study Notes" : s === "LMS" ? "LMS practice assignment" : "Ebook"; }
+  function moreHtml(q) { return q.more ? "<div class='more'>" + esc(q.more).replace(/(Other options:|Also know[^:]*:)/g, "<b>$1</b>") + "</div>" : ""; }
   function modName(m) { return "M" + m + " · " + (B.modules[m] || ""); }
 
   function pickMock() {
+    if (MOD) return shuffle(poolFor(MOD));
     var groups = {}; ALL.forEach(function (q) { (groups[q.m] = groups[q.m] || []).push(q); });
     var N = Math.min(MOCK_N, ALL.length), picked = [], mods = Object.keys(groups);
     var quota = {}, given = 0;
@@ -53,7 +55,7 @@
   function newSession(mode, qs) {
     S = { mode: mode, ids: qs.map(function (q) { return q.id; }), ord: {}, ans: {}, flag: {}, cur: 0, done: false };
     qs.forEach(function (q) { S.ord[q.id] = optOrder(q); });
-    if (mode === "mock") S.endAt = Date.now() + MOCK_MIN * 60000;
+    if (mode === "mock") S.endAt = Date.now() + mockMinutes() * 60000;
     save();
   }
   function save() { if (S && S.mode === "mock" && !S.done) sset(SKEY, S); }
@@ -65,8 +67,9 @@
     var nWrong = Object.keys(wrong).filter(function (id) { return BYID[id]; }).length;
     var h = "";
     if (MODE === "mock") {
-      var n = Math.min(MOCK_N, ALL.length);
-      h += card("<h1>Mock exam</h1><p class='sub'>" + n + " random questions from a bank of " + ALL.length + ", spread across all 5 modules. " + MOCK_MIN + " minutes. One question per screen. Answers and reasons are shown only after you submit, like the real exam.</p>" +
+      var n = MOD ? poolFor(MOD).length : Math.min(MOCK_N, ALL.length);
+      h += card("<h1>" + esc(LABEL) + (MOD ? " · Module " + MOD : "") + "</h1><p class='sub'>" + (MOD ? n + " questions from Module " + MOD + " (" + esc(B.modules[MOD] || "") + ")" : n + (n < ALL.length ? " random questions from a bank of " + ALL.length : " questions") + ", spread across all 5 modules") + ". " + mockMinutes() + " minutes, timed at the real exam pace. One question per screen. Answers and explanations are shown only after you submit.</p>" +
+        "<div class='chips' style='margin-bottom:14px'>" + mchip(null) + Object.keys(B.modules).map(mchip).join("") + "</div>" +
         (saved && !saved.done && saved.endAt > Date.now() ? "<div class='note'>You have an unfinished mock (" + Object.keys(saved.ans).length + " answered). </div><div class='nav'><button class='btn' id='resume'>Resume it</button><button class='btn ghost' id='go'>Start a new one</button></div>" :
           "<div class='nav'><button class='btn' id='go'>Start mock</button></div>") + histHtml());
     } else if (MODE === "wrong") {
@@ -88,10 +91,15 @@
     on("resume", function () { S = saved; startTimer(); render(); });
     on("clear", function () { sdel(WKEY); start(); });
   }
+  function mockMinutes() { return MOD ? Math.ceil(poolFor(MOD).length * 90 / 70) : MOCK_MIN; }
   function chip(m) {
     var on = (m === null && !MOD) || String(m) === MOD;
     var href = "?mode=practice" + (m ? "&m=" + m : "");
     return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='" + href + "'>" + (m ? "M" + m : "All") + "</a>";
+  }
+  function mchip(m) {
+    var on = (m === null && !MOD) || String(m) === MOD;
+    return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='?mode=mock" + (m ? "&m=" + m : "") + "'>" + (m ? "M" + m : "All modules") + "</a>";
   }
   function poolFor(m) { return m ? ALL.filter(function (q) { return String(q.m) === String(m); }) : ALL.slice(); }
   function histHtml() {
@@ -132,7 +140,7 @@
       h += "<button class='" + cls + "' data-o='" + oi + "'" + (!isMock && answered ? " disabled" : "") + "><span class='l'>" + L[k] + "</span><span>" + esc(q.opts[oi]) + "</span></button>";
     });
     h += "</div>";
-    if (!isMock && answered) h += "<div class='why'>" + (chosen === q.a ? "<b>Correct.</b> " : "<b style='color:var(--bad)'>Not quite.</b> Answer: <b>" + esc(q.opts[q.a]) + "</b>. ") + esc(q.why) + " <span style='color:var(--muted)'>(" + srcLabel(q.src) + ")</span></div>";
+    if (!isMock && answered) h += "<div class='why'>" + (chosen === q.a ? "<b>Correct.</b> " : "<b style='color:var(--bad)'>Not quite.</b> Answer: <b>" + esc(q.opts[q.a]) + "</b>. ") + esc(q.why) + " <span style='color:var(--muted)'>(" + srcLabel(q.src) + ")</span>" + moreHtml(q) + "</div>";
     var last = S.cur === S.ids.length - 1;
     h += "<div class='nav'><button class='btn ghost' id='prev'" + (S.cur === 0 ? " disabled" : "") + ">‹ Prev</button>" +
       (last ? "<button class='btn' id='end'>" + (isMock ? "Submit" : "Finish") + "</button>" : "<button class='btn' id='next'>Next ›</button>") + "</div>";
@@ -198,7 +206,7 @@
       "<div class='big'>" + s + " / " + n + "</div><div class='pct'>" + Math.round(100 * s / n) + "%</div>" +
       "<div class='stats'><div class='stat'><b style='color:var(--ok)'>" + s + "</b><span>Correct</span></div><div class='stat'><b style='color:var(--bad)'>" + wrong + "</b><span>Wrong</span></div><div class='stat'><b>" + skipped + "</b><span>Skipped</span></div></div>" +
       "<table class='modtbl'>" + Object.keys(mods).sort().map(function (m) { return "<tr><td>" + esc(modName(m)) + "</td><td>" + mods[m][0] + " / " + mods[m][1] + "</td></tr>"; }).join("") + "</table>" +
-      "<div class='nav'><a class='btn' href='?mode=" + (S.mode === "practice" ? "practice" + (MOD ? "&m=" + MOD : "") : S.mode) + "'>Try again</a><a class='btn ghost' href='?mode=wrong'>Retry wrong ones</a></div></div>";
+      "<div class='nav'><a class='btn' href='?mode=" + (S.mode === "wrong" ? "wrong" : S.mode + (MOD ? "&m=" + MOD : "")) + "'>Try again</a><a class='btn ghost' href='?mode=wrong'>Retry wrong ones</a></div></div>";
     h += "<div class='filters'>" + [["w", "Wrong (" + wrong + ")"], ["s", "Skipped (" + skipped + ")"], ["f", "Flagged"], ["a", "All"]].map(function (f) {
       return "<button data-f='" + f[0] + "' class='" + (filter === f[0] ? "on" : "") + "'>" + f[1] + "</button>";
     }).join("") + "</div><div class='rv'>";
@@ -209,7 +217,7 @@
       shown++;
       h += "<div class='item " + st + "'><div class='q'>" + (i + 1) + ". " + esc(q.q) + "</div><div class='a'>" +
         (st === "w" ? "Your answer: <span class='y'>" + esc(q.opts[c]) + "</span><br>" : st === "s" ? "<span style='color:var(--muted)'>Not answered</span><br>" : "") +
-        "Correct: <span class='c'>" + esc(q.opts[q.a]) + "</span></div><div class='reason'>" + esc(q.why) + " · " + esc(modName(q.m)) + " · " + srcLabel(q.src) + "</div></div>";
+        "Correct: <span class='c'>" + esc(q.opts[q.a]) + "</span></div><div class='reason'>" + esc(q.why) + " · " + esc(modName(q.m)) + " · " + srcLabel(q.src) + "</div>" + moreHtml(q) + "</div>";
     });
     if (!shown) h += "<p class='sub'>Nothing here.</p>";
     h += "</div>";
