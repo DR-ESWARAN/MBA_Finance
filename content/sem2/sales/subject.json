@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Sales Management and Organisation"
+    },
+    {
+      "n": 2,
+      "title": "Personal Selling"
+    },
+    {
+      "n": 3,
+      "title": "Sales Operations"
+    },
+    {
+      "n": 4,
+      "title": "Salesmanship"
+    },
+    {
+      "n": 5,
+      "title": "Sales Force Management"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}
