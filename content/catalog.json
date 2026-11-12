@@ -86,7 +86,8 @@
           "id": "mis",
           "code": "MIS",
           "name": "Management Information Systems",
-          "elective": true
+          "elective": true,
+          "live": true
         },
         {
           "id": "sales",

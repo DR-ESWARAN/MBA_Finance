@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Management Information Systems"
+    },
+    {
+      "n": 2,
+      "title": "Information Systems in the Enterprise"
+    },
+    {
+      "n": 3,
+      "title": "Electronic Commerce and the Digital Organization"
+    },
+    {
+      "n": 4,
+      "title": "Databases and Data Warehouses"
+    },
+    {
+      "n": 5,
+      "title": "The Wireless Revolution"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}

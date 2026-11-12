@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MIS Module 1 — Mind Map</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --card2:#1c2330;
+    --accent:#58a6ff; --accent2:#3fb950; --accent3:#f778ba;
+    --accent4:#d29922; --accent5:#a371f7; --accent6:#ff7b72;
+    --text:#e6edf3; --muted:#8b949e; --line:#30363d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;padding:14px;font-size:15px;}
+  header{text-align:center;padding:16px 12px;margin-bottom:14px;
+    background:linear-gradient(135deg,#1f6feb33,#a371f733);
+    border:1px solid var(--line);border-radius:16px;}
+  header .sub{color:var(--accent);font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+  header h1{font-size:21px;margin-top:4px;}
+  header .tag{color:var(--muted);font-size:12px;margin-top:6px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px;border-left:5px solid var(--accent);}
+  .node h2{font-size:17px;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .node h2 .n{background:var(--accent);color:#0d1117;border-radius:50%;
+    width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:700;flex-shrink:0;}
+  .c1{border-left-color:var(--accent);} .c1 h2 .n{background:var(--accent);}
+  .c2{border-left-color:var(--accent2);} .c2 h2 .n{background:var(--accent2);}
+  .c3{border-left-color:var(--accent3);} .c3 h2 .n{background:var(--accent3);}
+  .c4{border-left-color:var(--accent4);} .c4 h2 .n{background:var(--accent4);}
+  .c5{border-left-color:var(--accent5);} .c5 h2 .n{background:var(--accent5);}
+  .c6{border-left-color:var(--accent6);} .c6 h2 .n{background:var(--accent6);}
+  .c7{border-left-color:#56d4dd;} .c7 h2 .n{background:#56d4dd;}
+  .c8{border-left-color:#e3b341;} .c8 h2 .n{background:#e3b341;}
+  ul{list-style:none;}
+  li{padding:6px 0 6px 18px;position:relative;font-size:14px;border-bottom:1px solid #21262d;}
+  li:last-child{border-bottom:none;}
+  li::before{content:"▸";position:absolute;left:0;color:var(--muted);}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);
+    border-radius:20px;padding:5px 11px;margin:4px 4px 0 0;font-size:12.5px;}
+  b,strong{color:#fff;}
+  .key{color:var(--accent2);font-weight:600;}
+  .sub2{color:var(--muted);font-size:12.5px;display:block;margin-top:2px;}
+  .analogy{background:#1f6feb1a;border:1px dashed var(--accent);border-radius:10px;
+    padding:9px 11px;margin-top:10px;font-size:12.5px;color:#c9d6e6;}
+  .analogy b{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  td{padding:6px 5px;border-bottom:1px solid #21262d;vertical-align:top;}
+  td:first-child{color:var(--accent);font-weight:600;white-space:nowrap;padding-right:8px;}
+  .v{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin:8px 0 2px;}
+  footer{text-align:center;color:var(--muted);font-size:11.5px;margin-top:18px;padding:12px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="sub">Management Information Systems</div>
+  <h1>Module 1 · Management Information Systems</h1>
+  <div class="tag">Mind Map · Source: Module 1 Ebook + LMS Study Notes</div>
+</header>
+
+<div class="grid">
+
+  <div class="node c1">
+    <h2><span class="n">1</span> Information System</h2>
+    <span class="sub2">Capture data → information → <b>disseminate</b> to decision-makers</span>
+    <span class="sub2">People · processes · data · technology</span>
+    <span class="sub2">Hardware + software + <b>liveware</b> · feedback loop</span>
+    <span class="sub2">Why IT: operations · decisions · competitive advantage</span>
+  </div>
+
+  <div class="node c2">
+    <h2><span class="n">2</span> Types of IS</h2>
+    <table>
+      <tr><td>TPS</td><td>routine transactions</td></tr>
+      <tr><td>MIS</td><td>middle-manager summaries</td></tr>
+      <tr><td>DSS</td><td>semi-structured, scenarios</td></tr>
+      <tr><td>EIS</td><td>executives, KPIs</td></tr>
+      <tr><td>ERP</td><td>integrates departments</td></tr>
+    </table>
+    <div class="analogy"><b>Clinical:</b> TPS = nursing chart · MIS = morning census · DSS = risk calculator before PCI · EIS = board dashboard.</div>
+  </div>
+
+  <div class="node c3">
+    <h2><span class="n">3</span> Digital Convergence</h2>
+    <span class="sub2">All media digitized on <b>one worldwide network</b></span>
+    <span class="sub2">Information appliance · disintermediation</span>
+    <span class="sub2">SN: tech + devices + industries merge (telemedicine, Netflix)</span>
+  </div>
+
+  <div class="node c4">
+    <h2><span class="n">4</span> Networks &amp; IOS</h2>
+    <span class="sub2">Network = relationship joining people, objects, events</span>
+    <span class="sub2">IOS cuts transaction + co-ordination costs</span>
+    <span class="sub2">IT necessary, not sufficient · McKesson</span>
+  </div>
+
+  <div class="node c5">
+    <h2><span class="n">5</span> Four R's</h2>
+    <table>
+      <tr><td>Reframing</td><td>new vision</td></tr>
+      <tr><td>Restructuring</td><td>lean and fit</td></tr>
+      <tr><td>Revitalization</td><td>link to environment</td></tr>
+      <tr><td>Renewal</td><td>people + spirit</td></tr>
+    </table>
+    <span class="sub2">5 levels: 1-2 evolutionary · 3-5 revolutionary</span>
+  </div>
+
+  <div class="node c6">
+    <h2><span class="n">6</span> Knowledge Economy</h2>
+    <span class="sub2">Intellectual capital &gt; tangible assets</span>
+    <span class="sub2">Data → information → knowledge</span>
+    <span class="sub2">OAS (jukebox) · KWS = consultants, change agents</span>
+    <span class="sub2">IP: patent 20 yrs · copyright life + 70</span>
+  </div>
+
+  <div class="node c7">
+    <h2><span class="n">7</span> Approaches</h2>
+    <span class="sub2"><b>Technical</b>: maths models (CS, MS, OR)</span>
+    <span class="sub2"><b>Behavioural</b>: human issues</span>
+    <span class="sub2"><b>Socio-technical</b>: both; de-optimize to fit</span>
+  </div>
+
+  <div class="node c8">
+    <h2><span class="n">8</span> Challenges</h2>
+    <span class="sub2">Strategic business · globalization · info architecture · IS investment · responsibility</span>
+    <span class="sub2">Big data 3 Vs · cloud · BYOD · GDPR</span>
+    <span class="sub2">AI bias · accessibility · digital divide</span>
+    <div class="analogy"><b>Trading:</b> big data velocity is the tick feed; variety is price + news + options chain together.</div>
+  </div>
+
+</div>
+
+<footer>Dr. Eswaran · MBA Finance Sem 2 · MIS Module 1 · Revise on the go</footer>
+</body>
+</html>

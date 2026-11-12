@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MIS M4 Notes</title>
+<meta name="description" content="Notes, mind maps and mock exams for the DY Patil Online MBA (Finance). Free and open to all.">
+<meta name="theme-color" content="#2357d9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232357d9'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3EMBA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../../assets/style.css">
+</head><body>
+<header class="bar"><div class="in"><a class="logo" href="../../"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="../../sem2/">Sem 2</a></div></header>
+<div class="wrap">
+<div class="top"><div class="crumb"><a href="../../">Home</a> › <a href="../">Semester 2</a> › <a href="./">MIS</a> › Module 4</div></div>
+
+<h1>Module 4 · Databases and Data Warehouses</h1><p class="sub">Management Information Systems · Notes</p><div class="tabs"><a href="notes-m4.html" class="on">Notes</a><a href="cheat-m4.html" class="">Cheat sheet</a><a href="mindmap-m4.html" class="">Mind map</a></div><article class="doc"><blockquote>
+<p><strong>Read this first:</strong> <em>The <strong>Ebook</strong> covers the DBMS and its functions, the <strong>traditional file approach vs the database approach</strong>, database models (<strong>relational, object-oriented, hierarchical, network</strong>, flat file), SQL operators (<strong>SELECT, PROJECT, JOIN</strong>), data modelling and the <strong>E-R model</strong>, web databases (PHP, Daffodil DB), data warehousing (Inmon's four features), data mining and <strong>OLTP vs OLAP</strong>. The <strong>Study Notes</strong> (LMS follows these) add SQL commands (INSERT, UPDATE, DELETE, <strong>GROUP BY</strong>, ORDER BY), keys, <strong>NoSQL</strong> (key-value, document, column-family), <strong>ETL</strong>, star/snowflake schemas and data mining techniques.</em></p>
+<p><strong>Source conflict (flagged):</strong> <em>The Ebook says a data warehouse is "an RDBMS designed specifically to meet the needs of <strong>transaction processing systems</strong>". The Study Notes and the LMS say the opposite: data warehouses support <strong>analytical processing</strong>, not transactional. The Ebook's own OLTP vs OLAP section agrees with the SN. <strong>For the LMS, pick "analytical".</strong></em></p>
+</blockquote>
+<h2>1. Database and DBMS</h2>
+<ul>
+<li><p><strong>Database</strong> = a collection of data organised for <strong>easy retrieval and manipulation</strong> (QB). Keyword list: a collection of logically related records or files serving many applications.</p></li>
+<li><p><strong>DBMS</strong> = a <strong>software</strong> tool (QB) that stores data in a specified form and gives access to a user or application.</p>
+<p><strong>Data definition</strong> — structure for stored data</p>
+<p><strong>Data retrieval</strong> — query tools</p>
+<p><strong>Access control</strong> — DBA defines access by person or group</p>
+<p><strong>Data sharing</strong> — many users at once without overwriting</p>
+<p><strong>Data integrity</strong> — survives failures and incomplete updates</p></li>
+<li><p>Introducing a DBMS needs organisational change and often meets <strong>political resistance</strong> because it shifts power over data.</p></li>
+</ul>
+<h2>2. Traditional file approach vs database approach</h2>
+<ul>
+<li><strong>Traditional (file processing):</strong> each function (marketing, finance, production) kept its own programs and files, a <strong>piecemeal</strong> approach. SN adds the paper version: ledgers, registers, <strong>manual retrieval</strong>, error-prone, space problems.</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>Drawback</strong></th>
+<th><strong>Meaning (Ebook)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data duplication</td>
+<td>Same data in many files (payroll and personnel both hold name, designation)</td>
+</tr>
+<tr class="even">
+<td>Data inconsistency</td>
+<td>Copies not updated together (designation changed in payroll, not in PF)</td>
+</tr>
+<tr class="odd">
+<td>Lack of data integration</td>
+<td>Because of <strong>independent</strong> data files, ad hoc queries across files are hard (QB)</td>
+</tr>
+<tr class="even">
+<td>Data dependence</td>
+<td>File organisation fixed by one application (customer file only by last name)</td>
+</tr>
+<tr class="odd">
+<td>Program dependence</td>
+<td>Any format change or new report needs new programs</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p><strong>Database approach:</strong> a common pool of related data shared by many applications; <strong>data and program independent</strong>; redundancy and inconsistency minimised. SN: a <strong>centralised, structured digital repository</strong> (LMS answer) built on tables.</p></li>
+<li><p>Advantages: controlled redundancy, consistency, sharing, integrity, security, standards, economy of scale, accessibility, productivity, concurrency, backup and recovery.</p></li>
+</ul>
+<blockquote>
+<p><strong>Misconception:</strong> <em>Traditional methods are <strong>not</strong> as effective as database-driven approaches, which are dynamic and scalable.</em></p>
+</blockquote>
+<h2>3. Database models</h2>
+<ul>
+<li><strong>Database model (schema)</strong> = structure or format of a database in a formal language supported by the DBMS. Types: <strong>relational, object-oriented, hierarchical, network, flat file</strong>.</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>Model</strong></th>
+<th><strong>Key facts</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relational</td>
+<td><strong>E.F. Codd, 1970</strong>; predicate logic and set theory; data in <strong>tables</strong> (relations) of rows (<strong>tuples</strong>) and columns (<strong>attributes</strong>); domain = allowed values; seen as a <strong>collection of tables</strong></td>
+</tr>
+<tr class="even">
+<td>Object-oriented</td>
+<td>Stores <strong>objects</strong> (data + methods); encapsulation, inheritance, polymorphism; avoids "impedance mismatch"; ODMG standards poorly implemented; used in engineering and molecular biology</td>
+</tr>
+<tr class="odd">
+<td>Hierarchical</td>
+<td><strong>IBM IMS, 1966</strong>; upside-down tree, parent-child; simple and secure but lacks structural independence</td>
+</tr>
+<tr class="even">
+<td>Network</td>
+<td><strong>GE IDS, 1967</strong>; a relationship is a <strong>set</strong> of owner and member records; a set = <strong>1:M</strong> relationship (QB True)</td>
+</tr>
+<tr class="odd">
+<td>Flat file</td>
+<td>Single table; relational DB = many such tables</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>QB trap:</strong> <em>"The relational database is perceived as a collection of <strong>rows</strong>" = <strong>False</strong>. The Ebook says a <strong>collection of tables</strong>.</em></p>
+</blockquote>
+<ul>
+<li><p>Relational rules: column order does not matter, no identical rows, one value per attribute. Advantages: structural independence, simplicity, <strong>ad hoc queries through SQL</strong>. Disadvantages: hardware overhead, poor design risk, "islands of information".</p></li>
+<li><p><strong>Keys:</strong> <strong>primary key</strong> uniquely identifies a row (LMS); <strong>foreign key</strong> links tables (SN); natural key (ISBN) vs surrogate key (employee ID); compound key = several columns; keys drive <strong>indexes</strong>.</p></li>
+</ul>
+<h2>4. SQL and relational operations</h2>
+<ul>
+<li><strong>SQL</strong> = Structured Query Language, a <strong>4GL</strong> (vs 3GL COBOL, C). Two basic single-table operators:</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>Operator</strong></th>
+<th><strong>What it does</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>SELECT (selection)</td>
+<td>Picks <strong>rows</strong> that meet a condition = <strong>horizontal cut</strong></td>
+</tr>
+<tr class="even">
+<td>PROJECT (projection)</td>
+<td>Picks <strong>columns</strong> = <strong>vertical cut</strong></td>
+</tr>
+<tr class="odd">
+<td>JOIN</td>
+<td>Combines <strong>two or more tables</strong> over a common field</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Generic syntax: <strong>SELECT</strong> field list <strong>FROM</strong> tables <strong>WHERE</strong> condition.</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>SN command</strong></th>
+<th><strong>Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>INSERT</td>
+<td>Add new records</td>
+</tr>
+<tr class="even">
+<td>UPDATE</td>
+<td><strong>Modify existing records</strong></td>
+</tr>
+<tr class="odd">
+<td>DELETE</td>
+<td>Remove records</td>
+</tr>
+<tr class="even">
+<td>JOIN</td>
+<td>Combine related rows from tables</td>
+</tr>
+<tr class="odd">
+<td>GROUP BY</td>
+<td><strong>Group rows with same values into summary rows</strong> (COUNT, SUM, AVG)</td>
+</tr>
+<tr class="even">
+<td>ORDER BY</td>
+<td>Sort ascending/descending</td>
+</tr>
+<tr class="odd">
+<td>WHERE</td>
+<td>Filter records</td>
+</tr>
+</tbody>
+</table></div>
+<h2>5. Data modelling and ERD</h2>
+<ul>
+<li><p><strong>Data modelling</strong> = analysis of data objects used in a business and the <strong>identification of relationships</strong> among them (QB). Conceptual models (what: <strong>E-R model</strong>) vs implementation models (how: hierarchical, network, relational, object-oriented, semi-structured).</p></li>
+<li><p>Relationships: <strong>1:1</strong> (store-manager), <strong>1:M</strong> (painter-paintings), <strong>M:N</strong> (employees-skills).</p></li>
+<li><p><strong>E-R model</strong>: entities (rectangles), relationships (<strong>diamonds</strong>), attributes. Pros: conceptual simplicity, visual, communication tool. Cons: limited constraints, <strong>no data manipulation language</strong>.</p></li>
+<li><p>SN: ERDs <strong>represent relationships visually</strong>; tools MySQL Workbench, Visio, ERWin; ERD → schema: entity → table, attribute → column, relationship → foreign key. Misconception: modelling tools do more than draw ERDs.</p></li>
+</ul>
+<h2>6. Databases on the web and NoSQL</h2>
+<ul>
+<li><p><strong>Web database</strong> stores large amounts of information in an organised format easily accessible from <strong>scripting languages like PHP</strong> (QB). <strong>PHP</strong> = open-source server-side scripting. <strong>Daffodil DB</strong> = Java RDBMS, under 3 MB, first Java DB compatible with PHP.</p></li>
+<li><p>SN: web databases drive <strong>dynamic content</strong>, user-generated content, personalisation and caching. Misconception: they are not just passive repositories.</p></li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>NoSQL type</strong></th>
+<th><strong>Storage · examples · use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Key-value</td>
+<td><strong>Key-value pairs</strong> · Redis, DynamoDB · caching, sessions</td>
+</tr>
+<tr class="even">
+<td>Document</td>
+<td>JSON-like documents · MongoDB, CouchDB · CMS, e-commerce</td>
+</tr>
+<tr class="odd">
+<td>Column-family</td>
+<td>Columns not rows · Cassandra, HBase · time series, logs</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>NoSQL suits <strong>large unstructured or semi-structured data</strong>, scales horizontally, <strong>schema-less</strong>. Challenge: possible inconsistency.</li>
+</ul>
+<h2>7. Data warehouse</h2>
+<ul>
+<li><strong>Inmon's definition:</strong> a <strong>subject-oriented, integrated, time-variant, non-volatile</strong> collection of data in support of management decisions.</li>
+</ul>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>Feature</strong></th>
+<th><strong>Meaning</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Subject-oriented</td>
+<td>Organised by subject (customer, premium, claim), not by application</td>
+</tr>
+<tr class="even">
+<td>Integrated</td>
+<td>Consistent coding across sources (gender m/f vs 0/1 standardised)</td>
+</tr>
+<tr class="odd">
+<td>Time-variant</td>
+<td>Historical data, <strong>5 to 10 years</strong>, for trends and forecasting</td>
+</tr>
+<tr class="even">
+<td>Non-volatile</td>
+<td>Not updated once loaded; only <strong>loading and access</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><p>Kept <strong>separately</strong> from operational databases; "the logical link between what managers see in DSS/EIS and operations" (John McIntyre, SAS). Uses: customer focus, product repositioning, profit analysis, CRM, heterogeneous DB integration.</p></li>
+<li><p><strong>Update-driven</strong> (warehouse: integrate in advance) beats <strong>query-driven</strong> (traditional: filter on each query) for frequent aggregate queries.</p></li>
+<li><p><strong>SN components:</strong> source systems → <strong>ETL (Extract, Transform, Load)</strong> → warehouse database (<strong>star/snowflake schemas</strong> with <strong>fact</strong> and <strong>dimension</strong> tables) → <strong>metadata repository</strong> → <strong>BI tools</strong>. Transform = clean and standardise.</p></li>
+</ul>
+<blockquote>
+<p><strong>Gap flagged:</strong> <em>The Study Notes name fact tables but do not define them. The LMS key says a fact table holds <strong>detailed transaction data</strong>; use that on the LMS.</em></p>
+</blockquote>
+<h2>8. OLTP vs OLAP</h2>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th></th>
+<th><strong>OLTP</strong></th>
+<th><strong>OLAP</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Purpose</td>
+<td>Day-to-day operations</td>
+<td>Analysis, reports, data mining</td>
+</tr>
+<tr class="even">
+<td>Records</td>
+<td>Single or small sets</td>
+<td>Very large sets</td>
+</tr>
+<tr class="odd">
+<td>Design</td>
+<td><strong>Normalised</strong> (no duplicate data)</td>
+<td>Dimensional</td>
+</tr>
+<tr class="even">
+<td>Examples</td>
+<td>Airline bookings, banking</td>
+<td>Data warehouse</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>Dimensional modelling</strong> = holding OLTP data in an <strong>OLAP</strong> format; the primary building block of data warehousing (QB).</li>
+</ul>
+<h2>9. Data mining</h2>
+<ul>
+<li><p><strong>Data mining</strong> = the process of <strong>extracting patterns from data</strong> (QB). Data roughly doubles every three years. Uses: marketing, surveillance, <strong>fraud detection</strong>, science.</p></li>
+<li><p>Mining potential improves when <strong>appropriate</strong> data is stored in a warehouse. Non-representative samples mislead; it is not a "crystal ball".</p></li>
+</ul>
+<blockquote>
+<p><strong>QB trap:</strong> <em>"Data mining potential can be enhanced if the <strong>inappropriate</strong> data has been collected" = <strong>False</strong>. The Ebook says <strong>appropriate</strong>.</em></p>
+</blockquote>
+<ul>
+<li>SN techniques: <strong>classification, clustering, regression, association rules</strong> (items bought together), <strong>anomaly detection</strong>. Process: objectives → preparation → algorithm → model → insights → BI → continuous improvement.</li>
+</ul>
+<h2>10. Knowledge Check answers (SN)</h2>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>#</strong></th>
+<th><strong>Question</strong></th>
+<th><strong>Answer</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>Discovering patterns in large datasets</td>
+<td><strong>Data Mining</strong></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Key NoSQL advantage</td>
+<td><strong>Schema-less</strong></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>T in ETL</td>
+<td><strong>Transform</strong></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td>Warehouses differ from DBs optimised for ___ processing</td>
+<td><strong>Transactional</strong></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td>ERDs represent relationships in relational DBs</td>
+<td><strong>True</strong></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td>NoSQL strictly follows a predefined schema</td>
+<td><strong>False</strong></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td>Warehousing focuses on analytical processing</td>
+<td><strong>True</strong></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>BI tools only do extraction and loading</td>
+<td><strong>False</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>Exam traps:</strong> <em>database = easy retrieval and manipulation · DBMS = software · independent files → poor integration · relational = collection of <strong>tables</strong> · network set = 1:M · data modelling = relationships among data objects · web DB → PHP · selection = rows, projection = columns · UPDATE modifies · GROUP BY summarises · primary key = unique ID · key-value DB · warehouse = analytical · ETL · dimensional modelling = OLTP → OLAP.</em></p>
+<p><strong>Clinical analogy:</strong> <em>Separate cath-lab, ward and pharmacy registers are the traditional file approach: your patient's allergy is updated in one and not the other. A hospital EMR is the database approach. A registry like the national PCI registry is the data warehouse: historical, integrated, not edited after entry, built for analysis.</em></p>
+</blockquote>
+</article><div class="nav" style="margin-top:14px"><a class="btn ghost" href="notes-m3.html">‹ Module 3</a><a class="btn ghost" href="quiz.html?mode=practice&m=4">Practise M4 questions</a><a class="btn ghost" href="notes-m5.html">Module 5 ›</a></div>
+<div class="foot"><b>MBA Finance Study Hub</b> · made for classmates · content from the LMS study material</div>
+</div></body></html>
