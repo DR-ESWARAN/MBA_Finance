@@ -93,7 +93,8 @@
           "id": "sales",
           "code": "SALES",
           "name": "Sales Management",
-          "elective": true
+          "elective": true,
+          "live": true
         }
       ],
       "examDate": "2026-11-20"
