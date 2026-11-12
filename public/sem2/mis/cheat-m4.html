@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MIS M4 Cheat sheet</title>
+<meta name="description" content="Notes, mind maps and mock exams for the DY Patil Online MBA (Finance). Free and open to all.">
+<meta name="theme-color" content="#2357d9">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232357d9'/%3E%3Ctext x='32' y='42' font-size='26' font-family='Arial' font-weight='700' fill='white' text-anchor='middle'%3EMBA%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="../../assets/style.css">
+</head><body>
+<header class="bar"><div class="in"><a class="logo" href="../../"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="../../sem2/">Sem 2</a></div></header>
+<div class="wrap">
+<div class="top"><div class="crumb"><a href="../../">Home</a> › <a href="../">Semester 2</a> › <a href="./">MIS</a> › Module 4</div></div>
+
+<h1>Module 4 · Databases and Data Warehouses</h1><p class="sub">Management Information Systems · Cheat sheet</p><div class="tabs"><a href="notes-m4.html" class="">Notes</a><a href="cheat-m4.html" class="on">Cheat sheet</a><a href="mindmap-m4.html" class="">Mind map</a></div><article class="doc"><p><strong>DATABASE —</strong> Collection of data for <strong>easy retrieval and manipulation</strong>. <strong>DBMS = software</strong>: definition · retrieval · access control · sharing · integrity.</p>
+<p><strong>FILE APPROACH FLAWS —</strong> Duplication · inconsistency · <strong>lack of integration (independent files)</strong> · data dependence · program dependence. SN: manual retrieval.</p>
+<p><strong>DB APPROACH —</strong> <strong>Centralised digital repository</strong>; data and program independent; tables of rows and columns.</p>
+<div class="tbl"><table>
+<thead>
+<tr class="header">
+<th><strong>Model</strong></th>
+<th><strong>Key fact</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Relational</td>
+<td>Codd 1970 · <strong>collection of tables</strong> · tuples, attributes, domain</td>
+</tr>
+<tr class="even">
+<td>Object-oriented</td>
+<td>Objects = data + methods · inheritance · encapsulation</td>
+</tr>
+<tr class="odd">
+<td>Hierarchical</td>
+<td>IBM IMS 1966 · tree</td>
+</tr>
+<tr class="even">
+<td>Network</td>
+<td>GE IDS 1967 · <strong>set = 1:M</strong> owner/member</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>SQL —</strong> 4GL. SELECT = <strong>rows</strong> (horizontal) · PROJECT = columns · JOIN = combine tables · UPDATE modifies · <strong>GROUP BY</strong> summarises · primary key = unique ID.</p>
+<p><strong>MODELLING —</strong> Analysis of data objects + <strong>relationships</strong>. ERD: rectangle entity, diamond relationship. 1:1 · 1:M · M:N.</p>
+<p><strong>WEB / NoSQL —</strong> Web DB → <strong>PHP</strong>; Daffodil DB. NoSQL = unstructured, schema-less: <strong>key-value</strong> (Redis) · document (MongoDB) · column (Cassandra).</p>
+<p><strong>WAREHOUSE —</strong> Inmon: subject-oriented · integrated · time-variant · non-volatile. <strong>Analytical</strong>. ETL → star/snowflake (fact + dimension) → metadata → BI.</p>
+<p><strong>OLTP/OLAP —</strong> OLTP = daily, normalised · OLAP = analysis. <strong>Dimensional modelling</strong> = OLTP → OLAP.</p>
+<p><strong>MINING —</strong> <strong>Extracting patterns</strong>; needs <strong>appropriate</strong> data. Classification · clustering · regression · association · anomaly.</p>
+<blockquote>
+<p><strong>TRAPS:</strong> <em>Relational = collection of rows → False · inappropriate data → False · Ebook calls warehouse "for TPS" but LMS = analytical · fact table = detailed transaction data (LMS).</em></p>
+</blockquote>
+</article><div class="nav" style="margin-top:14px"><a class="btn ghost" href="cheat-m3.html">‹ Module 3</a><a class="btn ghost" href="quiz.html?mode=practice&m=4">Practise M4 questions</a><a class="btn ghost" href="cheat-m5.html">Module 5 ›</a></div>
+<div class="foot"><b>MBA Finance Study Hub</b> · made for classmates · content from the LMS study material</div>
+</div></body></html>
