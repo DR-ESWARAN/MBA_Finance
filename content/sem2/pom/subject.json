@@ -1,0 +1,11 @@
+{
+  "modules": [
+    {"n": 1, "title": "Introduction to Production & Operations Management"},
+    {"n": 2, "title": "Product & Service Design"},
+    {"n": 3, "title": "Facility Location Planning"},
+    {"n": 4, "title": "Capacity Planning"},
+    {"n": 5, "title": "Quality Assurance & Control"}
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}

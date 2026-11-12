@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POM Module 2 — Mind Map</title>
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --card2:#1c2330;
+    --accent:#58a6ff; --accent2:#3fb950; --accent3:#f778ba;
+    --accent4:#d29922; --accent5:#a371f7; --accent6:#ff7b72;
+    --text:#e6edf3; --muted:#8b949e; --line:#30363d;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    line-height:1.5;padding:14px;font-size:15px;}
+  header{text-align:center;padding:16px 12px;margin-bottom:14px;
+    background:linear-gradient(135deg,#1f6feb33,#a371f733);
+    border:1px solid var(--line);border-radius:16px;}
+  header .sub{color:var(--accent);font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+  header h1{font-size:21px;margin-top:4px;}
+  header .tag{color:var(--muted);font-size:12px;margin-top:6px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;}
+  .node{background:var(--card);border:1px solid var(--line);border-radius:16px;
+    padding:16px;border-left:5px solid var(--accent);}
+  .node h2{font-size:17px;display:flex;align-items:center;gap:9px;margin-bottom:11px;}
+  .node h2 .n{background:var(--accent);color:#0d1117;border-radius:50%;
+    width:26px;height:26px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:700;flex-shrink:0;}
+  .c1{border-left-color:var(--accent);} .c1 h2 .n{background:var(--accent);}
+  .c2{border-left-color:var(--accent2);} .c2 h2 .n{background:var(--accent2);}
+  .c3{border-left-color:var(--accent3);} .c3 h2 .n{background:var(--accent3);}
+  .c4{border-left-color:var(--accent4);} .c4 h2 .n{background:var(--accent4);}
+  .c5{border-left-color:var(--accent5);} .c5 h2 .n{background:var(--accent5);}
+  .c6{border-left-color:var(--accent6);} .c6 h2 .n{background:var(--accent6);}
+  .c7{border-left-color:#56d4dd;} .c7 h2 .n{background:#56d4dd;}
+  .c8{border-left-color:#e3b341;} .c8 h2 .n{background:#e3b341;}
+  ul{list-style:none;}
+  li{padding:6px 0 6px 18px;position:relative;font-size:14px;border-bottom:1px solid #21262d;}
+  li:last-child{border-bottom:none;}
+  li::before{content:"▸";position:absolute;left:0;color:var(--muted);}
+  .pill{display:inline-block;background:var(--card2);border:1px solid var(--line);
+    border-radius:20px;padding:5px 11px;margin:4px 4px 0 0;font-size:12.5px;}
+  b,strong{color:#fff;}
+  .key{color:var(--accent2);font-weight:600;}
+  .sub2{color:var(--muted);font-size:12.5px;display:block;margin-top:2px;}
+  .analogy{background:#1f6feb1a;border:1px dashed var(--accent);border-radius:10px;
+    padding:9px 11px;margin-top:10px;font-size:12.5px;color:#c9d6e6;}
+  .analogy b{color:var(--accent);}
+  table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px;}
+  td{padding:6px 5px;border-bottom:1px solid #21262d;vertical-align:top;}
+  td:first-child{color:var(--accent);font-weight:600;white-space:nowrap;padding-right:8px;}
+  .v{display:inline-block;font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin:8px 0 2px;}
+  footer{text-align:center;color:var(--muted);font-size:11.5px;margin-top:18px;padding:12px;}
+</style>
+</head>
+<body>
+<header>
+  <div class="sub">Production &amp; Operations Management</div>
+  <h1>Module 2 · Product &amp; Service Design</h1>
+  <div class="tag">Mind Map · Source: Module 2 Ebook + LMS Quick Notes</div>
+</header>
+
+<div class="grid">
+
+  <div class="node c1">
+    <h2><span class="n">1</span> Objectives &amp; Law</h2>
+    <span class="sub2">Main: customer satisfaction + needs · Secondary: function, cost, profit, quality, looks, ease of making &amp; servicing</span>
+    <table>
+      <tr><td>Patent</td><td>govt grant to inventor</td></tr>
+      <tr><td>Trademark</td><td>name/symbol (Coke, Apple)</td></tr>
+      <tr><td>Copyright</td><td>form of expression</td></tr>
+      <tr><td>UCC</td><td><b>1952</b>, 50 US states</td></tr>
+      <tr><td>EPA</td><td>after Stockholm 1972</td></tr>
+    </table>
+  </div>
+
+  <div class="node c2">
+    <h2><span class="n">2</span> Life Cycles</h2>
+    <div><span class="pill">Intro</span><span class="pill">Growth</span><span class="pill">Maturity = cut-throat</span><span class="pill">Decline</span></div>
+    <span class="sub2">+ advantage, compatibility, divisibility, communicability · − complexity, risk</span>
+    <span class="v">Technology LC</span>
+    <span class="sub2">Development → launch (Model T) → growth → mature (process innovation) → substitution</span>
+  </div>
+
+  <div class="node c3">
+    <h2><span class="n">3</span> Development</h2>
+    <span class="sub2">Edison: lofty goals · right-to-left · structure · fluidity</span>
+    <span class="v">Ebook 7</span>
+    <span class="sub2">Clarify → concept (<b>screening</b>) → embodiment → detailed (CAD) → physical eval → product &amp; process → introduction</span>
+    <span class="v">Quick Notes 4</span>
+    <span class="sub2">Idea → concept → prototype &amp; test → finalise</span>
+    <div class="analogy"><b>Clinic:</b> like a new protocol: idea, pilot on a few patients, audit, then the final SOP for the whole cath lab.</div>
+  </div>
+
+  <div class="node c4">
+    <h2><span class="n">4</span> Speed &amp; Concurrency</h2>
+    <ul>
+      <li>Fast to <b>customization</b> (one) vs fast to <b>design</b> (cluster)</li>
+      <li>Concurrent engg: overlapping, parallel phases</li>
+      <li>Teams: program, technical, design-build</li>
+      <li>5 → 3 years (Chrysler, Ford, GM)</li>
+    </ul>
+  </div>
+
+  <div class="node c5">
+    <h2><span class="n">5</span> Variety Tools</h2>
+    <table>
+      <tr><td>Standard</td><td>Whitney, Ford; MTS; cheaper, less flexible</td></tr>
+      <tr><td>Mass custom.</td><td>extreme postponement; Dell</td></tr>
+      <tr><td>Postpone</td><td><b>Alderson 1950</b>; Benetton</td></tr>
+      <tr><td>Modular</td><td>Maruti 800/Omni/Gypsy</td></tr>
+      <tr><td>Recycle</td><td><b>less</b> raw material</td></tr>
+    </table>
+    <div class="analogy"><b>Trading:</b> postponement is like keeping capital in a liquid fund and picking the exact strike only near expiry, when you know more.</div>
+  </div>
+
+  <div class="node c6">
+    <h2><span class="n">6</span> DFM</h2>
+    <span class="sub2">Efficient production at <b>highest quality</b> · fewer parts · standard parts · no tools/fasteners · DFX = one focus area</span>
+    <span class="sub2">Submarine parts 95,000 → 16,000</span>
+  </div>
+
+  <div class="node c7">
+    <h2><span class="n">7</span> Service Design</h2>
+    <span class="sub2">Contact = % of time customer is in system (low vs high)</span>
+    <span class="sub2">Goods differ: inventory · up-front risk · supply-chain-wide innovation</span>
+    <div><span class="pill">People</span><span class="pill">Props</span><span class="pill">Processes</span></div>
+    <span class="sub2">Tech helps, not runs · journey mapping · Airbnb, Spotify, Uber</span>
+  </div>
+
+  <div class="node c8">
+    <h2><span class="n">8</span> Reliability &amp; CAD</h2>
+    <table>
+      <tr><td>DFR</td><td>block diagrams, fault trees</td></tr>
+      <tr><td>Avoidance</td><td>better parts, cheaper</td></tr>
+      <tr><td>Tolerance</td><td>redundancy, costly</td></tr>
+      <tr><td>CAD</td><td>ideas · augmentation · market test</td></tr>
+    </table>
+    <div class="analogy"><b>Clinic:</b> redundancy = a backup defibrillator in the lab; fault avoidance = buying the reliable one first.</div>
+  </div>
+
+</div>
+
+<footer>Dr. Eswaran · MBA Finance Sem 2 · POM Module 2 · Revise on the go</footer>
+</body>
+</html>

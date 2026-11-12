@@ -73,7 +73,8 @@
         {
           "id": "pom",
           "code": "POM",
-          "name": "Production & Operations Management"
+          "name": "Production & Operations Management",
+          "live": true
         },
         {
           "id": "sm",
