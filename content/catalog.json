@@ -79,7 +79,8 @@
         {
           "id": "sm",
           "code": "SM",
-          "name": "Strategic Management"
+          "name": "Strategic Management",
+          "live": true
         },
         {
           "id": "mis",

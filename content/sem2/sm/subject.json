@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Introduction to Strategies"
+    },
+    {
+      "n": 2,
+      "title": "Strategic Management"
+    },
+    {
+      "n": 3,
+      "title": "Strategy Analysis"
+    },
+    {
+      "n": 4,
+      "title": "Strategy Formulation & Implementation"
+    },
+    {
+      "n": 5,
+      "title": "Strategic Control & Evaluation"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}
