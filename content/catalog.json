@@ -67,7 +67,8 @@
         {
           "id": "mkt",
           "code": "MKT",
-          "name": "Principles of Marketing"
+          "name": "Principles of Marketing",
+          "live": true
         },
         {
           "id": "pom",

@@ -1,0 +1,11 @@
+{
+  "modules": [
+    {"n": 1, "title": "Introduction to Marketing"},
+    {"n": 2, "title": "Product Marketing"},
+    {"n": 3, "title": "Pricing Decisions"},
+    {"n": 4, "title": "Marketing Channels"},
+    {"n": 5, "title": "Promotion Decision"}
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}
