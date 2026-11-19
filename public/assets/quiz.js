@@ -5,6 +5,7 @@
   var B = window.QBANK, CFG = window.QUIZ_CFG || {};
   var KEY = CFG.key || "quiz";
   var MOCK_N = CFG.mockN || 70, MOCK_MIN = CFG.mockMin || 90, LABEL = CFG.label || "Mock exam";
+  var UNIT = B.unit || "Module", US = B.unitShort || "M";
   var app = document.getElementById("app");
   var params = new URLSearchParams(location.search);
   var MODE = params.get("mode") || "mock";
@@ -33,9 +34,9 @@
     var fixed = q.tf || q.opts.some(function (o) { return /all of (the )?above|none of (the )?above|both/i.test(o); });
     return fixed ? idx : shuffle(idx);
   }
-  function srcLabel(s) { return s === "QB" ? "LMS Objective QB" : s === "SN" ? "Study Notes" : s === "LMS" ? "LMS practice assignment" : "Ebook"; }
+  function srcLabel(s) { return s === "QB" ? "LMS Objective QB" : s === "SN" ? "Study Notes" : s === "LMS" ? "LMS practice assignment" : s === "REAL" ? "LMS graded assignment" : "Ebook"; }
   function moreHtml(q) { return q.more ? "<div class='more'>" + esc(q.more).replace(/(Other options:|Also know[^:]*:)/g, "<b>$1</b>") + "</div>" : ""; }
-  function modName(m) { return "M" + m + " · " + (B.modules[m] || ""); }
+  function modName(m) { return US + m + " · " + (B.modules[m] || ""); }
 
   function pickMock() {
     if (MOD) return shuffle(poolFor(MOD));
@@ -68,7 +69,7 @@
     var h = "";
     if (MODE === "mock") {
       var n = MOD ? poolFor(MOD).length : Math.min(MOCK_N, ALL.length);
-      h += card("<h1>" + esc(LABEL) + (MOD ? " · Module " + MOD : "") + "</h1><p class='sub'>" + (MOD ? n + " questions from Module " + MOD + " (" + esc(B.modules[MOD] || "") + ")" : n + (n < ALL.length ? " random questions from a bank of " + ALL.length : " questions") + ", spread across all 5 modules") + ". " + mockMinutes() + " minutes, timed at the real exam pace. One question per screen. Answers and explanations are shown only after you submit.</p>" +
+      h += card("<h1>" + esc(LABEL) + (MOD ? " · " + UNIT + " " + MOD : "") + "</h1><p class='sub'>" + (MOD ? n + " questions from " + UNIT + " " + MOD + " (" + esc(B.modules[MOD] || "") + ")" : n + (n < ALL.length ? " random questions from a bank of " + ALL.length : " questions") + ", spread across all " + Object.keys(B.modules).length + " " + UNIT.toLowerCase() + "s") + ". " + mockMinutes() + " minutes, timed at the real exam pace. One question per screen. Answers and explanations are shown only after you submit.</p>" +
         "<div class='chips' style='margin-bottom:14px'>" + mchip(null) + Object.keys(B.modules).map(mchip).join("") + "</div>" +
         (saved && !saved.done && saved.endAt > Date.now() ? "<div class='note'>You have an unfinished mock (" + Object.keys(saved.ans).length + " answered). </div><div class='nav'><button class='btn' id='resume'>Resume it</button><button class='btn ghost' id='go'>Start a new one</button></div>" :
           "<div class='nav'><button class='btn' id='go'>Start mock</button></div>") + histHtml());
@@ -77,7 +78,7 @@
         (nWrong ? "<div class='nav'><button class='btn' id='go'>Start (" + nWrong + " questions)</button><button class='btn ghost' id='clear'>Clear list</button></div>" : "<div class='note'>No wrong answers saved yet. Take a mock or practice set first.</div>"));
     } else {
       var pool = poolFor(MOD);
-      h += card("<h1>Practice" + (MOD ? " · Module " + MOD : " · All modules") + "</h1><p class='sub'>" + (MOD ? esc(B.modules[MOD] || "") + ". " : "") + pool.length + " questions, untimed. Tap an answer to see right or wrong and the reason at once.</p>" +
+      h += card("<h1>Practice" + (MOD ? " · " + UNIT + " " + MOD : " · All " + UNIT.toLowerCase() + "s") + "</h1><p class='sub'>" + (MOD ? esc(B.modules[MOD] || "") + ". " : "") + pool.length + " questions, untimed. Tap an answer to see right or wrong and the reason at once.</p>" +
         "<div class='chips' style='margin-bottom:14px'>" + chip(null) + Object.keys(B.modules).map(chip).join("") + "</div>" +
         "<div class='nav'><button class='btn' id='go'>Start</button></div>");
     }
@@ -95,11 +96,11 @@
   function chip(m) {
     var on = (m === null && !MOD) || String(m) === MOD;
     var href = "?mode=practice" + (m ? "&m=" + m : "");
-    return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='" + href + "'>" + (m ? "M" + m : "All") + "</a>";
+    return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='" + href + "'>" + (m ? US + m : "All") + "</a>";
   }
   function mchip(m) {
     var on = (m === null && !MOD) || String(m) === MOD;
-    return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='?mode=mock" + (m ? "&m=" + m : "") + "'>" + (m ? "M" + m : "All modules") + "</a>";
+    return "<a class='chip' style='" + (on ? "background:var(--brand);color:#fff;border-color:var(--brand)" : "") + "' href='?mode=mock" + (m ? "&m=" + m : "") + "'>" + (m ? US + m : "All " + UNIT.toLowerCase() + "s") + "</a>";
   }
   function poolFor(m) { return m ? ALL.filter(function (q) { return String(q.m) === String(m); }) : ALL.slice(); }
   function histHtml() {

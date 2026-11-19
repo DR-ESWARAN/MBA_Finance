@@ -22,5 +22,5 @@
     }
   ],
   "lmsPractice": "lms.js",
-  "lmsGraded": null
+  "lmsGraded": "real.js"
 }
