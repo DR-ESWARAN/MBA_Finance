@@ -7,5 +7,5 @@
     {"n": 5, "title": "Promotion Decision"}
   ],
   "lmsPractice": "lms.js",
-  "lmsGraded": null
+  "lmsGraded": "real.js"
 }

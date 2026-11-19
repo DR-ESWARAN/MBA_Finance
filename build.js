@@ -106,6 +106,20 @@ for (const sem of cat.semesters) {
       }));
     }
 
+    // LMS graded (real) assignments: window.REALBANK, row[0] = assignment no., row[7] = topic module (used in the main mock)
+    const hasReal = cfg.lmsGraded && fs.existsSync(path.join(dir, cfg.lmsGraded));
+    let nR = 0;
+    if (hasReal) {
+      fs.copyFileSync(path.join(dir, cfg.lmsGraded), path.join(OUT, base, "real.js"));
+      require(path.join(dir, cfg.lmsGraded)); nR = window.REALBANK.rows.length;
+      { const seen = new Set(window.QBANK.rows.concat(hasLms ? window.LMSBANK.rows : []).map(r => r[1].toLowerCase().trim())); nQ += window.REALBANK.rows.filter(r => !seen.has(r[1].toLowerCase().trim())).length; }
+      write(`${base}/real.html`, page({
+        title: `${sb.code} Real Assignments · ${cat.site}`, depth: 2, crumbs: [...subCr.slice(0, 2), [sb.code, "./"], ["Real assignments"]],
+        body: `<div id="app"><p class="sub">Loading…</p></div><noscript>Please turn on JavaScript to take the quiz.</noscript>`,
+        scripts: `<script>window.QUIZ_CFG={key:${JSON.stringify(base + "/real")},mockN:${nR},mockMin:${Math.ceil(nR * 90 / 70)},label:"Real assignment test"};</script><script src="real.js"></script><script>window.QBANK=window.REALBANK;</script><script src="../../assets/quiz.js"></script>`
+      }));
+    }
+
     // Notes, cheat sheets, mind maps per module
     for (const m of cfg.modules) {
       const tabs = k => `<div class="tabs">${[["notes", "Notes"], ["cheat", "Cheat sheet"], ["mindmap", "Mind map"]].map(([id, t]) =>
@@ -132,7 +146,7 @@ for (const sem of cat.semesters) {
     write(`${base}/quiz.html`, page({
       title: `${sb.code} Quiz · ${cat.site}`, depth: 2, crumbs: [...subCr.slice(0, 2), [sb.code, "./"], ["Quiz"]],
       body: `<div id="app"><p class="sub">Loading…</p></div><noscript>Please turn on JavaScript to take the quiz.</noscript>`,
-      scripts: `<script>window.QUIZ_CFG={key:${JSON.stringify(base)}};</script><script src="bank.js"></script>${hasLms ? `<script src="lms.js"></script><script>QBANK.rows=QBANK.rows.concat(LMSBANK.rows);</script>` : ""}<script src="../../assets/quiz.js"></script>`
+      scripts: `<script>window.QUIZ_CFG={key:${JSON.stringify(base)}};</script><script src="bank.js"></script>${hasLms ? `<script src="lms.js"></script><script>QBANK.rows=QBANK.rows.concat(LMSBANK.rows);</script>` : ""}${hasReal ? `<script src="real.js"></script><script>(function(){var seen={};QBANK.rows.forEach(function(r){seen[r[1].toLowerCase().trim()]=1;});QBANK.rows=QBANK.rows.concat(REALBANK.rows.filter(function(r){return !seen[r[1].toLowerCase().trim()];}).map(function(r){return [r[7],r[1],r[2],r[3],r[4],r[5],r[6]];}));})();</script>` : ""}<script src="../../assets/quiz.js"></script>`
     }));
 
     // Subject hub
@@ -148,8 +162,12 @@ for (const sem of cat.semesters) {
 <a class="tile" href="quiz.html?mode=practice">${ic(String(nQ))}<div class="bd"><span class="badge b-done">Untimed</span><h3>Practice by module</h3><p>Ebook + LMS questions, instant answers with explanations</p></div></a>
 <a class="tile" href="quiz.html?mode=wrong">${ic("✗")}<div class="bd"><span class="badge b-done">Your device</span><h3>Retry wrong answers</h3><p>Questions you missed, saved on this phone</p></div></a>
 ${hasLms ? "" : lms(null, "LMS practice set", 75)}
-${lms(cfg.lmsGraded, "LMS graded assignments", 30)}
+${hasReal ? "" : lms(null, "LMS graded assignments", 30)}
 </div>
+${hasReal ? `<div class="section">Real assignments (LMS graded)</div><div class="grid">
+<a class="tile feat" href="real.html?mode=mock">${ic(String(nR))}<div class="bd"><span class="badge b-live">Both assignments · timed</span><h3>Real assignment test</h3><p>All ${nR} graded questions, or one assignment inside · timed · explanations at the end</p></div></a>
+<a class="tile" href="real.html?mode=practice">${ic("?")}<div class="bd"><span class="badge b-done">Untimed</span><h3>Learn the graded questions</h3><p>Instant answer, explanation, other options and related concepts</p></div></a>
+</div>` : ""}
 ${hasLms ? `<div class="section">LMS practice assignments</div><div class="grid">
 <a class="tile feat" href="lms.html?mode=mock">${ic(String(nL))}<div class="bd"><span class="badge b-live">All modules · timed</span><h3>Practice assignment test</h3><p>All ${nL} questions, or pick one module inside · timed · explanations at the end</p></div></a>
 <a class="tile" href="lms.html?mode=practice">${ic("?")}<div class="bd"><span class="badge b-done">Untimed</span><h3>Learn the LMS questions</h3><p>Instant answer, explanation, other options and related concepts</p></div></a>

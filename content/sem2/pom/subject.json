@@ -7,5 +7,5 @@
     {"n": 5, "title": "Quality Assurance & Control"}
   ],
   "lmsPractice": "lms.js",
-  "lmsGraded": null
+  "lmsGraded": "real.js"
 }
