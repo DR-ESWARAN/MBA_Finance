@@ -165,7 +165,7 @@ ${hasLms ? "" : lms(null, "LMS practice set", 75)}
 ${hasReal ? "" : lms(null, "LMS graded assignments", 30)}
 </div>
 ${hasReal ? `<div class="section">Real assignments (LMS graded)</div><div class="grid">
-<a class="tile feat" href="real.html?mode=mock">${ic(String(nR))}<div class="bd"><span class="badge b-live">Both assignments · timed</span><h3>Real assignment test</h3><p>All ${nR} graded questions, or one assignment inside · timed · explanations at the end</p></div></a>
+<a class="tile feat" href="real.html?mode=mock">${ic(String(nR))}<div class="bd"><span class="badge b-live">All sets · timed</span><h3>Real assignment test</h3><p>All ${nR} graded questions, or one set inside · timed · explanations at the end</p></div></a>
 <a class="tile" href="real.html?mode=practice">${ic("?")}<div class="bd"><span class="badge b-done">Untimed</span><h3>Learn the graded questions</h3><p>Instant answer, explanation, other options and related concepts</p></div></a>
 </div>` : ""}
 ${hasLms ? `<div class="section">LMS practice assignments</div><div class="grid">
