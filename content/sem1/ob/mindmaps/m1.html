@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OB Module 1 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  /* GRID — single col on mobile, multi on desktop */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  /* CARD TITLE */
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  /* BRANCH */
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  /* TABLE — scrollable on mobile */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  /* ANALOGY */
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  /* CENTRAL */
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+  /* WIDE — 2 col on desktop only */
+  .wide { grid-column: span 2; }
+
+  /* MOBILE OVERRIDES */
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+
+  /* TABLET */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Organizational Behaviour — Module 1</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>OB Module 1: Introduction</h1>
+    <p>Study and application of knowledge about how people act within organizations</p>
+    <div class="central-chips">
+      <span class="central-chip c1">What is OB?</span>
+      <span class="central-chip c2">Behaviour Model</span>
+      <span class="central-chip c3">Individual Differences</span>
+      <span class="central-chip c4">Cultural Differences</span>
+      <span class="central-chip c5">Attributional Styles</span>
+      <span class="central-chip c6">Job Attitudes</span>
+      <span class="central-chip c1">Learning Theories</span>
+      <span class="central-chip c2">Reinforcement</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: WHAT IS OB -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">🏢</div><h2>1. What is OB?</h2></div>
+    <div class="branch">
+      <div class="branch-label">Key Definitions</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Author</th><th>Definition</th></tr>
+          <tr><td><b>Robbins</b></td><td>Systematic study of actions & attitudes in orgs</td></tr>
+          <tr><td><b>Keith Davis</b></td><td>Human tool for human benefit</td></tr>
+          <tr><td><b>Fred Luthans</b></td><td>Understanding, prediction & control of behaviour</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Core Elements</div>
+      <div class="tags">
+        <span class="tag highlight">Individuals</span>
+        <span class="tag highlight">Groups</span>
+        <span class="tag highlight">Org Structure</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Contributing Disciplines</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Field</th><th>Contribution</th></tr>
+          <tr><td>Psychology</td><td>Learning, motivation, personality, leadership</td></tr>
+          <tr><td>Sociology</td><td>Group dynamics, norms, power, conflict</td></tr>
+          <tr><td>Social Psychology</td><td>Change mgmt, group decisions</td></tr>
+          <tr><td>Anthropology</td><td>Cultural differences, cross-cultural behaviour</td></tr>
+          <tr><td>Political Science</td><td>Govt regulations, org politics</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: BEHAVIOUR MODEL -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>2. Behaviour Model (DUPC)</h2></div>
+    <div class="branch">
+      <div class="branch-label">Manager's 4 Functions</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Step</th><th>Meaning</th></tr>
+          <tr><td><b style="color:#f5a623">D</b>escribe</td><td>Identify HOW people behave</td></tr>
+          <tr><td><b style="color:#f5a623">U</b>nderstand</td><td>Know WHY they behave</td></tr>
+          <tr><td><b style="color:#f5a623">P</b>redict</td><td>Anticipate future behaviour</td></tr>
+          <tr><td><b style="color:#f5a623">C</b>ontrol</td><td>Channel towards org goals</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Elements of any Organization</div>
+      <div class="tags">
+        <span class="tag">People</span><span class="tag">→</span>
+        <span class="tag">Structure</span><span class="tag">→</span>
+        <span class="tag">Technology</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Like cardiology — Describe ECG → Understand pathophysiology → Predict risk → Intervene (control). OB does the same for human behaviour.
+    </div>
+  </div>
+
+  <!-- CARD 3: INDIVIDUAL DIFFERENCES -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🧩</div><h2>3. Individual Differences</h2></div>
+    <div class="branch">
+      <div class="branch-label">Perceiver Characteristics</div>
+      <div class="tags">
+        <span class="tag">Cognitive Accessibility</span>
+        <span class="tag">Need for Cognition</span>
+        <span class="tag">Attributional Style</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Entity vs Incremental Theorists (Dweck)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th></th><th>Entity</th><th>Incremental</th></tr>
+          <tr><td>Belief</td><td>Personality = Fixed</td><td>Personality = Changeable</td></tr>
+          <tr><td>Attribution</td><td>Internal/Personal</td><td>Situational/External</td></tr>
+          <tr><td>Challenges</td><td>Struggles to adapt</td><td>Optimistic, adapts</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: CULTURAL DIFFERENCES -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🌏</div><h2>4. Cultural Differences</h2></div>
+    <div class="branch">
+      <div class="branch-label">Two Cultural Orientations</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th></th><th>Western</th><th>East Asian</th></tr>
+          <tr><td>Examples</td><td>USA, Canada, AU</td><td>Japan, China, India</td></tr>
+          <tr><td>Focus</td><td>The Individual</td><td>Relationship/Situation</td></tr>
+          <tr><td>Attribution</td><td>Internal</td><td>Situational</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Morris et al. Study</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;">Bicultural HK students primed with American icons → more personal attributions. Chinese icons → more situational attributions.</p>
+    </div>
+  </div>
+
+  <!-- CARD 5: ATTRIBUTIONAL STYLES — FULL WIDTH -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">🧠</div><h2>5. Attributional Styles & Mental Health</h2></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">3 Dimensions</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Dimension</th><th>Poles</th></tr>
+            <tr><td>Locus</td><td>Internal ↔ External</td></tr>
+            <tr><td>Time</td><td>Stable ↔ Unstable</td></tr>
+            <tr><td>Scope</td><td>Global ↔ Specific</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#ff8a80;">❌ Negative Style</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>"I'm no good"</td><td style="color:#ff8a80;">Internal</td></tr>
+            <tr><td>"I always fail"</td><td style="color:#ff8a80;">Stable</td></tr>
+            <tr><td>"I fail at everything"</td><td style="color:#ff8a80;">Global</td></tr>
+            <tr><td colspan="2" style="color:#f87171;">→ Hopelessness, Depression</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#43e97b;">✅ Positive Style</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>"Task was hard"</td><td style="color:#43e97b;">External</td></tr>
+            <tr><td>"Next time better"</td><td style="color:#43e97b;">Unstable</td></tr>
+            <tr><td>"Good elsewhere"</td><td style="color:#43e97b;">Specific</td></tr>
+            <tr><td colspan="2" style="color:#6ee7b7;">→ Persistence, Resilience</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div>
+        <div class="branch-label">Learned Helplessness — Seligman</div>
+        <div class="tags">
+          <span class="tag">Extreme –ve attribution</span>
+          <span class="tag">No perceived control</span>
+          <span class="tag">Origin: Dog shock experiments</span>
+          <span class="tag">→ Poor health & performance</span>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Self-Handicapping — Berglas & Jones</div>
+        <div class="tags">
+          <span class="tag">Create excuses BEFORE failing</span>
+          <span class="tag">More common in men</span>
+          <span class="tag">Long-term: low satisfaction</span>
+          <span class="tag">Short-term ego protection</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: JOB ATTITUDES -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">💼</div><h2>6. Perception & Job Attitudes</h2></div>
+    <div class="branch">
+      <div class="branch-label">8 Drivers of Job Satisfaction</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>🧬 Personality</td><td>Positive disposition → higher satisfaction</td></tr>
+          <tr><td>🔗 P-E Fit</td><td>Skills + Values match = satisfied</td></tr>
+          <tr><td>⚙️ Job Characteristics</td><td>Autonomy, feedback, variety, significance</td></tr>
+          <tr><td>📄 Psych Contract</td><td>Unwritten deal — breach = dissatisfied</td></tr>
+          <tr><td>⚖️ Org Justice</td><td>Fair treatment & policies</td></tr>
+          <tr><td>🤝 Relationships</td><td>Manager + peer quality</td></tr>
+          <tr><td>😰 Stress</td><td>Ambiguity=bad; responsibility=can be good</td></tr>
+          <tr><td>🏠 Work-Life Balance</td><td>Flexibility policies → higher satisfaction</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Consequences of Positive Attitudes</div>
+      <div class="tags">
+        <span class="tag highlight">Higher engagement</span>
+        <span class="tag highlight">r ≈ 0.30 with performance</span>
+        <span class="tag">Lower absenteeism</span>
+        <span class="tag">Lower turnover</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: LEARNING -->
+  <div class="card pink">
+    <div class="card-title"><div class="card-icon">📚</div><h2>7. Learning Theories</h2></div>
+    <div class="branch">
+      <p style="font-size:0.76rem;color:#ccc;line-height:1.5;"><b>Definition:</b> Permanent change in behaviour due to direct/indirect experience</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">4 Factors (4M)</div>
+      <div class="tags">
+        <span class="tag highlight">Motivation</span>
+        <span class="tag highlight">Practice</span>
+        <span class="tag highlight">Environment</span>
+        <span class="tag highlight">Mental Group</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">4 Theories</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Theory</th><th>Key Idea</th><th>Theorist</th></tr>
+          <tr><td>Classical Conditioning</td><td>CS + US → CR</td><td>Pavlov</td></tr>
+          <tr><td>Operant Conditioning</td><td>Behaviour shaped by outcomes</td><td>Skinner</td></tr>
+          <tr><td>Social Learning</td><td>Observe → Imitate → Reinforce</td><td>Bandura, Rotter</td></tr>
+          <tr><td>Cognitive Learning</td><td>Deliberate thinking + mental maps</td><td>—</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Social Learning = Cardiology intern: Watch cath → Assist → Perform independently.
+    </div>
+  </div>
+
+  <!-- CARD 8: REINFORCEMENT — FULL WIDTH -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">🔁</div><h2>8. Reinforcement</h2></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">Types</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Type</th><th>Mechanism</th></tr>
+            <tr><td><b style="color:#43e97b">Positive</b></td><td>Add desirable stimulus → behaviour ↑</td></tr>
+            <tr><td><b style="color:#4facfe">Negative</b></td><td>Remove unpleasant → behaviour ↑</td></tr>
+            <tr><td><b style="color:#ff8a80">Punishment</b></td><td>Add unpleasant → behaviour ↓ <br><small style="color:#ff8a80">≠ Negative Reinforcement</small></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Schedules of Reinforcement</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Schedule</th><th>Example</th><th>Effect</th></tr>
+            <tr><td>Fixed Interval</td><td>Monthly salary</td><td>Predictable</td></tr>
+            <tr><td>Variable Interval</td><td>Spot checks</td><td>Sustained</td></tr>
+            <tr><td>Fixed Ratio</td><td>Piece-rate pay</td><td>High then pause</td></tr>
+            <tr><td><b style="color:#f9d423">⭐ Variable Ratio</b></td><td>Slot machine</td><td><b style="color:#f9d423">MOST POWERFUL</b></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ TARGETS — FULL WIDTH -->
+  <div class="card teal wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>Key Authors — MCQ Targets</h2>
+      <span class="badge key">HIGH YIELD</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Concept</th><th>Author</th></tr>
+          <tr><td>OB = systematic study</td><td>Robbins</td></tr>
+          <tr><td>OB = human tool</td><td>Keith Davis</td></tr>
+          <tr><td>OB = predict & control</td><td>Fred Luthans</td></tr>
+          <tr><td>DUPC Model</td><td>OB Framework</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Concept</th><th>Author</th></tr>
+          <tr><td>Classical Conditioning</td><td>Pavlov</td></tr>
+          <tr><td>Operant Conditioning</td><td>Skinner</td></tr>
+          <tr><td>Social Learning</td><td>Bandura + Rotter</td></tr>
+          <tr><td>Variable Ratio = most powerful</td><td>Skinner</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Concept</th><th>Author</th></tr>
+          <tr><td>Learned Helplessness</td><td>Seligman</td></tr>
+          <tr><td>Self-Handicapping</td><td>Berglas & Jones</td></tr>
+          <tr><td>Entity vs Incremental</td><td>Dweck</td></tr>
+          <tr><td>Western vs East Asian</td><td>Morris et al.</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  OB Module 1 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OB Module 4 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24; color: #fff;
+    min-height: 100vh; padding: 20px 14px 60px;
+  }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800;
+    background: linear-gradient(90deg,#e74c6f,#f5a623,#7b61ff,#4ecdc4);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px; max-width: 1400px; margin: 0 auto;
+  }
+  .card {
+    border-radius: 14px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 4px; border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f77fe1,#fb9dcc); }
+  .card.gold::before   { background: linear-gradient(90deg,#f9d423,#f7971e); }
+  .card-title {
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 4px;
+  }
+  .card.red    .card-title { color: #e74c6f; }
+  .card.orange .card-title { color: #f5a623; }
+  .card.purple .card-title { color: #a78bff; }
+  .card.teal   .card-title { color: #4ecdc4; }
+  .card.green  .card-title { color: #43e97b; }
+  .card.blue   .card-title { color: #4facfe; }
+  .card.pink   .card-title { color: #f77fe1; }
+  .card.gold   .card-title { color: #f9d423; }
+  .node {
+    background: rgba(255,255,255,0.04); border-radius: 8px;
+    padding: 8px 10px; margin-bottom: 7px; line-height: 1.45;
+  }
+  .node:last-child { margin-bottom: 0; }
+  .node-label { font-weight: 700; font-size: 0.82rem; margin-bottom: 4px; }
+  .leaf {
+    padding: 3px 0 3px 12px; font-size: 0.80rem; color: #bbb;
+    border-left: 2px solid rgba(255,255,255,0.12);
+    margin-top: 3px; line-height: 1.4;
+  }
+  .leaf b { color: #fff; }
+  .leaf span.hi { color: #ffd580; font-weight: 600; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 6px; }
+  .mini-table th {
+    background: rgba(255,255,255,0.08); color: #ccc; font-weight: 700;
+    padding: 5px 8px; text-align: left; font-size: 0.74rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .mini-table td {
+    padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #bbb; vertical-align: top;
+  }
+  .mini-table td b { color: #fff; }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block; background: rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2px 9px; font-size: 0.72rem;
+    font-weight: 600; margin: 2px 3px 2px 0; color: #ddd;
+  }
+  .callout {
+    background: rgba(255,255,255,0.05); border-left: 3px solid #f5a623;
+    border-radius: 0 8px 8px 0; padding: 8px 10px;
+    font-size: 0.78rem; color: #ccc; margin-top: 8px; line-height: 1.5;
+  }
+  .callout b { color: #ffd580; }
+  @media (min-width: 700px) { .span2 { grid-column: span 2; } }
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .card { padding: 13px; }
+    .mini-table th, .mini-table td { padding: 4px 6px; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ OB</a><span style="flex:1"></span><a href="notes-m4.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">‹ M3</a><a href="mindmap-m5.html" style="color:#c9d1d9;text-decoration:none">M5 ›</a></div>
+
+<div class="header">
+  <h1>OB Module 4 — Power, Politics, Conflict &amp; Negotiation</h1>
+  <p>DY Patil MBA · Organizational Behaviour · Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1. POWER -->
+  <div class="card red">
+    <div class="card-title">1. What is Power?</div>
+    <div class="node">
+      <div class="leaf"><b>Max Weber:</b> "Probability that one actor will carry out his own will despite resistance"</div>
+      <div class="leaf"><b>Emerson:</b> "Resistance on the part of B that can be overcome by A"</div>
+      <div class="leaf"><b>Working def:</b> One individual/group has ability to cause another to take action not otherwise taken</div>
+      <div class="leaf">Involves <b>implied force</b> — not necessarily actual force</div>
+    </div>
+    <div class="node">
+      <div class="node-label">Power vs Authority vs Leadership</div>
+      <div class="leaf"><b>Power</b> = ABILITY to secure compliance (informal authority)</div>
+      <div class="leaf"><b>Authority</b> = RIGHT to seek compliance; backed by legitimacy (legitimate power)</div>
+      <div class="leaf"><b>Leadership</b> = elicits responses BEYOND required compliance — voluntary, not forced</div>
+      <div class="leaf">Headship (rights) ≠ Leadership (inspiration)</div>
+    </div>
+  </div>
+
+  <!-- 2. TYPES & BASES OF POWER -->
+  <div class="card orange span2">
+    <div class="card-title">2. Types of Power (Etzioni) &amp; Bases of Power (French &amp; Raven)</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;">
+      <div class="node">
+        <div class="node-label">Etzioni's 3 Types</div>
+        <div class="leaf"><b>Coercive</b> — force to comply → Prison orgs</div>
+        <div class="leaf"><b>Utilitarian</b> — performance-reward contingency → Business orgs</div>
+        <div class="leaf"><b>Normative</b> — belief in org's right to govern behaviour → Religious orgs</div>
+      </div>
+      <div class="node">
+        <div class="node-label">French &amp; Raven's 5 Bases → Employee Response</div>
+        <div class="leaf"><b>Referent (Charismatic)</b> — personal admiration → <span class="hi">Commitment</span></div>
+        <div class="leaf"><b>Expert</b> — knowledge/expertise in narrow domain → <span class="hi">Commitment</span></div>
+        <div class="leaf"><b>Legitimate</b> — right to exert power (= authority) → <span class="hi">Compliance</span></div>
+        <div class="leaf"><b>Reward</b> — controls valued rewards (pay, promotions) → <span class="hi">Compliance</span></div>
+        <div class="leaf"><b>Coercive (Punishment)</b> — based on FEAR; can fire/demote/transfer → <span class="hi">Resistance</span></div>
+      </div>
+      <div class="node">
+        <div class="node-label">Power Dependency Factors</div>
+        <div class="leaf"><b>Subordinate's values</b> — if B values what A controls, B is more susceptible</div>
+        <div class="leaf"><b>Nature of A-B relationship</b> — peers vs superior; permanent vs temporary</div>
+        <div class="leaf"><b>Counterpower</b> — B's own sources of power that buffer A's influence (e.g., union)</div>
+      </div>
+    </div>
+    <div class="callout" style="border-color:#f5a623;margin-top:8px"><b>Clinical analogy:</b> Referent power = senior cardiologist's influence through respect alone, not hierarchy. Expert power = how a specialist commands authority in a narrow domain over senior administrators.</div>
+  </div>
+
+  <!-- 3. POLITICS -->
+  <div class="card purple">
+    <div class="card-title">3. Political Behaviour in Organizations</div>
+    <div class="node">
+      <div class="node-label">Definitions</div>
+      <div class="leaf"><b>Lasswell:</b> Politics = "who gets what, when, and how"</div>
+      <div class="leaf"><b>Pfeffer:</b> "Activities to acquire, develop, and use power and resources to obtain preferred outcomes under uncertainty"</div>
+    </div>
+    <div class="node">
+      <div class="node-label">Power vs Politics</div>
+      <div class="leaf"><b>Power</b> = property of the system at REST (store of potential influence)</div>
+      <div class="leaf"><b>Politics</b> = power in ACTION — exercising power to get things accomplished</div>
+      <div class="leaf">Political behaviour is NOT inherently bad; can serve org interests</div>
+    </div>
+    <div class="node">
+      <div class="node-label">5 Reasons for Political Behaviour</div>
+      <div class="leaf"><b>Ambiguous goals</b> — room for personal gain under guise of org goals</div>
+      <div class="leaf"><b>Limited resources</b> — scarcity → need to claim one's share</div>
+      <div class="leaf"><b>Changing technology &amp; environment</b> — dynamic environment → ambiguity → politics</div>
+      <div class="leaf"><b>Non-programmed decisions</b> — ambiguous conditions leave room for manoeuvring</div>
+      <div class="leaf"><b>Organizational change</b> — restructuring → factions fight over territory</div>
+    </div>
+    <div class="node">
+      <div class="node-label">Strategic Contingencies (Miles)</div>
+      <div class="leaf">"Requirement of activities of one subunit affected by activities of other subunits"</div>
+      <div class="leaf"><b>Lawrence &amp; Lorsch study:</b> Successful firms' power aligned to strategic contingencies<br>Container mfg → Sales &amp; Production · Food processing → Sales &amp; Research</div>
+      <div class="leaf"><b>Resource Dependence:</b> Controlling scarce resources → power → more resources → more power ("rich get richer")</div>
+    </div>
+  </div>
+
+  <!-- 4. CONFLICT RESOLUTION -->
+  <div class="card teal">
+    <div class="card-title">4. Resolving Conflicts — 5 Methods</div>
+    <table class="mini-table">
+      <thead><tr><th>Method</th><th>How</th></tr></thead>
+      <tbody>
+        <tr><td><b>Change Structure</b></td><td>Align goals; both report to same exec; evaluate on shared outcomes</td></tr>
+        <tr><td><b>Change Team Composition</b></td><td>Separate conflicting personalities; change physical seating layout</td></tr>
+        <tr><td><b>Common Opposing Force</b></td><td>Unite against a common enemy (competitor, recession)</td></tr>
+        <tr><td><b>Majority Rule</b></td><td>Vote; fair process; don't overuse; follow healthy discussion</td></tr>
+        <tr><td><b>Problem Solving</b></td><td>Focus on problem not people; find root cause; both sides partially right</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="border-color:#4ecdc4;margin-top:8px"><b>Seating research:</b> Antagonists seated ACROSS each other → more conflict. Seated SIDE BY SIDE → less conflict.</div>
+  </div>
+
+  <!-- 5. CONFLICT HANDLING STYLES -->
+  <div class="card green span2">
+    <div class="card-title">5. Conflict-Handling Styles (5)</div>
+    <table class="mini-table">
+      <thead><tr><th>Style</th><th>Assertive?</th><th>Cooperative?</th><th>Behaviour</th><th>Best When</th></tr></thead>
+      <tbody>
+        <tr><td><b>Avoidance</b></td><td>Low</td><td>Low</td><td>Deny conflict; postpone decisions; "I don't care"</td><td>Issue is trivial</td></tr>
+        <tr><td><b>Accommodation</b></td><td>Low</td><td>High</td><td>Give in; sacrifice personal goals; "Let's do it your way"</td><td>Others' interest more important</td></tr>
+        <tr><td><b>Compromise</b></td><td>Medium</td><td>Medium</td><td>Each side sacrifices something; middle ground</td><td>Time-pressed; moderate stakes</td></tr>
+        <tr><td><b>Competition</b></td><td>High</td><td>Low</td><td>Win regardless of others' feelings; push for own outcome</td><td>Strong moral objection; ethical issue</td></tr>
+        <tr><td><b>Collaboration</b> ⭐</td><td>High</td><td>High</td><td>Both argue + listen; challenge ideas not people; WIN-WIN</td><td>Most situations; complex issues</td></tr>
+      </tbody>
+    </table>
+    <div class="callout" style="border-color:#43e97b;margin-top:8px">
+      <b>No single "right" style</b> — depends on situation. Collaborative has highest potential. Managers prefer forcing; subordinates prefer avoiding/accommodating/compromising.<br>
+      <b>Clinical analogy:</b> Avoidance = ignoring a cardiac finding hoping it resolves. Collaboration = multidisciplinary team case discussion — best outcome.
+    </div>
+  </div>
+
+  <!-- 6. NEGOTIATION -->
+  <div class="card blue span2">
+    <div class="card-title">6. Negotiation — Stages &amp; Strategies</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;">
+      <div class="node">
+        <div class="node-label">4 Stages of Negotiation</div>
+        <div class="leaf"><b>1. Non-task time</b> — get acquainted; small talk; relationship-building (especially Mexico, S. Korea)</div>
+        <div class="leaf"><b>2. Information exchange</b> — background + general info; sets context (very important in Japan)</div>
+        <div class="leaf"><b>3. Influence &amp; Persuasion</b> — promises, threats, questions; effectiveness depends on relative power + cultural norms</div>
+        <div class="leaf"><b>4. Closing</b> — agreement or failure<br>USA: signed contract = deal closed ✅<br>China: signed contract = beginning of final negotiations 🔄</div>
+      </div>
+      <div class="node">
+        <div class="node-label">2 Bargaining Strategies</div>
+        <div class="leaf"><b>Distributive — Win-Lose</b>: Fixed resources; maximize own share; short-term relationship (e.g., house buyer vs seller)</div>
+        <div class="leaf"><b>Integrative — Win-Win</b>: Both parties try creative solutions that benefit both; mutual problem-solving (e.g., bilateral trade negotiations)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. ORG STRUCTURE -->
+  <div class="card pink span2">
+    <div class="card-title">7. Org Environment &amp; Structure</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin-top:4px;">
+      <div class="node">
+        <div class="node-label">Open vs Closed Systems</div>
+        <div class="leaf"><b>Open system</b> — responsive/adaptive to environment; Input → Throughput → Output → Environment (feedback loop)</div>
+        <div class="leaf"><b>Closed system</b> — less sensitive to environmental resources and possibilities</div>
+        <div class="leaf"><b>Example:</b> US Big 3 auto makers (1980s) acted as closed systems → failed to adapt to Japanese competition</div>
+      </div>
+      <div class="node">
+        <div class="node-label">4 Building Blocks of Structure</div>
+        <div class="leaf"><b>Centralization</b> — degree to which decision-making authority is at higher levels</div>
+        <div class="leaf"><b>Formalization</b> — extent to which rules/procedures are written and articulated</div>
+        <div class="leaf"><b>Departmentalization</b> — how jobs are grouped (Functional vs Divisional)</div>
+        <div class="leaf"><b>Span of Control</b> — reporting relationships defining hierarchy</div>
+      </div>
+      <div class="node">
+        <div class="node-label">6 Types of Org Structures</div>
+        <div class="leaf"><b>Functional</b> — grouped by function (marketing, finance, HR, IT)</div>
+        <div class="leaf"><b>Divisional</b> — grouped by product, customer, or geography</div>
+        <div class="leaf"><b>Matrix</b> — functional + divisional combined; dual reporting</div>
+        <div class="leaf"><b>Geographic</b> — separate departments per region/country</div>
+        <div class="leaf"><b>Networked Team</b> — cross-functional; less formal hierarchy</div>
+        <div class="leaf"><b>Virtual</b> — geographically dispersed; technology-connected</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGH YIELD -->
+  <div class="card red span2" style="background:#1a0f11;">
+    <div class="card-title" style="color:#ff8a80;">⚡ High-Yield MCQ Targets — Module 4</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+      <span class="badge">Power definition (Weber + Emerson)</span>
+      <span class="badge">Power vs Authority vs Leadership</span>
+      <span class="badge">Etzioni's 3 types + org examples</span>
+      <span class="badge">French &amp; Raven's 5 bases</span>
+      <span class="badge">Referent/Expert → Commitment</span>
+      <span class="badge">Legitimate/Reward → Compliance</span>
+      <span class="badge">Coercive → Resistance</span>
+      <span class="badge">Counterpower</span>
+      <span class="badge">Lasswell + Pfeffer definitions of politics</span>
+      <span class="badge">Power at rest vs Politics in action</span>
+      <span class="badge">5 reasons for political behaviour</span>
+      <span class="badge">Strategic contingencies (Miles)</span>
+      <span class="badge">Lawrence &amp; Lorsch study</span>
+      <span class="badge">Rich get richer (resource dependence)</span>
+      <span class="badge">5 conflict resolution methods</span>
+      <span class="badge">Side-by-side = less conflict</span>
+      <span class="badge">5 conflict styles (assertiveness × cooperation)</span>
+      <span class="badge">Collaboration = WIN-WIN</span>
+      <span class="badge">4 negotiation stages</span>
+      <span class="badge">USA vs China closing symbolism</span>
+      <span class="badge">Distributive (win-lose) vs Integrative (win-win)</span>
+      <span class="badge">Open vs Closed system</span>
+      <span class="badge">4 building blocks of structure</span>
+      <span class="badge">6 org structure types</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QT Module 1 — Statistics Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  /* CARD TITLE */
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  /* BRANCH */
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  /* ANALOGY */
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  /* CENTRAL */
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .c7 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+
+  /* WIDE */
+  .wide { grid-column: span 2; }
+
+  /* MOBILE OVERRIDES */
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+
+  /* TABLET */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Quantitative Techniques — Module 1</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL NODE -->
+  <div class="central">
+    <h1>QT Module 1: Statistics</h1>
+    <p>Collection · Analysis · Interpretation · Presentation of Numerical Data</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Meaning & Definitions</span>
+      <span class="central-chip c2">6 Characteristics</span>
+      <span class="central-chip c3">Scientific Method</span>
+      <span class="central-chip c4">Importance</span>
+      <span class="central-chip c5">Business Applications</span>
+      <span class="central-chip c6">9 Functions</span>
+      <span class="central-chip c7">7 Limitations</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: MEANING & DEFINITIONS -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📊</div><h2>1. Meaning & Definitions</h2></div>
+    <div class="branch">
+      <div class="branch-label">Two Senses</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Sense</th><th>Meaning</th></tr>
+          <tr><td><b style="color:#e74c6f">Plural</b></td><td>Set of related numerical figures / data</td></tr>
+          <tr><td><b style="color:#ff8a80">Singular</b></td><td>Scientific method for collection, classification, analysis & interpretation</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Definitions <span class="badge key">MCQ</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Author</th><th>Definition</th></tr>
+          <tr><td><b>A.L. Bowley</b></td><td>"Numerical facts placed in relation to each other"</td></tr>
+          <tr><td><b>Yule & Kendall</b></td><td>"Quantitative data affected by multiplicity of causes"</td></tr>
+          <tr><td><b>Webster</b></td><td>"Classified facts respecting conditions of people, stated in numbers"</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Notable Contributor</div>
+      <div class="tags">
+        <span class="tag highlight">R.A. Fisher</span>
+        <span class="tag">"Statistical Methods for Research Workers" — 1925</span>
+        <span class="tag">Father of Modern Statistics</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: 6 CHARACTERISTICS -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">🔢</div><h2>2. Characteristics of Statistics <span class="badge key">6</span></h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Characteristic</th><th>Key Point</th></tr>
+          <tr><td>1</td><td><b style="color:#f5a623">Numerical Figures</b></td><td>Must be quantifiable (measured or counted)</td></tr>
+          <tr><td>2</td><td><b style="color:#f5a623">Aggregate of Facts</b></td><td>Single figure ≠ statistics; must be a related set</td></tr>
+          <tr><td>3</td><td><b style="color:#f5a623">Multiplicity of Factors</b></td><td>Data influenced by many simultaneous causes</td></tr>
+          <tr><td>4</td><td><b style="color:#f5a623">Enumerated / Estimated</b></td><td>Collected by counting or measurement, with reasonable accuracy</td></tr>
+          <tr><td>5</td><td><b style="color:#f5a623">Systematic & Purposeful</b></td><td>Haphazard data → wrong conclusions</td></tr>
+          <tr><td>6</td><td><b style="color:#f5a623">Comparable</b></td><td>Must be homogeneous, same units, relatable</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Like lab values — a single BP reading means nothing; a series of readings in context (aggregate, systematic, comparable) gives the diagnosis.
+    </div>
+  </div>
+
+  <!-- CARD 3: SCIENTIFIC METHOD -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🔬</div><h2>3. Statistics as a Scientific Method</h2></div>
+    <div class="branch">
+      <div class="branch-label">Theoretical Statistics <span class="badge key">MCQ</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Branch</th><th>What it Does</th></tr>
+          <tr><td><b style="color:#4ecdc4">Descriptive</b></td><td>Collection, classification, tabulation, diagrams, averages, dispersion, correlation</td></tr>
+          <tr><td><b style="color:#4ecdc4">Inductive</b></td><td>Generalisations about population from a sample; includes forecasting</td></tr>
+          <tr><td><b style="color:#4ecdc4">Inferential</b></td><td>Tests hypotheses regarding population characteristics</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Applied Statistics</div>
+      <div class="tags">
+        <span class="tag">Sample survey design</span>
+        <span class="tag">Quality control</span>
+        <span class="tag">Business decision-making</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Statistics = Science + Art</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td><b style="color:#a8edea">Science</b></td><td>Systematic, general application</td></tr>
+          <tr><td><b style="color:#a8edea">Art</b></td><td>Success depends on skill & experience of statistician</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: IMPORTANCE -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🌐</div><h2>4. Importance of Statistics</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Area</th><th>Application</th></tr>
+          <tr><td><b style="color:#b39ddb">State / Govt</b></td><td>Military strength, welfare policy, administration</td></tr>
+          <tr><td><b style="color:#b39ddb">Economics</b></td><td>Demand-supply laws, econometrics, price indices</td></tr>
+          <tr><td><b style="color:#b39ddb">National Income</b></td><td>GDP, savings, investment estimation</td></tr>
+          <tr><td><b style="color:#b39ddb">Planning</b></td><td>Resource assessment, growth rate feasibility</td></tr>
+          <tr><td><b style="color:#b39ddb">Business</b></td><td>6 sub-applications (see next card)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>📈 Trading Analogy:</span> Just as a trader uses price + volume data to decide buy/sell, governments use statistical data to make policy decisions.
+    </div>
+  </div>
+
+  <!-- CARD 5: BUSINESS APPLICATIONS — FULL WIDTH -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">🏭</div><h2>5. Statistical Analysis in Business <span class="badge key">6 Areas</span></h2></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">Location & Size</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Cost-benefit analysis before starting business; statistical guidelines for optimal location</p>
+        <div class="branch-label" style="margin-top:10px;">Production Planning</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Market surveys → demand forecasting → production levels</p>
+      </div>
+      <div>
+        <div class="branch-label">Inventory Control</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Optimal min & max stock levels using demand/supply fluctuation analysis</p>
+        <div class="branch-label" style="margin-top:10px;">Quality Control</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Control charts with UCL & LCL; samples taken at regular intervals</p>
+      </div>
+      <div>
+        <div class="branch-label">Accounts & Auditing</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Summarise accounts; sampling techniques for auditing large firms</p>
+        <div class="branch-label" style="margin-top:10px;">Banks & Insurance</div>
+        <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">Cash flow estimation; mortality tables for premium calculation</p>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:12px;">
+      <span>🫀 Clinical Analogy:</span> Quality Control charts (UCL/LCL) = Cardiac monitor alarms — alerts trigger only when values go outside safe range, not on every fluctuation.
+    </div>
+  </div>
+
+  <!-- CARD 6: SCOPE & FUNCTIONS -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">⚙️</div><h2>6. Scope & Functions <span class="badge star">9</span></h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Function</th></tr>
+          <tr><td>1</td><td>Present facts in numerical figures</td></tr>
+          <tr><td>2</td><td>Simplify complex data</td></tr>
+          <tr><td>3</td><td>Study relationships between phenomena (correlation)</td></tr>
+          <tr><td>4</td><td>Provide comparison techniques (mean, variance, ratios)</td></tr>
+          <tr><td>5</td><td>Enlarge individual experience</td></tr>
+          <tr><td>6</td><td>Help in policy formulation</td></tr>
+          <tr><td>7</td><td>Help in forecasting (time series, regression)</td></tr>
+          <tr><td>8</td><td>Test hypotheses about population</td></tr>
+          <tr><td>9</td><td>Decision-making under uncertainty</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: LIMITATIONS -->
+  <div class="card pink">
+    <div class="card-title"><div class="card-icon">⚠️</div><h2>7. Limitations of Statistics <span class="badge key">7</span></h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Limitation</th><th>Key Point</th></tr>
+          <tr><td>1</td><td>Numerical facts only</td><td>Qualitative traits (beauty, honesty) can't be directly measured</td></tr>
+          <tr><td>2</td><td>Groups, not individuals</td><td>Individual exceptions are ignored</td></tr>
+          <tr><td>3</td><td>True only on average</td><td>Avg wage ≠ every worker's wage</td></tr>
+          <tr><td>4</td><td>Approximately true</td><td>Sample-based → never exact</td></tr>
+          <tr><td>5</td><td>One set of methods only</td><td>Must be supplemented by other analyses</td></tr>
+          <tr><td>6</td><td>Liable to be misused</td><td>Biased collection → misleading conclusions</td></tr>
+          <tr><td>7</td><td><b style="color:#f857a6">Experts only</b></td><td>"Most dangerous tools in hands of inexpert" — Yule & Kendall</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: HIGH YIELD MCQ TARGETS — FULL WIDTH -->
+  <div class="card yellow wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield Exam Targets</h2>
+      <span class="badge key">HIGH YIELD</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div>
+        <div class="branch-label">Key Authors & Quotes</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Concept</th><th>Author</th></tr>
+            <tr><td>Numerical facts in relation</td><td>A.L. Bowley</td></tr>
+            <tr><td>Multiplicity of causes</td><td>Yule & Kendall</td></tr>
+            <tr><td>Classified facts in numbers</td><td>Webster</td></tr>
+            <tr><td>Father of Modern Statistics</td><td>R.A. Fisher (1925)</td></tr>
+            <tr><td>"Dangerous in inexpert hands"</td><td>Yule & Kendall</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Count-Based MCQs</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Topic</th><th>Count</th></tr>
+            <tr><td>Characteristics of Statistics</td><td><b style="color:#f9d423">6</b></td></tr>
+            <tr><td>Theoretical branches</td><td><b style="color:#f9d423">3</b> (Desc / Ind / Inf)</td></tr>
+            <tr><td>Scope & Functions</td><td><b style="color:#f9d423">9</b></td></tr>
+            <tr><td>Limitations</td><td><b style="color:#f9d423">7</b></td></tr>
+            <tr><td>Business applications</td><td><b style="color:#f9d423">6</b></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">3 Theoretical Branches</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Branch</th><th>One-liner</th></tr>
+            <tr><td><b style="color:#43e97b">Descriptive</b></td><td>Collect, classify, present, summarise</td></tr>
+            <tr><td><b style="color:#4facfe">Inductive</b></td><td>Sample → generalise → forecast</td></tr>
+            <tr><td><b style="color:#f857a6">Inferential</b></td><td>Test hypotheses about population</td></tr>
+          </table>
+        </div>
+        <div class="tags" style="margin-top:8px;">
+          <span class="tag highlight">Planning without stats = ship without rudder</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#555;font-size:0.7rem;margin-top:24px;padding-bottom:20px;">
+  QT Module 1 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

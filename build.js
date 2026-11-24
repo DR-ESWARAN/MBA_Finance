@@ -29,7 +29,7 @@ function page({ title, depth, crumbs = [], body, hero = "", scripts = "" }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${up}assets/style.css">
 </head><body>
-<header class="bar"><div class="in"><a class="logo" href="${up}"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="${up}sem2/">Sem 2</a></div></header>
+<header class="bar"><div class="in"><a class="logo" href="${up}"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="${up}sem1/">Sem 1</a><a class="lnk" href="${up}sem2/">Sem 2</a></div></header>
 <div class="wrap">
 ${cr ? `<div class="top">${cr}</div>` : ""}
 ${hero}
@@ -121,8 +121,9 @@ for (const sem of cat.semesters) {
     }
 
     // Notes, cheat sheets, mind maps per module
+    const hasCheat = n => fs.existsSync(path.join(dir, "notes", `m${n}-cheat.md`));
     for (const m of cfg.modules) {
-      const tabs = k => `<div class="tabs">${[["notes", "Notes"], ["cheat", "Cheat sheet"], ["mindmap", "Mind map"]].map(([id, t]) =>
+      const tabs = k => `<div class="tabs">${[["notes", "Notes"], ...(hasCheat(m.n) ? [["cheat", "Cheat sheet"]] : []), ["mindmap", "Mind map"]].map(([id, t]) =>
         `<a href="${id === "mindmap" ? `mindmap-m${m.n}.html` : `${id}-m${m.n}.html`}" class="${id === k ? "on" : ""}">${t}</a>`).join("")}</div>`;
       const pager = k => `<div class="nav" style="margin-top:14px">${m.n > 1 ? `<a class="btn ghost" href="${k}-m${m.n - 1}.html">‹ Module ${m.n - 1}</a>` : ""}<a class="btn ghost" href="quiz.html?mode=practice&m=${m.n}">Practise M${m.n} questions</a>${m.n < cfg.modules.length ? `<a class="btn ghost" href="${k}-m${m.n + 1}.html">Module ${m.n + 1} ›</a>` : ""}</div>`;
       for (const [k, label] of [["notes", "Notes"], ["cheat", "Cheat sheet"]]) {
@@ -135,7 +136,7 @@ for (const sem of cat.semesters) {
       }
       const mmf = path.join(dir, "mindmaps", `m${m.n}.html`);
       if (fs.existsSync(mmf)) {
-        const bar = `<div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#0d1117ee;border-bottom:1px solid #30363d;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#58a6ff;text-decoration:none">‹ ${esc(sb.code)}</a><span style="flex:1"></span><a href="notes-m${m.n}.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m${m.n}.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a>${m.n > 1 ? `<a href="mindmap-m${m.n - 1}.html" style="color:#c9d1d9;text-decoration:none">‹ M${m.n - 1}</a>` : ""}${m.n < cfg.modules.length ? `<a href="mindmap-m${m.n + 1}.html" style="color:#c9d1d9;text-decoration:none">M${m.n + 1} ›</a>` : ""}</div>`;
+        const bar = `<div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#0d1117ee;border-bottom:1px solid #30363d;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#58a6ff;text-decoration:none">‹ ${esc(sb.code)}</a><span style="flex:1"></span><a href="notes-m${m.n}.html" style="color:#c9d1d9;text-decoration:none">Notes</a>${hasCheat(m.n) ? `<a href="cheat-m${m.n}.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a>` : ""}${m.n > 1 ? `<a href="mindmap-m${m.n - 1}.html" style="color:#c9d1d9;text-decoration:none">‹ M${m.n - 1}</a>` : ""}${m.n < cfg.modules.length ? `<a href="mindmap-m${m.n + 1}.html" style="color:#c9d1d9;text-decoration:none">M${m.n + 1} ›</a>` : ""}</div>`;
         const theme = `<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style>`;
         let mm = fs.readFileSync(mmf, "utf8").replace(/<\/head>/i, theme + "</head>").replace(/<body([^>]*)>/i, `<body$1>${bar.replace(/#0d1117ee/, "#22093fee").replace(/#30363d/, "#e9c25a").replace(/#58a6ff/, "#e9c25a")}`);
         write(`${base}/mindmap-m${m.n}.html`, mm);
@@ -150,7 +151,7 @@ for (const sem of cat.semesters) {
     }));
 
     // Subject hub
-    const rows = cfg.modules.map(m => `<div class="row"><span class="num">${m.n}</span><div class="t">Module ${m.n}<small>${esc(m.title)}</small></div><div class="chips"><a class="chip" href="notes-m${m.n}.html">Notes</a><a class="chip" href="cheat-m${m.n}.html">Cheat sheet</a><a class="chip" href="mindmap-m${m.n}.html">Mind map</a><a class="chip" href="quiz.html?mode=practice&m=${m.n}">AI Ques</a>${hasLms ? `<a class="chip" href="lms.html?mode=mock&m=${m.n}">Practice Assignment</a>` : ""}</div></div>`).join("");
+    const rows = cfg.modules.map(m => `<div class="row"><span class="num">${m.n}</span><div class="t">Module ${m.n}<small>${esc(m.title)}</small></div><div class="chips"><a class="chip" href="notes-m${m.n}.html">Notes</a>${hasCheat(m.n) ? `<a class="chip" href="cheat-m${m.n}.html">Cheat sheet</a>` : ""}<a class="chip" href="mindmap-m${m.n}.html">Mind map</a><a class="chip" href="quiz.html?mode=practice&m=${m.n}">AI Ques</a>${hasLms ? `<a class="chip" href="lms.html?mode=mock&m=${m.n}">Practice Assignment</a>` : ""}</div></div>`).join("");
     const lms = (x, name, n) => x
       ? `<a class="tile" href="quiz.html?mode=${x}">${ic(String(n))}<div class="bd">${badge("live")}<h3>${name}</h3><p>${n} questions</p></div></a>`
       : `<div class="tile off">${ic(String(n))}<div class="bd">${badge("soon")}<h3>${name}</h3><p>${n} questions from the LMS</p></div></div>`;

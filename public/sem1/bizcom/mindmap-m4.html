@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZCOM Module 4 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color:#e74c6f; border-color:rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color:#f5a623; border-color:rgba(245,166,35,0.3); }
+  .tag.teal-hl   { background: rgba(78,205,196,0.15); color:#4ecdc4; border-color:rgba(78,205,196,0.3); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color:#43e97b; border-color:rgba(67,233,123,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color:#4facfe; border-color:rgba(79,172,254,0.3); }
+  .tag.purple-hl { background: rgba(123,97,255,0.15); color:#7b61ff; border-color:rgba(123,97,255,0.3); }
+  .tag.pink-hl   { background: rgba(248,87,166,0.15); color:#f857a6; border-color:rgba(248,87,166,0.3); }
+  .tag.yellow-hl { background: rgba(249,212,35,0.15); color:#f9d423; border-color:rgba(249,212,35,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.key { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .tip-row { display: flex; align-items: flex-start; gap: 6px; font-size: 0.73rem; color: #ccc; padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.04); line-height: 1.4; }
+  .tip-row:first-child { border-top: none; }
+  .num-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; min-width: 20px; border-radius: 50%; font-size: 0.6rem; font-weight: 700; }
+  .red .num-badge { background:rgba(231,76,111,0.25); color:#e74c6f; } .orange .num-badge { background:rgba(245,166,35,0.25); color:#f5a623; }
+  .teal .num-badge { background:rgba(78,205,196,0.25); color:#4ecdc4; } .green .num-badge { background:rgba(67,233,123,0.25); color:#43e97b; }
+  .blue .num-badge { background:rgba(79,172,254,0.25); color:#4facfe; } .pink .num-badge { background:rgba(248,87,166,0.25); color:#f857a6; }
+  .yellow .num-badge { background:rgba(249,212,35,0.25); color:#f9d423; } .purple .num-badge { background:rgba(123,97,255,0.25); color:#7b61ff; }
+  .central { grid-column:1/-1; background:linear-gradient(135deg,#1f1433,#281a40); border:1px solid rgba(123,97,255,0.3); border-radius:18px; padding:20px; text-align:center; }
+  .central h1 { font-size:clamp(1.1rem,4vw,1.6rem); font-weight:800; background:linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; line-height:1.3; }
+  .central p { color:#888; font-size:0.78rem; }
+  .central-chips { display:flex; justify-content:center; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .central-chip { padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+  .c1{background:rgba(231,76,111,0.15);color:#e74c6f;border:1px solid rgba(231,76,111,0.3);}
+  .c2{background:rgba(245,166,35,0.15);color:#f5a623;border:1px solid rgba(245,166,35,0.3);}
+  .c3{background:rgba(78,205,196,0.15);color:#4ecdc4;border:1px solid rgba(78,205,196,0.3);}
+  .c4{background:rgba(123,97,255,0.15);color:#7b61ff;border:1px solid rgba(123,97,255,0.3);}
+  .c5{background:rgba(67,233,123,0.15);color:#43e97b;border:1px solid rgba(67,233,123,0.3);}
+  .c6{background:rgba(79,172,254,0.15);color:#4facfe;border:1px solid rgba(79,172,254,0.3);}
+  .c7{background:rgba(248,87,166,0.15);color:#f857a6;border:1px solid rgba(248,87,166,0.3);}
+  .c8{background:rgba(249,212,35,0.15);color:#f9d423;border:1px solid rgba(249,212,35,0.3);}
+  .wide { grid-column: span 2; }
+  @media (max-width:480px) { body{padding:14px 10px 50px;} .grid{gap:12px;grid-template-columns:1fr;} .wide{grid-column:span 1;} .card{padding:14px 12px;border-radius:12px;} .mini-table{font-size:0.72rem;} .tag{font-size:0.72rem;padding:4px 10px;} .central{padding:16px 12px;} .central-chip{font-size:0.7rem;padding:4px 10px;} }
+  @media (min-width:481px) and (max-width:768px) { .grid{grid-template-columns:1fr;} .wide{grid-column:span 1;} }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ BIZCOM</a><span style="flex:1"></span><a href="notes-m4.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">‹ M3</a><a href="mindmap-m5.html" style="color:#c9d1d9;text-decoration:none">M5 ›</a></div>
+
+<div class="header">
+  <h1>BIZCOM — Module 4</h1>
+  <p>Presentation · Persuasion · Arguments · Meetings · Interpersonal Communication</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL BANNER -->
+  <div class="card central">
+    <h1>Module 4: Presentation</h1>
+    <p>Exam: 15 May 2026 · Source: EBook + Study Guide</p>
+    <div class="central-chips">
+      <span class="central-chip c1">7 Purposes</span>
+      <span class="central-chip c2">6 Styles</span>
+      <span class="central-chip c3">Cialdini × 6</span>
+      <span class="central-chip c4">GASCAPT</span>
+      <span class="central-chip c5">Elevator Pitch</span>
+      <span class="central-chip c6">5-Stage Call</span>
+      <span class="central-chip c7">3 Meeting Types</span>
+      <span class="central-chip c8">Intra vs Inter</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: 7 Purposes -->
+  <div class="card red">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>7 Purposes of Presentation</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>#</th><th>Purpose</th><th>Core Goal</th></tr>
+        <tr><td>1</td><td>To Inform</td><td>Accurate explanations, share findings</td></tr>
+        <tr><td>2</td><td>To Educate</td><td>Knowledge-focused; interactive; varied learning styles</td></tr>
+        <tr><td>3</td><td>To Instruct</td><td>Directions/orders; audience gains new skill</td></tr>
+        <tr><td>4</td><td>To Persuade</td><td>Accept proposal or make a sale; logic + emotion</td></tr>
+        <tr><td>5</td><td>To Solve Problem</td><td>Panel; identify → facts → causes → solutions</td></tr>
+        <tr><td>6</td><td>To Inspire</td><td>TED Talk style; create reason for change</td></tr>
+        <tr><td>7</td><td>To Decide</td><td>Persuade audience to carry out requests; interactive</td></tr>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>⚡ Trap:</span> Educate = knowledge-focused · Instruct = directions/orders-focused
+    </div>
+  </div>
+
+  <!-- CARD 2: 6 Presentation Styles -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">🎭</div>
+      <h2>6 Presentation Styles</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Style</th><th>When / Who</th></tr>
+        <tr><td>Coach</td><td>Motivational speakers; very enthusiastic</td></tr>
+        <tr><td>Connector</td><td>Audience feels speaker is "one of them"</td></tr>
+        <tr><td>Freeform</td><td>Thorough knowledge; no notes; talking points memorized</td></tr>
+        <tr><td>Instructor</td><td>Giving instructions, orders, conveying messages</td></tr>
+        <tr><td>Storytelling</td><td>Conference, networking, sales; adequate time for stories</td></tr>
+        <tr><td>Visual</td><td>Use slides to complement speech; short prep time</td></tr>
+      </table>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Presentation Characteristics</div>
+      <div class="tags">
+        <span class="tag orange-hl">Compact</span>
+        <span class="tag orange-hl">Direct</span>
+        <span class="tag orange-hl">Concise</span>
+        <span class="tag orange-hl">Convincing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: 8 Elements Speech to Inform -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">📢</div>
+      <h2>Speech to Inform — 8 Elements</h2>
+    </div>
+    <div class="tip-row"><span class="num-badge">1</span> Start with what you know — more enthusiastic delivery</div>
+    <div class="tip-row"><span class="num-badge">2</span> Consider audience's prior knowledge — survey/ask</div>
+    <div class="tip-row"><span class="num-badge">3</span> Adapt technical terms — define and substitute</div>
+    <div class="tip-row"><span class="num-badge">4</span> Use outside information — adds depth and credibility; cite sources</div>
+    <div class="tip-row"><span class="num-badge">5</span> Present information ethically — honest even when contradicting personal bias</div>
+    <div class="tip-row"><span class="num-badge">6</span> Reciprocity — give first, without requirement in return</div>
+    <div class="tip-row"><span class="num-badge">7</span> Mutuality — find common ground; inclusive format</div>
+    <div class="tip-row"><span class="num-badge">8</span> Non-judgmentalism — open-minded; negotiate meaning constructively</div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> Like a cath lab briefing — know your audience (junior vs senior cardiologist), cite evidence (cite sources), and never oversell findings.
+    </div>
+  </div>
+
+  <!-- CARD 4: 6 Cialdini Persuasion Principles (WIDE) -->
+  <div class="card purple wide">
+    <div class="card-title">
+      <div class="card-icon">🧠</div>
+      <h2>6 Persuasion Principles — Cialdini</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>#</th><th>Principle</th><th>Core Mechanism</th><th>Key Detail</th></tr>
+        <tr><td>1</td><td><strong style="color:#b39ddb;">Reciprocity</strong></td><td>Give first without expecting return → indebtedness</td><td>Must be personalized and unexpected</td></tr>
+        <tr><td>2</td><td><strong style="color:#b39ddb;">Commitment / Consistency</strong></td><td>People stick with what they already chose</td><td>Get small initial voluntary/public commitments (ideally in writing)</td></tr>
+        <tr><td>3</td><td><strong style="color:#b39ddb;">Social Proof / Consensus</strong></td><td>People look to others' behavior when uncertain</td><td>Use peer influence to drive action</td></tr>
+        <tr><td>4</td><td><strong style="color:#b39ddb;">Authority</strong></td><td>People follow credible, knowledgeable experts</td><td>Display credentials and diplomas visibly</td></tr>
+        <tr><td>5</td><td><strong style="color:#b39ddb;">Liking</strong></td><td>People say yes to those they like</td><td>Point out shared beliefs, interests, language</td></tr>
+        <tr><td>6</td><td><strong style="color:#b39ddb;">Scarcity</strong></td><td>Fewer = more valuable</td><td>Use loss language (what you'll lose) not gain language</td></tr>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> As a specialist, you already use Authority (credentials) and Social Proof (guidelines/evidence). Scarcity = "This window for intervention closes fast." All 6 work in medical sales pitches too.
+    </div>
+  </div>
+
+  <!-- CARD 5: GASCAPT + 7 Steps -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">⚖️</div>
+      <h2>Making Arguments — GASCAPT</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Argument = Claim + Reasons + Evidence</div>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Letter</th><th>Strategy</th><th>Description</th></tr>
+        <tr><td><strong style="color:#43e97b;">G</strong></td><td>Generalization</td><td>True of good sample → true of whole population</td></tr>
+        <tr><td><strong style="color:#43e97b;">A</strong></td><td>Analogy</td><td>Two situations alike in observable ways will be alike in others</td></tr>
+        <tr><td><strong style="color:#43e97b;">S</strong></td><td>Sign</td><td>Statistics/facts indicate meaning — look for correlation</td></tr>
+        <tr><td><strong style="color:#43e97b;">C</strong></td><td>Cause</td><td>Two conditions always together → causally related</td></tr>
+        <tr><td><strong style="color:#43e97b;">A</strong></td><td>Authority</td><td>Credible source indicates is probably true</td></tr>
+        <tr><td><strong style="color:#43e97b;">P</strong></td><td>Principle</td><td>Accepted or proper truth</td></tr>
+        <tr><td><strong style="color:#43e97b;">T</strong></td><td>Testimony</td><td>Personal experience</td></tr>
+      </table>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">7 Steps to Build Argument</div>
+      <div class="tags">
+        <span class="tag green-hl">1. Consider Situation</span>
+        <span class="tag green-hl">2. Clarify Thinking</span>
+        <span class="tag green-hl">3. Construct Claim</span>
+        <span class="tag green-hl">4. Collect Evidence</span>
+        <span class="tag green-hl">5. Consider Objections</span>
+        <span class="tag green-hl">6. Craft Argument</span>
+        <span class="tag green-hl">7. Confirm Main Point</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: Elevator Pitch + Telephone -->
+  <div class="card blue">
+    <div class="card-title">
+      <div class="card-icon">📞</div>
+      <h2>Elevator Pitch + Telephone/VoIP</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Elevator Pitch — 6 Steps</div>
+      <div class="tip-row"><span class="num-badge">1</span> Identify the goal</div>
+      <div class="tip-row"><span class="num-badge">2</span> Introduce yourself and your product</div>
+      <div class="tip-row"><span class="num-badge">3</span> Communicate your proposition</div>
+      <div class="tip-row"><span class="num-badge">4</span> Engage with a question</div>
+      <div class="tip-row"><span class="num-badge">5</span> Wrap it up</div>
+      <div class="tip-row"><span class="num-badge">6</span> Practice</div>
+    </div>
+    <div class="tags" style="margin-top:6px;">
+      <span class="tag blue-hl">20–30 seconds</span>
+      <span class="tag blue-hl">Interesting</span>
+      <span class="tag blue-hl">Memorable</span>
+      <span class="tag blue-hl">Succinct</span>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">5-Stage Telephone Conversation</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Stage</th><th>What Happens</th></tr>
+          <tr><td>1. Opening</td><td>Both identify themselves; greetings reciprocated</td></tr>
+          <tr><td>2. Feed Forward</td><td>Purpose and tone established; permission to continue</td></tr>
+          <tr><td>3. Business</td><td>Substance of conversation; parties exchange roles</td></tr>
+          <tr><td>4. Feedback</td><td>Signal that business is concluded</td></tr>
+          <tr><td>5. Closing</td><td>Both parties say goodbye</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">VoIP = Voice over Internet Protocol</div>
+      <div class="tags">
+        <span class="tag">Also: IP telephony</span>
+        <span class="tag">Converts voice → digital signal</span>
+        <span class="tag">Via computer / VoIP phone</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: Sound Bites + Toast/Roast + Meetings -->
+  <div class="card pink">
+    <div class="card-title">
+      <div class="card-icon">🥂</div>
+      <h2>Sound Bites · Toasts · Meetings</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Sound Bite vs Quote</div>
+      <div class="tags">
+        <span class="tag">Brief excerpt (word to 2 sentences)</span>
+        <span class="tag">Captures attention</span>
+        <span class="tag pink-hl">Clear · Vivid · Easy to repeat · Memorable</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Toast vs Roast</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Description</th></tr>
+          <tr><td><strong style="color:#f857a6;">Toast</strong></td><td>Honor/goodwill; appreciation/congratulation; short speech; attractive and brief</td></tr>
+          <tr><td><strong style="color:#ff8a80;">Roast</strong></td><td>Ridicules/criticizes to HONOR someone; for those in power; NOT a mean speech</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">3 Types of Meetings</div>
+      <div class="tags">
+        <span class="tag pink-hl">Informative — give info/instruction</span>
+        <span class="tag pink-hl">Consultative — group consulted for solutions</span>
+        <span class="tag pink-hl">Executive — decisions announced/finalized</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Formal vs Informal Meetings</div>
+      <div class="tags">
+        <span class="tag">Formal: set rules + minutes</span>
+        <span class="tag">Informal: no rules; no written record required</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: Intrapersonal vs Interpersonal (WIDE) -->
+  <div class="card yellow wide">
+    <div class="card-title">
+      <div class="card-icon">🪞</div>
+      <h2>Intrapersonal vs Interpersonal Communication</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Feature</th><th>Intrapersonal</th><th>Interpersonal</th></tr>
+        <tr><td>Definition</td><td>Communication with yourself; internal dialogue; self-concept</td><td>Between two or more people via verbal/non-verbal messages</td></tr>
+        <tr><td>Foundation</td><td>Self-awareness — how you view your position in surroundings</td><td>Social expectations and customs (learned or acquired)</td></tr>
+        <tr><td>Development</td><td>3 components: self-awareness → self-regulation → motivation</td><td>Best honed by practice</td></tr>
+        <tr><td>Key Skills</td><td>Self-talk, self-concept, adjusting reactions</td><td>Active listening, negotiation, public speaking</td></tr>
+      </table>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Intrapersonal — 3 Development Components</div>
+      <div class="tags">
+        <span class="tag yellow-hl">1. Self-Awareness — monitor reactions; first step to growth</span>
+        <span class="tag yellow-hl">2. Self-Regulation — control habitual adverse reactions; integrity</span>
+        <span class="tag yellow-hl">3. Motivation — internal drive to make changes long-lasting</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Improving Interpersonal Communication</div>
+      <div class="tags">
+        <span class="tag">Express appreciation for team &amp; support staff</span>
+        <span class="tag">Display empathy; moderate disputes quickly</span>
+        <span class="tag yellow-hl">Active listening = repeat back speaker's comment to confirm</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> Self-awareness = recognizing your bias before interpreting an ECG. Self-regulation = staying calm in a cardiac arrest. Motivation = why you keep learning despite long shifts. Intrapersonal skills underpin every doctor-patient interaction.
+    </div>
+  </div>
+
+  <!-- CARD 9: MCQ Targets (WIDE) -->
+  <div class="card teal wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield MCQ Targets — Module 4</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Topic</th><th>What to Know</th></tr>
+        <tr><td>7 Purposes of Presentation</td><td>Inform / Educate / Instruct / Persuade / Solve / Inspire / Decide</td></tr>
+        <tr><td>Educate vs Instruct <span class="badge key">TRAP</span></td><td>Educate = knowledge-focused · Instruct = directions/orders-focused</td></tr>
+        <tr><td>6 Presentation Styles</td><td>Coach / Connector / Freeform / Instructor / Storytelling / Visual</td></tr>
+        <tr><td>6 Cialdini Principles</td><td>Reciprocity / Commitment / Social Proof / Authority / Liking / Scarcity</td></tr>
+        <tr><td>Scarcity <span class="badge key">TRAP</span></td><td>Use loss language (what you'll LOSE), not gain language</td></tr>
+        <tr><td>GASCAPT</td><td>7 strategies — Generalization / Analogy / Sign / Cause / Authority / Principle / Testimony</td></tr>
+        <tr><td>7 Steps to Build Argument</td><td>Consider → Clarify → Construct → Collect → Consider Objections → Craft → Confirm</td></tr>
+        <tr><td>Elevator Pitch</td><td>6 steps; 20–30 seconds; interesting, memorable, succinct</td></tr>
+        <tr><td>5-Stage Telephone Conv.</td><td>Opening → Feed Forward → Business → Feedback → Closing</td></tr>
+        <tr><td>Toast vs Roast <span class="badge key">TRAP</span></td><td>Toast = honor; Roast = ridicule TO honor — NOT an opportunity to be mean</td></tr>
+        <tr><td>3 Meeting Types</td><td>Informative / Consultative / Executive</td></tr>
+        <tr><td>Intrapersonal 3 Components</td><td>Self-awareness → Self-regulation → Motivation (sequence matters)</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

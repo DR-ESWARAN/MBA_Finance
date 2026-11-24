@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGMT Module 5 — Managerial Decision Making</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #140b24;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 16px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 700;
+    color: #f0c040;
+    padding: 18px 12px;
+    background: linear-gradient(135deg, #1c2128, #281a40);
+    border: 2px solid #f0c040;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    letter-spacing: 0.5px;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 12px;
+    color: #8b949e;
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 16px;
+  }
+
+  .card {
+    background: #1f1433;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #3a2a58;
+  }
+
+  .card-title {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Colour themes per card */
+  .yellow .card-title { color: #f0c040; border-color: #f0c040; }
+  .blue   .card-title { color: #58a6ff; border-color: #58a6ff; }
+  .green  .card-title { color: #3fb950; border-color: #3fb950; }
+  .purple .card-title { color: #bc8cff; border-color: #bc8cff; }
+  .orange .card-title { color: #f78166; border-color: #f78166; }
+  .teal   .card-title { color: #39d3c0; border-color: #39d3c0; }
+  .pink   .card-title { color: #f778ba; border-color: #f778ba; }
+  .lime   .card-title { color: #a8f070; border-color: #a8f070; }
+  .red    .card-title { color: #ff7b72; border-color: #ff7b72; }
+  .gold   .card-title { color: #e3b341; border-color: #e3b341; }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+  th {
+    background: #281a40;
+    padding: 7px 10px;
+    text-align: left;
+    font-weight: 600;
+    color: #8b949e;
+    font-size: 12px;
+  }
+  td {
+    padding: 7px 10px;
+    border-bottom: 1px solid #281a40;
+    vertical-align: top;
+  }
+  tr:last-child td { border-bottom: none; }
+
+  /* Tag pills */
+  .tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    margin: 3px 3px 3px 0;
+  }
+
+  /* Steps numbered list */
+  .steps { list-style: none; counter-reset: step; }
+  .steps li {
+    counter-increment: step;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 7px 0;
+    border-bottom: 1px solid #281a40;
+    font-size: 13px;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .steps li::before {
+    content: counter(step);
+    background: #f0c040;
+    color: #140b24;
+    font-weight: 700;
+    font-size: 12px;
+    min-width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* Two-col pros/cons inside a card */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .col-inner { background: #140b24; border-radius: 8px; padding: 10px; }
+  .col-inner h4 { font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+  .col-inner ul { padding-left: 14px; font-size: 12px; }
+  .col-inner ul li { margin-bottom: 4px; }
+
+  /* Condition boxes */
+  .condition-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 4px;
+  }
+  .condition-box {
+    background: #140b24;
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    border-top: 3px solid;
+  }
+  .condition-box h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+  .condition-box p { font-size: 12px; color: #8b949e; }
+
+  /* Modern approaches */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .approach-item {
+    background: #140b24;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-left: 4px solid;
+    font-size: 13px;
+  }
+  .approach-item strong { font-size: 13px; display: block; margin-bottom: 3px; }
+
+  /* Group DM types */
+  .group-type-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .group-type-item {
+    background: #140b24;
+    border-radius: 8px;
+    padding: 10px 12px;
+    border-left: 4px solid;
+    font-size: 13px;
+  }
+  .group-type-item strong { display: block; font-size: 13px; margin-bottom: 4px; }
+  .group-type-item .badge {
+    font-size: 11px;
+    color: #8b949e;
+    font-style: italic;
+  }
+
+  /* Technique row */
+  .tech-section { margin-top: 8px; }
+  .tech-section h4 { font-size: 12px; color: #8b949e; font-weight: 600; margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 6px;
+  }
+  .tech-pill {
+    background: #281a40;
+    border-radius: 8px;
+    padding: 7px 10px;
+    font-size: 12px;
+    text-align: center;
+    border: 1px solid #3a2a58;
+  }
+  .tech-pill strong { display: block; font-size: 12px; margin-bottom: 2px; }
+  .tech-pill span { font-size: 11px; color: #8b949e; }
+
+  /* High-yield exam table */
+  .exam-row td:first-child {
+    color: #f0c040;
+    font-weight: 600;
+    font-size: 12px;
+    min-width: 120px;
+  }
+
+  /* Full-width card */
+  .full { grid-column: 1 / -1; }
+
+  /* Bullet list inside card */
+  .card ul { padding-left: 16px; font-size: 13px; }
+  .card ul li { margin-bottom: 5px; }
+
+  @media (max-width: 480px) {
+    body { padding: 12px 10px; }
+    h1 { font-size: 17px; padding: 14px 10px; }
+    .grid { grid-template-columns: 1fr; gap: 12px; }
+    .full { grid-column: 1; }
+    .two-col { grid-template-columns: 1fr; }
+    .condition-row { grid-template-columns: 1fr; }
+    table { font-size: 12px; }
+    th, td { padding: 6px 8px; }
+    .tech-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ MGMT</a><span style="flex:1"></span><a href="notes-m5.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">‹ M4</a></div>
+
+<h1>🧠 MGMT Module 5
+  <div class="subtitle">Managerial Decision Making — Exam: 15 May 2026</div>
+</h1>
+
+<div class="grid">
+
+  <!-- Card 1: Definition & Significance -->
+  <div class="card yellow">
+    <div class="card-title">📌 Definition & Significance</div>
+    <table>
+      <tr><th>Term</th><th>Meaning</th></tr>
+      <tr><td><strong>Decision</strong></td><td>An act requiring judgement translated into action</td></tr>
+      <tr><td><strong>Decision-Making</strong></td><td>Selecting a course of action from alternatives to deal with a specific problem</td></tr>
+      <tr><td><strong>Manager's value</strong></td><td>Evaluated &amp; rewarded based on importance &amp; results of decisions</td></tr>
+    </table>
+    <div style="margin-top:12px;">
+      <div style="font-size:12px; color:#8b949e; font-weight:600; margin-bottom:6px;">4 CHARACTERISTICS OF MANAGERIAL DECISIONS</div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+        <div class="tag" style="background:#1c2128; border:1px solid #f0c040; color:#f0c040; border-radius:8px; padding:6px 8px; font-size:12px;">🎯 Long-range org objectives</div>
+        <div class="tag" style="background:#1c2128; border:1px solid #f0c040; color:#f0c040; border-radius:8px; padding:6px 8px; font-size:12px;">🔀 Best choice from alternatives</div>
+        <div class="tag" style="background:#1c2128; border:1px solid #f0c040; color:#f0c040; border-radius:8px; padding:6px 8px; font-size:12px;">🔄 Involves org change</div>
+        <div class="tag" style="background:#1c2128; border:1px solid #f0c040; color:#f0c040; border-radius:8px; padding:6px 8px; font-size:12px;">💰 Commits scarce resources</div>
+      </div>
+    </div>
+    <div style="margin-top:10px; background:#1c2128; border-left:3px solid #f0c040; border-radius:6px; padding:8px 10px; font-size:12px; color:#8b949e; font-style:italic;">
+      Clinical analogy: Like stenting vs CABG in complex CAD — multiple alternatives, incomplete info, time constraints, irreversible resource commitment
+    </div>
+  </div>
+
+  <!-- Card 2: Rational vs Non-Rational -->
+  <div class="card blue">
+    <div class="card-title">⚖️ Rational vs Non-Rational Decision Making ⭐</div>
+    <table>
+      <tr><th>Dimension</th><th style="color:#58a6ff;">Rational</th><th style="color:#f78166;">Non-Rational</th></tr>
+      <tr><td>Nature</td><td>Prescriptive; ideal</td><td>Descriptive; realistic</td></tr>
+      <tr><td>Approach</td><td>Deterministic</td><td>Probabilistic</td></tr>
+      <tr><td>Information</td><td>Complete, perfect</td><td>Incomplete, limited</td></tr>
+      <tr><td>Goal</td><td>Optimise — best solution</td><td>Satisfice — "good enough"</td></tr>
+      <tr><td>Basis</td><td>Logic, facts</td><td>Judgement, intuition, bias</td></tr>
+      <tr><td>Outcome</td><td>Optimal decision</td><td>Satisfactory decision</td></tr>
+    </table>
+    <div style="margin-top:10px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+      <div style="background:#140b24; border-radius:8px; padding:10px; border-top:2px solid #58a6ff;">
+        <div style="font-size:12px; font-weight:700; color:#58a6ff; margin-bottom:6px;">Herbert Simon</div>
+        <div style="font-size:12px;"><strong>Maximisers</strong> — try to optimise; take longer, regret more<br><br><strong>Satisficers</strong> — simplify, accept "good enough"</div>
+      </div>
+      <div style="background:#140b24; border-radius:8px; padding:10px; border-top:2px solid #f78166;">
+        <div style="font-size:12px; font-weight:700; color:#f78166; margin-bottom:6px;">Gerd Gigerenzer</div>
+        <div style="font-size:12px;">Simple heuristics (experience-based shortcuts) often outperform exhaustive optimisation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: 8-Step Decision Process -->
+  <div class="card green">
+    <div class="card-title">🔢 8-Step Decision-Making Process ⭐</div>
+    <ol class="steps">
+      <li><span><strong>Identify purpose</strong> — Define the problem, who is affected, deadline</span></li>
+      <li><span><strong>Gather information</strong> — Collect relevant data from internal &amp; external sources</span></li>
+      <li><span><strong>Set criteria</strong> — Define baseline principles for evaluating alternatives (profit, culture)</span></li>
+      <li><span><strong>Brainstorm alternatives</strong> — Use Cause-Effect diagrams, Pareto charts to identify root causes</span></li>
+      <li><span><strong>Evaluate alternatives</strong> — Compare each for positives &amp; negatives using criteria</span></li>
+      <li><span><strong>Select best alternative</strong> — Choose the optimal or most acceptable option</span></li>
+      <li><span><strong>Execute the decision</strong> — Convert to a plan or sequence of activities</span></li>
+      <li><span><strong>Evaluate results</strong> — Assess outcome; learn and correct for future decisions</span></li>
+    </ol>
+  </div>
+
+  <!-- Card 4: 3 Decision Conditions -->
+  <div class="card purple">
+    <div class="card-title">🌡️ 3 Decision-Making Conditions ⭐</div>
+    <div class="condition-row">
+      <div class="condition-box" style="border-color:#3fb950;">
+        <h4 style="color:#3fb950;">CERTAINTY</h4>
+        <p>All alternatives, conditions &amp; outcomes known; info accurate &amp; reliable</p>
+        <div style="margin-top:6px; font-size:11px; color:#3fb950;">Routine/repetitive operations</div>
+      </div>
+      <div class="condition-box" style="border-color:#f0c040;">
+        <h4 style="color:#f0c040;">RISK</h4>
+        <p>Incomplete info BUT good idea of probability of each outcome</p>
+        <div style="margin-top:6px; font-size:11px; color:#f0c040;">Launch product with market data</div>
+      </div>
+      <div class="condition-box" style="border-color:#ff7b72;">
+        <h4 style="color:#ff7b72;">UNCERTAINTY</h4>
+        <p>Future unpredictable; alternatives, risks &amp; consequences unknown</p>
+        <div style="margin-top:6px; font-size:11px; color:#ff7b72;">Most strategic decisions</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 5: Modern Approaches Under Uncertainty -->
+  <div class="card orange">
+    <div class="card-title">🔍 Modern Approaches Under Uncertainty ⭐</div>
+    <div class="approach-grid">
+      <div class="approach-item" style="border-color:#f78166;">
+        <strong style="color:#f78166;">📊 Risk Analysis</strong>
+        Quantitative + qualitative assessment of size &amp; nature of risk; trade-off between risk and benefit
+      </div>
+      <div class="approach-item" style="border-color:#58a6ff;">
+        <strong style="color:#58a6ff;">🌳 Decision Trees</strong>
+        Graphic representation of alternative actions, chance events &amp; probabilities; trace optimum path<br>
+        <span style="font-size:12px; color:#8b949e;">■ Square = decision point &nbsp;|&nbsp; ● Circle = chance event</span>
+      </div>
+      <div class="approach-item" style="border-color:#bc8cff;">
+        <strong style="color:#bc8cff;">🎭 Preference / Utility Theory</strong>
+        Individual attitudes toward risk vary — "risk averters" vs "gamblers"; top managers take largest risk but not with own money
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 6: MIS vs DSS -->
+  <div class="card teal">
+    <div class="card-title">💻 MIS vs DSS</div>
+    <table>
+      <tr><th>Feature</th><th style="color:#39d3c0;">MIS</th><th style="color:#f0c040;">DSS</th></tr>
+      <tr><td>Full form</td><td>Management Information System</td><td>Decision Support System</td></tr>
+      <tr><td>Function</td><td>Converts raw data → useful info for managers</td><td>Helps identify problems &amp; finalise decisions</td></tr>
+      <tr><td>Tools</td><td>Computer-based; reporting, coordination, control</td><td>Communication tech, data, documents</td></tr>
+      <tr><td>Output</td><td>Structured reports for routine decisions</td><td>Supports semi-structured &amp; unstructured decisions</td></tr>
+    </table>
+  </div>
+
+  <!-- Card 7: Group DM Advantages & Disadvantages -->
+  <div class="card pink">
+    <div class="card-title">👥 Group Decision Making ⭐</div>
+    <div style="font-size:12px; color:#8b949e; margin-bottom:8px;">Definition: Individuals collectively make a choice — no single person is accountable</div>
+    <div class="two-col">
+      <div class="col-inner" style="border-top:2px solid #3fb950;">
+        <h4 style="color:#3fb950;">✅ ADVANTAGES (8)</h4>
+        <ul>
+          <li>More diversity of opinions</li>
+          <li>Greater participation &amp; interest</li>
+          <li>More understanding &amp; positivity</li>
+          <li>Less individual bias</li>
+          <li>Team-building opportunity</li>
+          <li>Promotes collective thinking</li>
+          <li>Increases org strength</li>
+          <li>Encourages smart risk-taking</li>
+        </ul>
+      </div>
+      <div class="col-inner" style="border-top:2px solid #ff7b72;">
+        <h4 style="color:#ff7b72;">❌ DISADVANTAGES (9)</h4>
+        <ul>
+          <li>Takes significant time</li>
+          <li>Irrelevant opinions possible</li>
+          <li>Some members stay silent</li>
+          <li>Different group priorities</li>
+          <li>May go against org goals</li>
+          <li>Reduces individual accountability</li>
+          <li>Dominant member overuse</li>
+          <li>Everyone sees themselves as leader</li>
+          <li><strong>Group think</strong> — going with flow</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 8: 3 Types of Group DM -->
+  <div class="card lime">
+    <div class="card-title">🗂️ 3 Types of Group Decision Making ⭐</div>
+    <div class="group-type-grid">
+      <div class="group-type-item" style="border-color:#a8f070;">
+        <strong style="color:#a8f070;">🤝 Interacting Groups</strong>
+        Members meet face-to-face; discuss, argue, agree — most common method
+        <div class="badge" style="margin-top:4px;">↑ Ideas generated BUT political factors can influence; limits creativity</div>
+      </div>
+      <div class="group-type-item" style="border-color:#58a6ff;">
+        <strong style="color:#58a6ff;">📋 Delphi Groups</strong>
+        No face-to-face; questionnaires sent → summarised → repeated rounds until consensus
+        <div class="badge" style="margin-top:4px;">Used for forecasting: demand, market trends, future problems</div>
+      </div>
+      <div class="group-type-item" style="border-color:#bc8cff;">
+        <strong style="color:#bc8cff;">✍️ Nominal Groups</strong>
+        Members work independently in silence; write ideas; ideas collected, discussed, voted &amp; ranked
+        <div class="badge" style="margin-top:4px;">↑ Individual creativity; avoids personality domination</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 9: Decision-Making Techniques -->
+  <div class="card red">
+    <div class="card-title">🛠️ Decision-Making Techniques</div>
+    <div class="tech-section">
+      <h4>Standard Financial / Management Tools</h4>
+      <div class="tech-grid">
+        <div class="tech-pill">
+          <strong style="color:#f78166;">Marginal Analysis</strong>
+          <span>Extra output from +1 unit input (Paul Samuelson)</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#f78166;">Financial Analysis</strong>
+          <span>Profitability, payback period, discounted cash flows</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#f78166;">Break-Even Analysis</strong>
+          <span>Sales level where TR = TC; Profit = 0</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#f78166;">Ratio Analysis</strong>
+          <span>Interpret financial statements; assess strengths &amp; weaknesses</span>
+        </div>
+      </div>
+    </div>
+    <div class="tech-section" style="margin-top:12px;">
+      <h4>Operations Research (OR) Techniques</h4>
+      <div class="tech-grid">
+        <div class="tech-pill">
+          <strong style="color:#58a6ff;">Linear Programming</strong>
+          <span>Optimal allocation of scarce resources (linear relationships)</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#58a6ff;">Waiting-Line (Queuing)</strong>
+          <span>Balance service vs waiting time</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#58a6ff;">Gaming Theory</strong>
+          <span>Competitive strategy selection against rational opponents</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#58a6ff;">Simulation</strong>
+          <span>Computer model of real system; test variables</span>
+        </div>
+        <div class="tech-pill">
+          <strong style="color:#58a6ff;">Decision Tree</strong>
+          <span>■ Decision points + ● Chance events → optimum path</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 10: High-Yield Exam Summary -->
+  <div class="card gold full">
+    <div class="card-title">🎯 High-Yield Exam Summary</div>
+    <table>
+      <tr><th>Topic</th><th>What to Know</th></tr>
+      <tr class="exam-row"><td>Rational vs Non-Rational</td><td>6-dimension table; Simon's maximiser vs satisficer; Gigerenzer heuristics</td></tr>
+      <tr class="exam-row"><td>8-Step Process</td><td>Steps in order — esp. Step 1 (identify), Step 3 (criteria), Step 8 (evaluate)</td></tr>
+      <tr class="exam-row"><td>3 Decision Conditions</td><td>Certainty / Risk / Uncertainty — definition + example for each</td></tr>
+      <tr class="exam-row"><td>3 Modern Approaches</td><td>Risk Analysis, Decision Trees (■=decision, ●=chance), Preference/Utility Theory — one-liner each</td></tr>
+      <tr class="exam-row"><td>MIS vs DSS</td><td>Function + Output difference — MIS = structured reports; DSS = semi/unstructured decisions</td></tr>
+      <tr class="exam-row"><td>Group DM Types</td><td>Interacting (face-to-face) / Delphi (questionnaires) / Nominal (silent independent) — method + key feature</td></tr>
+      <tr class="exam-row"><td>Group Advantages</td><td>At least 5 of 8</td></tr>
+      <tr class="exam-row"><td>Group Disadvantages</td><td>At least 5 of 9 — esp. time, accountability, group think</td></tr>
+      <tr class="exam-row"><td>Techniques</td><td>Break-Even Analysis + Decision Tree — most likely tested; know all 4 standard + 5 OR tools</td></tr>
+    </table>
+  </div>
+
+</div>
+
+<div style="text-align:center; margin-top:20px; font-size:11px; color:#484f58;">
+  Source: Mgmt Module 5 Ebook.docx + Study Guide.pptx &nbsp;|&nbsp; MGMT-Module5-MindMap.html
+</div>
+
+</body>
+</html>

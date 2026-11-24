@@ -6,43 +6,50 @@
       "id": "sem1",
       "name": "Semester 1",
       "status": "done",
-      "note": "Exams over. Content will be added later for juniors.",
+      "note": "Exams over. Notes, mind maps, AI questions, LMS assignments and 70-question mocks for juniors.",
       "subjects": [
         {
           "id": "ob",
           "code": "OB",
-          "name": "Organizational Behavior"
+          "name": "Organizational Behavior",
+          "live": true
         },
         {
           "id": "acct",
           "code": "ACCT",
-          "name": "Principles of Accounting"
+          "name": "Principles of Accounting",
+          "live": true
         },
         {
           "id": "econ",
           "code": "ECON",
-          "name": "Managerial Economics"
+          "name": "Managerial Economics",
+          "live": true
         },
         {
           "id": "mgmt",
           "code": "MGMT",
-          "name": "Principles of Management"
+          "name": "Principles of Management",
+          "live": true
         },
         {
           "id": "qt",
           "code": "QT",
-          "name": "Quantitative Techniques"
+          "name": "Quantitative Techniques",
+          "live": true
         },
         {
           "id": "bizcom",
           "code": "BIZCOM",
           "name": "Business Communication",
-          "elective": true
+          "elective": true,
+          "live": true
         },
         {
           "id": "blcg",
           "code": "BLCG",
-          "name": "Business Law & Corporate Governance"
+          "name": "Business Law & Corporate Governance",
+          "live": true
         }
       ]
     },

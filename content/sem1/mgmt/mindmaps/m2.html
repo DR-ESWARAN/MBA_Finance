@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGMT Module 2 — Evolution of Management Thought</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card.indigo::before { background: linear-gradient(90deg,#667eea,#764ba2); }
+  .card.lime::before   { background: linear-gradient(90deg,#b8f400,#56ab2f); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .indigo .card-icon { background: rgba(102,126,234,0.2); }
+  .lime .card-icon   { background: rgba(184,244,0,0.15); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+  .indigo .card-title h2 { color: #667eea; }
+  .lime .card-title h2   { color: #b8f400; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.hl { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.68rem, 2vw, 0.74rem); }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .mini-table td strong { color: #fff; }
+  .num-badge {
+    display: inline-block; width: 18px; height: 18px;
+    border-radius: 50%; text-align: center; line-height: 18px;
+    font-size: 0.6rem; font-weight: 800; margin-right: 4px; flex-shrink: 0;
+  }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.7rem, 2vw, 0.74rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem); font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  /* Timeline for early pioneers */
+  .pioneer-list { margin-top: 6px; }
+  .pioneer-item {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .pioneer-item:last-child { border-bottom: none; }
+  .pioneer-dot {
+    width: 28px; height: 28px; min-width: 28px;
+    border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-size: 0.7rem; font-weight: 800;
+    background: rgba(245,166,35,0.2); color: #f5a623; margin-top: 1px;
+  }
+  .pioneer-name { font-size: 0.78rem; font-weight: 700; color: #f5a623; margin-bottom: 2px; }
+  .pioneer-desc { font-size: 0.68rem; color: #bbb; line-height: 1.4; }
+
+  /* Taylor's 4 principles */
+  .principle-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px;
+  }
+  .principle-item {
+    border-radius: 10px; padding: 10px;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .p-num { font-size: 1.1rem; font-weight: 900; margin-bottom: 4px; }
+  .p-title { font-size: 0.72rem; font-weight: 700; margin-bottom: 4px; }
+  .p-desc { font-size: 0.64rem; color: #999; line-height: 1.4; }
+  .pr1 { background: rgba(231,76,111,0.08); } .pr1 .p-num,.pr1 .p-title { color: #e74c6f; }
+  .pr2 { background: rgba(245,166,35,0.08); } .pr2 .p-num,.pr2 .p-title { color: #f5a623; }
+  .pr3 { background: rgba(78,205,196,0.08); } .pr3 .p-num,.pr3 .p-title { color: #4ecdc4; }
+  .pr4 { background: rgba(123,97,255,0.08); } .pr4 .p-num,.pr4 .p-title { color: #a78bfa; }
+
+  /* Fayol 14 principles — numbered grid */
+  .fayol-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px;
+  }
+  .fayol-item {
+    display: flex; gap: 8px; align-items: flex-start;
+    padding: 7px 8px; border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .fayol-num {
+    width: 20px; height: 20px; min-width: 20px;
+    border-radius: 6px; display: flex; align-items: center;
+    justify-content: center; font-size: 0.6rem; font-weight: 800;
+    background: rgba(245,166,35,0.2); color: #f5a623; margin-top: 1px;
+  }
+  .fayol-title { font-size: 0.72rem; font-weight: 700; color: #fff; margin-bottom: 2px; }
+  .fayol-desc { font-size: 0.62rem; color: #999; line-height: 1.3; }
+
+  /* Weber 7 principles */
+  .weber-list { margin-top: 8px; }
+  .weber-item {
+    display: flex; gap: 8px; padding: 7px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: flex-start;
+  }
+  .weber-item:last-child { border-bottom: none; }
+  .weber-dot {
+    width: 22px; height: 22px; min-width: 22px; border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 800;
+    background: rgba(79,172,254,0.2); color: #4facfe; margin-top: 1px;
+  }
+  .weber-title { font-size: 0.72rem; font-weight: 700; color: #4facfe; margin-bottom: 2px; }
+  .weber-desc { font-size: 0.64rem; color: #bbb; line-height: 1.4; }
+
+  /* Hawthorne 4 experiments */
+  .haw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-top: 8px; }
+  .haw-item { border-radius: 10px; padding: 9px 10px; }
+  .haw-num { font-size: 0.6rem; font-weight: 700; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .haw-title { font-size: 0.74rem; font-weight: 700; margin-bottom: 4px; }
+  .haw-finding { font-size: 0.64rem; color: #bbb; line-height: 1.4; }
+  .h1 { background: rgba(231,76,111,0.1); } .h1 .haw-num,.h1 .haw-title { color: #e74c6f; }
+  .h2 { background: rgba(245,166,35,0.1); } .h2 .haw-num,.h2 .haw-title { color: #f5a623; }
+  .h3 { background: rgba(78,205,196,0.1); } .h3 .haw-num,.h3 .haw-title { color: #4ecdc4; }
+  .h4 { background: rgba(123,97,255,0.1); } .h4 .haw-num,.h4 .haw-title { color: #a78bfa; }
+
+  /* Maslow pyramid */
+  .maslow { margin-top: 8px; }
+  .maslow-level {
+    border-radius: 8px; padding: 8px 12px; margin-bottom: 5px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .maslow-emoji { font-size: 1.1rem; min-width: 24px; text-align: center; }
+  .maslow-name { font-size: 0.74rem; font-weight: 700; margin-bottom: 2px; }
+  .maslow-desc { font-size: 0.63rem; color: #bbb; }
+  .m5 { background: rgba(249,212,35,0.12); } .m5 .maslow-name { color: #f9d423; }
+  .m4 { background: rgba(245,166,35,0.10); } .m4 .maslow-name { color: #f5a623; }
+  .m3 { background: rgba(78,205,196,0.10); } .m3 .maslow-name { color: #4ecdc4; }
+  .m2 { background: rgba(79,172,254,0.10); } .m2 .maslow-name { color: #4facfe; }
+  .m1 { background: rgba(231,76,111,0.12); } .m1 .maslow-name { color: #e74c6f; }
+  .maslow-arrow { text-align: center; font-size: 0.65rem; color: #555; margin: 3px 0; }
+
+  /* Theory X vs Y */
+  .xy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  .xy-col { border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.06); }
+  .xy-header { font-size: 0.8rem; font-weight: 800; text-align: center; margin-bottom: 7px; padding: 4px; border-radius: 6px; }
+  .xy-x { background: rgba(231,76,111,0.08); } .xy-x .xy-header { background: rgba(231,76,111,0.15); color: #e74c6f; }
+  .xy-y { background: rgba(67,233,123,0.08); } .xy-y .xy-header { background: rgba(67,233,123,0.15); color: #43e97b; }
+  .xy-item { font-size: 0.65rem; color: #bbb; padding: 2px 0; line-height: 1.4; }
+  .xy-item::before { content: '• '; color: #555; }
+
+  /* Systems theory */
+  .sys-flow {
+    display: flex; align-items: center; gap: 6px;
+    margin-top: 10px; flex-wrap: wrap; justify-content: center;
+  }
+  .sys-box {
+    border-radius: 8px; padding: 8px 10px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.08); min-width: 60px;
+  }
+  .sys-label { font-size: 0.65rem; font-weight: 700; margin-bottom: 3px; }
+  .sys-desc { font-size: 0.6rem; color: #888; }
+  .sys-arrow { font-size: 1rem; color: #555; }
+  .sb1 { background: rgba(231,76,111,0.1); } .sb1 .sys-label { color: #e74c6f; }
+  .sb2 { background: rgba(245,166,35,0.1); } .sb2 .sys-label { color: #f5a623; }
+  .sb3 { background: rgba(78,205,196,0.1); } .sb3 .sys-label { color: #4ecdc4; }
+  .sb4 { background: rgba(123,97,255,0.1); } .sb4 .sys-label { color: #a78bfa; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .fayol-grid { grid-template-columns: 1fr; }
+    .principle-grid { grid-template-columns: 1fr; }
+    .haw-grid { grid-template-columns: 1fr; }
+    .xy-grid { grid-template-columns: 1fr; }
+    .sys-flow { flex-direction: column; align-items: center; }
+    .sys-arrow { transform: rotate(90deg); }
+    .central { padding: 16px 12px; }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Principles of Management — Module 2</h1>
+  <p>Evolution of Management Thought · DY Patil Online MBA · Sem 1 · Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>Evolution of Management Thought</h1>
+    <p>From Industrial Revolution to Modern Systems — 5 major schools</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Early Pioneers</span>
+      <span class="central-chip c2">Classical School</span>
+      <span class="central-chip c3">Behavioural / Human Relations</span>
+      <span class="central-chip c4">Quantitative Approach</span>
+      <span class="central-chip c5">Systems Theory</span>
+      <span class="central-chip c6">Contingency Theory</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: EARLY PIONEERS -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">🏭</div>
+      <h2>Early Pioneers (Pre-Classical)</h2>
+    </div>
+    <div class="pioneer-list">
+      <div class="pioneer-item">
+        <div class="pioneer-dot">RO</div>
+        <div>
+          <div class="pioneer-name">Robert Owen</div>
+          <div class="pioneer-desc">HR Pioneer — 10.5 hr workday; no child labour under 10; improved worker living conditions; proposals called "radical"</div>
+        </div>
+      </div>
+      <div class="pioneer-item">
+        <div class="pioneer-dot">CB</div>
+        <div>
+          <div class="pioneer-name">Charles Babbage</div>
+          <div class="pioneer-desc">"Father of computing"; division of labour; work specialisation; profit-sharing plan (→ basis of Scanlon Plan)</div>
+        </div>
+      </div>
+      <div class="pioneer-item">
+        <div class="pioneer-dot">AU</div>
+        <div>
+          <div class="pioneer-name">Andrew Ure & Charles Dupin</div>
+          <div class="pioneer-desc">Industrial educators; Ure = "automatic plan" for factory harmony; Dupin influenced Fayol — time study, workload balancing</div>
+        </div>
+      </div>
+      <div class="pioneer-item">
+        <div class="pioneer-dot">HT</div>
+        <div>
+          <div class="pioneer-name">Henry Robinson Towne</div>
+          <div class="pioneer-desc">Systematic management from 1870; "gain sharing" to boost productivity; credited Taylor as scientific mgmt pioneer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: TAYLOR'S SCIENTIFIC MANAGEMENT -->
+  <div class="card red">
+    <div class="card-title">
+      <div class="card-icon">⚙️</div>
+      <h2>Taylor — Scientific Management <span class="badge key">⭐</span></h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Problem: "Soldiering" — workers deliberately slow</div>
+      <div class="tags">
+        <span class="tag">Fear of job loss</span>
+        <span class="tag">Faulty wages</span>
+        <span class="tag">Outdated methods</span>
+      </div>
+    </div>
+    <div class="principle-grid" style="margin-top:10px;">
+      <div class="principle-item pr1">
+        <div class="p-num">1</div>
+        <div class="p-title">Science, Not Rule of Thumb</div>
+        <div class="p-desc">Replace guesswork; experiment for best techniques</div>
+      </div>
+      <div class="principle-item pr2">
+        <div class="p-num">2</div>
+        <div class="p-title">Harmony, Not Discord</div>
+        <div class="p-desc">"Mental Revolution" — mgmt & labour are indispensable to each other</div>
+      </div>
+      <div class="principle-item pr3">
+        <div class="p-num">3</div>
+        <div class="p-title">Cooperation, Not Individualism</div>
+        <div class="p-desc">Joint standard-setting; shared responsibility</div>
+      </div>
+      <div class="principle-item pr4">
+        <div class="p-num">4</div>
+        <div class="p-title">Development of Each Person</div>
+        <div class="p-desc">Scientific selection + training; assign work per ability</div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Tools: Time+Motion+Fatigue Study · 8 Functional Foremen · Differential Piece-Rate</div>
+    </div>
+    <div class="analogy">
+      <span>Note:</span> Functional Foremanship (8 bosses) VIOLATES Fayol's Unity of Command.
+    </div>
+  </div>
+
+  <!-- CARD 3: FAYOL'S 14 PRINCIPLES -->
+  <div class="card yellow wide">
+    <div class="card-title">
+      <div class="card-icon">📜</div>
+      <h2>Fayol's 14 Principles of Management <span class="badge key">MUST KNOW ALL 14 ⭐⭐</span></h2>
+    </div>
+    <div class="fayol-grid">
+      <div class="fayol-item">
+        <div class="fayol-num">1</div>
+        <div><div class="fayol-title">Division of Work</div><div class="fayol-desc">Specialisation → increased skill & efficiency</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">2</div>
+        <div><div class="fayol-title">Authority</div><div class="fayol-desc">Right to command + responsibility must go together</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">3</div>
+        <div><div class="fayol-title">Discipline</div><div class="fayol-desc">Rules must be upheld; methods may vary</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">4</div>
+        <div><div class="fayol-title">Unity of Command</div><div class="fayol-desc">One employee → one direct supervisor only</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">5</div>
+        <div><div class="fayol-title">Unity of Direction</div><div class="fayol-desc">One plan, one manager for teams with same objective</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">6</div>
+        <div><div class="fayol-title">Subordination of Individual</div><div class="fayol-desc">Group interest &gt; individual interest (incl. managers)</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">7</div>
+        <div><div class="fayol-title">Remuneration</div><div class="fayol-desc">Fair pay — financial + non-financial</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">8</div>
+        <div><div class="fayol-title">Centralisation</div><div class="fayol-desc">Appropriate balance — neither extreme centralised nor decentralised</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">9</div>
+        <div><div class="fayol-title">Scalar Chain</div><div class="fayol-desc">Clear chain of command top to bottom</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">10</div>
+        <div><div class="fayol-title">Order</div><div class="fayol-desc">Right place for everything; clean, tidy, safe workplace</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">11</div>
+        <div><div class="fayol-title">Equity</div><div class="fayol-desc">Fairness + kindness to all staff</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">12</div>
+        <div><div class="fayol-title">Stability of Tenure</div><div class="fayol-desc">Minimise turnover; plan personnel needs</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">13</div>
+        <div><div class="fayol-title">Initiative</div><div class="fayol-desc">Freedom for employees to create and carry out plans</div></div>
+      </div>
+      <div class="fayol-item">
+        <div class="fayol-num">14</div>
+        <div><div class="fayol-title">Esprit de Corps</div><div class="fayol-desc">Promote team spirit and unity</div></div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:10px;">
+      <span>Fayol = Father of Modern Management.</span> Divided org into 6 activities — Technical, Commercial, Financial, Security, Accounting, Managerial (most important at top level).
+    </div>
+  </div>
+
+  <!-- CARD 4: WEBER -->
+  <div class="card blue">
+    <div class="card-title">
+      <div class="card-icon">🏛️</div>
+      <h2>Weber's Bureaucracy — 7 Principles</h2>
+    </div>
+    <div class="weber-list">
+      <div class="weber-item"><div class="weber-dot">1</div><div><div class="weber-title">Formal Hierarchy</div><div class="weber-desc">Ranked positions; each level answers to level above</div></div></div>
+      <div class="weber-item"><div class="weber-dot">2</div><div><div class="weber-title">Administrative Class</div><div class="weber-desc">Paid full-time; selected on competence; no ownership interest</div></div></div>
+      <div class="weber-item"><div class="weber-dot">3</div><div><div class="weber-title">Formal Rules & Norms</div><div class="weber-desc">Strict rules for all → stability, continuity, predictability</div></div></div>
+      <div class="weber-item"><div class="weber-dot">4</div><div><div class="weber-title">Division of Work</div><div class="weber-desc">Clearly defined area of competence; no role overlap</div></div></div>
+      <div class="weber-item"><div class="weber-dot">5</div><div><div class="weber-title">Impersonal Relationships</div><div class="weber-desc">Rational decisions — not influenced by emotions or personal bias</div></div></div>
+      <div class="weber-item"><div class="weber-dot">6</div><div><div class="weber-title">Official Records</div><div class="weber-desc">All decisions formally documented; filing system; legal evidence</div></div></div>
+      <div class="weber-item"><div class="weber-dot">7</div><div><div class="weber-title">Principle of Equality</div><div class="weber-desc">Selection & promotion based on skills/experience — no favouritism</div></div></div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Criticisms</div>
+      <div class="tags">
+        <span class="tag">Red tape & delays</span>
+        <span class="tag">Kills creativity</span>
+        <span class="tag">Rigid system</span>
+        <span class="tag">Ignores human factor</span>
+        <span class="tag">One-way communication</span>
+        <span class="tag">Ignores informal org</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: FOLLETT -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">🤝</div>
+      <h2>Mary Parker Follett — "Mother of Modern Management"</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Core Ideas</div>
+      <div class="tags">
+        <span class="tag hl">Power WITH, not OVER</span>
+        <span class="tag hl">Integration</span>
+        <span class="tag hl">Group Power &gt; Personal Power</span>
+        <span class="tag">Participation of all</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">4 Coordination Principles</div>
+      <div class="tags">
+        <span class="tag">Direct Contact</span>
+        <span class="tag">Early Stages</span>
+        <span class="tag">Reciprocal Relationship</span>
+        <span class="tag">Continuous Process</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Key quote:</span> "Leadership is not defined by the exercise of power but by the capacity to increase the sense of power among those led."
+    </div>
+  </div>
+
+  <!-- CARD 6: HAWTHORNE EXPERIMENTS -->
+  <div class="card pink wide">
+    <div class="card-title">
+      <div class="card-icon">🔬</div>
+      <h2>Elton Mayo — Hawthorne Experiments <span class="badge key">⭐ Father of Human Relations</span></h2>
+    </div>
+    <div style="font-size:0.72rem; color:#888; margin-bottom:8px;">Western Electric's Hawthorne Plant, Chicago · 1927–1933</div>
+    <div class="haw-grid">
+      <div class="haw-item h1">
+        <div class="haw-num">Experiment 1</div>
+        <div class="haw-title">💡 Illumination</div>
+        <div class="haw-finding">Productivity ↑ not just from physical conditions but from informal social relations among workers</div>
+      </div>
+      <div class="haw-item h2">
+        <div class="haw-num">Experiment 2</div>
+        <div class="haw-title">🔧 Relay Assembly Test Room</div>
+        <div class="haw-finding">Productivity ↑ even when improvements withdrawn → socio-psychological factors key: recognition, participation, informal groups</div>
+      </div>
+      <div class="haw-item h3">
+        <div class="haw-num">Experiment 3</div>
+        <div class="haw-title">🗣️ Mass Interviewing</div>
+        <div class="haw-finding">Informal relations + social/psychological needs directly impact worker behaviour</div>
+      </div>
+      <div class="haw-item h4">
+        <div class="haw-num">Experiment 4</div>
+        <div class="haw-title">🏦 Bank Wiring Observation</div>
+        <div class="haw-finding">14 workers observed → informal production norms set by workers; informal group relations exist</div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">7 Key Conclusions</div>
+      <div class="tags">
+        <span class="tag hl">Factory = psycho-social unit</span>
+        <span class="tag hl">Workers form informal groups</span>
+        <span class="tag hl">Interpersonal relations &gt; physical conditions</span>
+        <span class="tag">Workers react as group members</span>
+        <span class="tag">Workers ≠ purely economic men</span>
+        <span class="tag">Informal leaders set norms</span>
+        <span class="tag">Managers must understand group relations</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Criticisms</div>
+      <div class="tags">
+        <span class="tag">Lacks validity (Hawthorne Effect)</span>
+        <span class="tag">Over-importance to human aspects</span>
+        <span class="tag">Overemphasises group decisions</span>
+        <span class="tag">Excess freedom to workers</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: MASLOW -->
+  <div class="card purple">
+    <div class="card-title">
+      <div class="card-icon">🔺</div>
+      <h2>Maslow's Hierarchy of Needs <span class="badge star">⭐</span></h2>
+    </div>
+    <div class="maslow">
+      <div class="maslow-level m5">
+        <div class="maslow-emoji">🌟</div>
+        <div><div class="maslow-name">Self-Actualisation</div><div class="maslow-desc">Full potential; new skills; lifelong process; only small % achieve it</div></div>
+      </div>
+      <div class="maslow-arrow">▲ must satisfy lower before higher ▲</div>
+      <div class="maslow-level m4">
+        <div class="maslow-emoji">🏆</div>
+        <div><div class="maslow-name">Esteem Needs</div><div class="maslow-desc">Respect, recognition, mastery, validation from others</div></div>
+      </div>
+      <div class="maslow-level m3">
+        <div class="maslow-emoji">❤️</div>
+        <div><div class="maslow-name">Love / Belonging</div><div class="maslow-desc">Friendships, social bonds, lasting attachments</div></div>
+      </div>
+      <div class="maslow-level m2">
+        <div class="maslow-emoji">🛡️</div>
+        <div><div class="maslow-name">Safety Needs</div><div class="maslow-desc">Shelter, protection from danger, uncertain future</div></div>
+      </div>
+      <div class="maslow-level m1">
+        <div class="maslow-emoji">🍎</div>
+        <div><div class="maslow-name">Physiological Needs</div><div class="maslow-desc">Air, food, water — most basic; if unmet, nothing else matters</div></div>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Analogy:</span> Like triage — fix haemodynamic instability (physiological) before addressing psychological wellbeing (esteem).
+    </div>
+  </div>
+
+  <!-- CARD 8: THEORY X & Y -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">⚖️</div>
+      <h2>McGregor — Theory X & Theory Y <span class="badge key">⭐ 1960</span></h2>
+    </div>
+    <div class="xy-grid">
+      <div class="xy-col xy-x">
+        <div class="xy-header">Theory X — Pessimistic</div>
+        <div class="xy-item">Dislikes work; avoids it</div>
+        <div class="xy-item">Needs threats & coercion</div>
+        <div class="xy-item">Avoids responsibility</div>
+        <div class="xy-item">Little ambition; values security</div>
+        <div class="xy-item">Resists change</div>
+        <div class="xy-item">Needs formal direction</div>
+      </div>
+      <div class="xy-col xy-y">
+        <div class="xy-header">Theory Y — Optimistic</div>
+        <div class="xy-item">Work is natural, relaxing</div>
+        <div class="xy-item">Self-directed if committed</div>
+        <div class="xy-item">Seeks responsibility</div>
+        <div class="xy-item">Creative, capable, resourceful</div>
+        <div class="xy-item">Loyal if job is rewarding</div>
+        <div class="xy-item">Self-control & self-direction</div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:10px;">
+      <span>Link to Maslow:</span> Theory X → physiological & safety needs | Theory Y → social, esteem & self-actualisation.<br>
+      <span style="margin-top:4px; display:block;">McGregor preferred Theory Y</span> — cordial relations, stimulating jobs, participative decisions.
+    </div>
+  </div>
+
+  <!-- CARD 9: ARGYRIS + QUANTITATIVE -->
+  <div class="card indigo">
+    <div class="card-title">
+      <div class="card-icon">📊</div>
+      <h2>Argyris + Quantitative Approach</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Chris Argyris — Maturity-Immaturity Theory</div>
+      <div class="tags">
+        <span class="tag hl">Immature → Passive, dependent, no confidence</span>
+        <span class="tag hl">Mature → Active, independent, self-controlled</span>
+        <span class="tag">Model I = manipulative, risk-averse</span>
+        <span class="tag">Model II = open learning, informed choices ✅</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Quantitative Approach — 3 Branches (Post-WWII)</div>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead><tr><th>Branch</th><th>Tools / Focus</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Management Science</strong></td><td>PERT, CPM, linear programming, simulation — decision-making in planning & control</td></tr>
+          <tr><td><strong>Operations Management</strong></td><td>Production, inventory, quality control, scheduling, facilities</td></tr>
+          <tr><td><strong>MIS</strong></td><td>Raw data → useful information for managers; coordination, control, visualisation</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 10: MODERN APPROACHES -->
+  <div class="card lime">
+    <div class="card-title">
+      <div class="card-icon">🌐</div>
+      <h2>Modern Approaches — Systems & Contingency</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Systems Theory</div>
+      <div class="tags">
+        <span class="tag hl">Open System — interacts with environment (all orgs)</span>
+        <span class="tag">Closed System — self-contained (e.g. assembly line)</span>
+      </div>
+    </div>
+    <div class="sys-flow">
+      <div class="sys-box sb1"><div class="sys-label">INPUTS</div><div class="sys-desc">Men, Money, Materials, Machines</div></div>
+      <div class="sys-arrow">→</div>
+      <div class="sys-box sb2"><div class="sys-label">PROCESS</div><div class="sys-desc">Managerial & technical transformation</div></div>
+      <div class="sys-arrow">→</div>
+      <div class="sys-box sb3"><div class="sys-label">OUTPUTS</div><div class="sys-desc">Products, services, profits</div></div>
+      <div class="sys-arrow">→</div>
+      <div class="sys-box sb4"><div class="sys-label">FEEDBACK</div><div class="sys-desc">Info on outcomes vs environment</div></div>
+    </div>
+    <div class="branch" style="margin-top:14px;">
+      <div class="branch-label">Contingency Theory (Situational Theory)</div>
+      <div class="tags">
+        <span class="tag hl">No single "best way" to manage</span>
+        <span class="tag">Action depends on internal + external situation</span>
+        <span class="tag">Manager must adapt to each unique context</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Analogy:</span> Like personalised medicine — no universal treatment protocol; management must adapt to the organisational context.
+    </div>
+  </div>
+
+  <!-- CARD 11: HIGH YIELD SUMMARY -->
+  <div class="card red wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield Exam Summary</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead><tr><th>Topic</th><th>What to Know for Exam</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fayol's 14 Principles</strong></td><td>All 14 names + one-liner — most tested topic in this module</td></tr>
+          <tr><td><strong>Taylor's 4 Principles</strong></td><td>Science, Harmony, Cooperation, Development + 8 functional foremen names + differential piece-rate</td></tr>
+          <tr><td><strong>Weber's Bureaucracy</strong></td><td>7 principles + list of criticisms (6-7 points)</td></tr>
+          <tr><td><strong>Hawthorne — 4 expts</strong></td><td>Name + 1-line finding for each; 7 conclusions (especially: psycho-social, informal groups, not just economic men)</td></tr>
+          <tr><td><strong>Theory X vs Y</strong></td><td>6 assumptions each + McGregor preferred Y + link to Maslow</td></tr>
+          <tr><td><strong>Maslow</strong></td><td>5 levels bottom to top in order + one-liner each</td></tr>
+          <tr><td><strong>Systems Theory</strong></td><td>Open vs Closed + 4 components: Inputs → Process → Outputs → Feedback</td></tr>
+          <tr><td><strong>Contingency</strong></td><td>No best way; situation-dependent; also called Situational Theory</td></tr>
+          <tr><td><strong>Follett</strong></td><td>Power with not over; Integration; Group power; 4 coordination principles</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end grid -->
+</body>
+</html>

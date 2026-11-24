@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCT Module 4 — Trial Balance</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623,#e74c6f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .tag.purple-hl { background: rgba(123,97,255,0.15); color: #7b61ff; border-color: rgba(123,97,255,0.3); }
+  .tag.yellow-hl { background: rgba(249,212,35,0.15); color: #f9d423; border-color: rgba(249,212,35,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .central { grid-column: 1/-1; background: linear-gradient(135deg,#1f1433,#281a40); border: 1px solid rgba(123,97,255,0.3); border-radius: 18px; padding: 20px; text-align: center; }
+  .central h1 { font-size: clamp(1.1rem,4vw,1.6rem); font-weight: 800; background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623,#e74c6f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; line-height: 1.3; }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background:rgba(231,76,111,0.15); color:#e74c6f; border:1px solid rgba(231,76,111,0.3); }
+  .c2 { background:rgba(245,166,35,0.15); color:#f5a623; border:1px solid rgba(245,166,35,0.3); }
+  .c3 { background:rgba(78,205,196,0.15); color:#4ecdc4; border:1px solid rgba(78,205,196,0.3); }
+  .c4 { background:rgba(123,97,255,0.15); color:#7b61ff; border:1px solid rgba(123,97,255,0.3); }
+  .c5 { background:rgba(67,233,123,0.15); color:#43e97b; border:1px solid rgba(67,233,123,0.3); }
+  .c6 { background:rgba(79,172,254,0.15); color:#4facfe; border:1px solid rgba(79,172,254,0.3); }
+  .wide { grid-column: span 2; }
+  .formula { background: rgba(123,97,255,0.1); border: 1px solid rgba(123,97,255,0.3); border-radius: 10px; padding: 10px 14px; font-size: clamp(0.82rem,2.5vw,0.95rem); color: #b39ddb; text-align: center; font-weight: 700; margin-top: 8px; letter-spacing: 0.3px; }
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+  .flow-step { background: rgba(123,97,255,0.15); border: 1px solid rgba(123,97,255,0.3); color: #b39ddb; border-radius: 8px; padding: 4px 10px; font-size: 0.7rem; font-weight: 600; }
+  .flow-step.active { background: rgba(123,97,255,0.35); border-color: #7b61ff; color: #fff; }
+  .flow-arrow { color: #555; font-size: 0.8rem; }
+  @media (max-width:480px) {
+    body { padding:14px 10px 50px; }
+    .grid { gap:12px; grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr !important; }
+    .three-col { grid-template-columns:1fr !important; }
+    .card { padding:14px 12px; border-radius:12px; }
+    .card-title h2 { font-size:0.85rem; }
+    .mini-table { font-size:0.72rem; }
+    .tag { font-size:0.72rem; padding:4px 10px; }
+    .central { padding:16px 12px; }
+    .central-chip { font-size:0.7rem; padding:4px 10px; }
+  }
+  @media (min-width:481px) and (max-width:768px) {
+    .grid { grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ACCT</a><span style="flex:1"></span><a href="notes-m4.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">‹ M3</a><a href="mindmap-m5.html" style="color:#c9d1d9;text-decoration:none">M5 ›</a></div>
+<div class="header">
+  <h1>Principles of Accounting — Module 4</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>ACCT Module 4: Trial Balance</h1>
+    <p>Statement of Balance · Tests Arithmetical Accuracy · NOT conclusive proof · Base for Final Accounts</p>
+    <div class="central-chips">
+      <span class="central-chip c4">Definition</span>
+      <span class="central-chip c1">4 Objectives</span>
+      <span class="central-chip c5">Advantages</span>
+      <span class="central-chip c2">Limitations</span>
+      <span class="central-chip c3">2 Formats</span>
+      <span class="central-chip c4">2 Methods</span>
+      <span class="central-chip c6">2 Types</span>
+      <span class="central-chip c1">Balancing Rules</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION + POSITION -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">📋</div><h2>1. Definition & Position</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition (Eric Kohler)</div>
+      <p style="font-size:0.73rem;color:#bbb;line-height:1.5;font-style:italic;">"A list or abstract of the balances or of total debits and total credits of accounts in a ledger, with the purpose being to determine the equality of posted debits and credits."</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Also called</div>
+      <div class="tags"><span class="tag highlight">Statement of Balance</span></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Rule</div>
+      <div class="tags">
+        <span class="tag green-hl">Dr Total = Cr Total → Arithmetically correct</span>
+        <span class="tag red-hl">⚠️ NOT conclusive proof of accuracy</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Position in Accounting Cycle</div>
+      <div class="flow">
+        <span class="flow-step">Journal</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Ledger</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step active">Trial Balance ✅</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Final Accounts</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">When Prepared</div>
+      <div class="tags">
+        <span class="tag">End of financial year (usual)</span>
+        <span class="tag">Can be periodic per business need</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: OBJECTIVES -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>2. Objectives of Trial Balance</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Objective</th><th>Detail</th></tr>
+          <tr><td><b style="color:#4facfe">1</b></td><td><b>Check Arithmetical Accuracy</b></td><td>Dr = Cr proves mathematical correctness of recording</td></tr>
+          <tr><td><b style="color:#4facfe">2</b></td><td><b>Locate Accounting Errors</b></td><td>Starting point for tracing errors in journal/ledger</td></tr>
+          <tr><td><b style="color:#4facfe">3</b></td><td><b>Summarise Transactions</b></td><td>Gives overall picture of all financial transactions</td></tr>
+          <tr><td><b style="color:#4facfe">4</b></td><td><b>Base for Final Accounts</b></td><td>P&L and Balance Sheet are prepared from Trial Balance</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Trial Balance = Pre-operative checklist. Confirms everything is accounted for before you proceed to the final diagnosis (Final Accounts). If it fails — stop and find the error.
+    </div>
+  </div>
+
+  <!-- CARD 3: ADVANTAGES + LIMITATIONS — WIDE -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>3. Advantages vs Limitations</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label" style="color:#43e97b;">✅ Advantages</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>✅ Confirms Dr = Cr for every transaction</td></tr>
+            <tr><td>✅ Up-to-date account-wise data</td></tr>
+            <tr><td>✅ Confirms each ledger balance computed correctly</td></tr>
+            <tr><td>✅ Confirms balances transferred to correct side</td></tr>
+            <tr><td>✅ Confirms debit/credit columns added correctly</td></tr>
+            <tr><td>✅ Holistic summary of all ledger accounts</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#e74c6f;">❌ Limitations (Errors NOT disclosed)</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td style="color:#ff8a80;">Agreement ≠ conclusive proof of accuracy</td></tr>
+            <tr><td>Only condensed (summary) info per account</td></tr>
+            <tr><td>Does NOT show profit/loss or financial position</td></tr>
+            <tr><td style="color:#f9d423;"><b>Wrong account error</b> — correct amount, wrong account</td></tr>
+            <tr><td style="color:#f9d423;"><b>Omission error</b> — transaction not recorded at all</td></tr>
+            <tr><td style="color:#f9d423;"><b>Compensating error</b> — two opposite errors cancel out</td></tr>
+            <tr><td style="color:#f9d423;"><b>Error of principle</b> — wrong account type used</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: FORMATS -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">📊</div><h2>4. Formats of Trial Balance</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Format</th><th>Also Known As</th><th>Structure</th></tr>
+          <tr>
+            <td><b style="color:#f5a623">Journal Format</b></td>
+            <td>Vertical Format</td>
+            <td>4 columns: Particulars | L.F. | Debit Balance | Credit Balance</td>
+          </tr>
+          <tr>
+            <td><b style="color:#f5a623">Ledger Format</b></td>
+            <td>T / Horizontal Format</td>
+            <td>2 sides: Left (Dr balances) | Right (Cr balances), 3 cols each</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">What Goes on Which Side (Journal Format)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th style="color:#43e97b;">DEBIT Side</th><th style="color:#ff8a80;">CREDIT Side</th></tr>
+          <tr><td>Assets</td><td>Liabilities</td></tr>
+          <tr><td>Expenses</td><td>Income / Gains</td></tr>
+          <tr><td>Losses</td><td>Capital</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: METHODS -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">🔧</div><h2>5. Methods of Preparation</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Method</th><th>Process</th><th>Key Feature</th></tr>
+          <tr>
+            <td><b style="color:#43e97b">Total Method</b></td>
+            <td>Accounts NOT balanced — only <b>totalled</b></td>
+            <td>Grand total Dr = Grand total Cr</td>
+          </tr>
+          <tr>
+            <td><b style="color:#43e97b">Balance Method</b></td>
+            <td>Closing balances of each ledger account used</td>
+            <td><b style="color:#f9d423;">More commonly used ⭐</b></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Types of Trial Balance</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Description</th><th>In Use?</th></tr>
+          <tr><td><b>Gross TB</b></td><td>Total Dr and Cr of each account shown (without balancing)</td><td style="color:#e74c6f;">❌ Not common</td></tr>
+          <tr><td><b>Net TB</b></td><td>Only the balance (Dr or Cr) of each account shown</td><td style="color:#43e97b;">✅ Common practice</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: BALANCING RULES — WIDE -->
+  <div class="card pink wide">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>6. Balancing of Accounts — Rules</h2><span class="badge star">⭐ HIGH YIELD</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">Account Balancing Rules</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Account Type</th><th>Balancing</th><th>Always Shows</th></tr>
+            <tr><td><b style="color:#4facfe">Assets</b></td><td>Always balanced</td><td style="color:#43e97b;"><b>Debit balance</b></td></tr>
+            <tr><td><b style="color:#e74c6f">Liabilities</b></td><td>Always balanced</td><td style="color:#ff8a80;"><b>Credit balance</b></td></tr>
+            <tr><td><b style="color:#f857a6">Capital</b></td><td>Always balanced</td><td style="color:#ff8a80;"><b>Credit balance</b> (usually)</td></tr>
+            <tr><td><b style="color:#f5a623">Expenses & Revenue</b></td><td><b>NOT balanced — totalled only</b></td><td>Dr = Expense/Loss | Cr = Income</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">c/d and b/d Rules</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Situation</th><th>Entry at End</th><th>Opening Next Period</th></tr>
+            <tr><td>Dr side &gt; Cr side</td><td style="color:#ff8a80;">"By Balance c/d" on Cr side</td><td style="color:#43e97b;">"To Balance b/d" on Dr side</td></tr>
+            <tr><td>Cr side &gt; Dr side</td><td style="color:#43e97b;">"To Balance c/d" on Dr side</td><td style="color:#ff8a80;">"By Balance b/d" on Cr side</td></tr>
+          </table>
+        </div>
+        <div class="branch-label" style="margin-top:10px;">Meaning of Balances in Trial Balance</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Account</th><th>Balance</th><th>Means</th></tr>
+            <tr><td>Personal — Dr</td><td>Debit column</td><td><b style="color:#4facfe">Sundry Debtors</b> (amount due FROM)</td></tr>
+            <tr><td>Personal — Cr</td><td>Credit column</td><td><b style="color:#e74c6f">Sundry Creditors</b> (amount due TO)</td></tr>
+            <tr><td>Real A/c</td><td>Always Dr</td><td>Asset exists in business</td></tr>
+            <tr><td>Nominal — Exp/Loss</td><td>Dr column</td><td>Cost incurred</td></tr>
+            <tr><td>Nominal — Income/Gain</td><td>Cr column</td><td>Income earned</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: TB vs BALANCE SHEET -->
+  <div class="card yellow">
+    <div class="card-title"><div class="card-icon">📑</div><h2>7. Trial Balance vs Balance Sheet</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Basis</th><th>Trial Balance</th><th>Balance Sheet</th></tr>
+          <tr><td>Accounts shown</td><td>All ledger accounts</td><td>Personal + Real only</td></tr>
+          <tr><td>When prepared</td><td>After Ledger</td><td>After Trading A/c + P&L A/c</td></tr>
+          <tr><td>Objective</td><td style="color:#4facfe;">Check arithmetical accuracy</td><td style="color:#43e97b;">Show financial position</td></tr>
+          <tr><td>Item order</td><td>Not in specific order</td><td>Items in proper order</td></tr>
+          <tr><td>Stock shown</td><td style="color:#f5a623;"><b>Opening stock</b></td><td style="color:#f9d423;"><b>Closing stock</b></td></tr>
+          <tr><td>Headings</td><td>Debit and Credit</td><td>Assets and Liabilities</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: HIGH YIELD -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">⚡</div><h2>High-Yield Exam Targets</h2><span class="badge star">⭐ EXAM FOCUS</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Point</th><th>Key Fact</th></tr>
+          <tr><td>Trial Balance tests</td><td><b>Arithmetical accuracy only</b></td></tr>
+          <tr><td>Agreement means</td><td>NOT conclusive proof of accuracy</td></tr>
+          <tr><td>4 Objectives</td><td>Accuracy · Errors · Summarise · Base for Final A/cs</td></tr>
+          <tr><td>Preferred method</td><td><b>Balance Method</b> (closing balances)</td></tr>
+          <tr><td>Common type</td><td><b>Net Trial Balance</b></td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Account</th><th>Balance in TB</th></tr>
+          <tr><td>All Assets</td><td style="color:#43e97b;"><b>Debit</b></td></tr>
+          <tr><td>All Liabilities</td><td style="color:#ff8a80;"><b>Credit</b></td></tr>
+          <tr><td>Capital</td><td style="color:#ff8a80;"><b>Credit</b></td></tr>
+          <tr><td>All Expenses/Losses</td><td style="color:#43e97b;"><b>Debit</b></td></tr>
+          <tr><td>All Income/Gains</td><td style="color:#ff8a80;"><b>Credit</b></td></tr>
+          <tr><td>Personal Dr balance</td><td>Sundry Debtors</td></tr>
+          <tr><td>Personal Cr balance</td><td>Sundry Creditors</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;color:#444;font-size:0.7rem;margin-top:30px;padding-bottom:20px;">ACCT Module 4 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

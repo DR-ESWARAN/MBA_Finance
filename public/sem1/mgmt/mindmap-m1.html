@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGMT Module 1 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card.indigo::before { background: linear-gradient(90deg,#667eea,#764ba2); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .indigo .card-icon { background: rgba(102,126,234,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+  .indigo .card-title h2 { color: #667eea; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .mini-table td strong { color: #fff; }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .c7 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+  .c8 { background: rgba(102,126,234,0.15); color: #667eea; border: 1px solid rgba(102,126,234,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  /* POSDC row layout */
+  .posdc-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .posdc-item {
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .posdc-letter {
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .posdc-name {
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    color: #bbb;
+    margin-bottom: 6px;
+  }
+  .posdc-desc {
+    font-size: 0.62rem;
+    color: #999;
+    line-height: 1.4;
+  }
+  .p1 { background: rgba(231,76,111,0.1); } .p1 .posdc-letter { color: #e74c6f; }
+  .p2 { background: rgba(245,166,35,0.1); } .p2 .posdc-letter { color: #f5a623; }
+  .p3 { background: rgba(78,205,196,0.1); } .p3 .posdc-letter { color: #4ecdc4; }
+  .p4 { background: rgba(123,97,255,0.1); } .p4 .posdc-letter { color: #a78bfa; }
+  .p5 { background: rgba(67,233,123,0.1); } .p5 .posdc-letter { color: #43e97b; }
+
+  /* Levels visual */
+  .pyramid { margin-top: 10px; }
+  .level-row {
+    border-radius: 8px;
+    padding: 9px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .level-badge {
+    min-width: 38px; height: 38px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; font-weight: 700; text-align: center;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+  .level-content { flex: 1; }
+  .level-title { font-size: 0.8rem; font-weight: 700; margin-bottom: 2px; }
+  .level-who { font-size: 0.65rem; color: #999; margin-bottom: 3px; }
+  .level-focus { font-size: 0.65rem; color: #bbb; line-height: 1.4; }
+  .lv-top { background: rgba(231,76,111,0.1); }
+  .lv-top .level-badge { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .lv-top .level-title { color: #e74c6f; }
+  .lv-mid { background: rgba(245,166,35,0.1); }
+  .lv-mid .level-badge { background: rgba(245,166,35,0.2); color: #f5a623; }
+  .lv-mid .level-title { color: #f5a623; }
+  .lv-low { background: rgba(78,205,196,0.1); }
+  .lv-low .level-badge { background: rgba(78,205,196,0.2); color: #4ecdc4; }
+  .lv-low .level-title { color: #4ecdc4; }
+
+  /* Skills pyramid */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .skill-box {
+    border-radius: 10px;
+    padding: 10px 8px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .skill-icon { font-size: 1.4rem; margin-bottom: 5px; }
+  .skill-name { font-size: 0.72rem; font-weight: 700; margin-bottom: 4px; }
+  .skill-desc { font-size: 0.62rem; color: #999; line-height: 1.4; }
+  .skill-level { font-size: 0.6rem; font-weight: 700; margin-top: 5px; padding: 2px 7px; border-radius: 10px; display: inline-block; }
+  .sk1 { background: rgba(79,172,254,0.1); } .sk1 .skill-name { color: #4facfe; } .sk1 .skill-level { background: rgba(79,172,254,0.2); color: #4facfe; }
+  .sk2 { background: rgba(123,97,255,0.1); } .sk2 .skill-name { color: #a78bfa; } .sk2 .skill-level { background: rgba(123,97,255,0.2); color: #a78bfa; }
+  .sk3 { background: rgba(245,166,35,0.1); } .sk3 .skill-name { color: #f5a623; } .sk3 .skill-level { background: rgba(245,166,35,0.2); color: #f5a623; }
+
+  /* Mintzberg roles */
+  .roles-section { margin-bottom: 12px; }
+  .roles-header {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 6px; padding: 4px 10px;
+    border-radius: 6px; display: inline-block;
+  }
+  .rh-inter { background: rgba(248,87,166,0.15); color: #f857a6; }
+  .rh-info  { background: rgba(67,233,123,0.15); color: #43e97b; }
+  .rh-dec   { background: rgba(79,172,254,0.15); color: #4facfe; }
+  .role-list { display: grid; grid-template-columns: 1fr 1fr; gap: 5px; }
+  .role-item {
+    border-radius: 8px;
+    padding: 7px 9px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(255,255,255,0.03);
+  }
+  .role-name { font-size: 0.7rem; font-weight: 700; margin-bottom: 2px; }
+  .role-desc { font-size: 0.62rem; color: #888; line-height: 1.3; }
+  .ri-pink .role-name  { color: #f857a6; }
+  .ri-green .role-name { color: #43e97b; }
+  .ri-blue .role-name  { color: #4facfe; }
+
+  /* Art vs Science */
+  .vs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .vs-col { border-radius: 10px; padding: 10px; border: 1px solid rgba(255,255,255,0.07); }
+  .vs-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 7px; text-align: center; }
+  .vs-art { background: rgba(231,76,111,0.08); } .vs-art .vs-title { color: #e74c6f; }
+  .vs-sci { background: rgba(79,172,254,0.08); } .vs-sci .vs-title { color: #4facfe; }
+  .vs-item { font-size: 0.65rem; color: #bbb; padding: 2px 0; line-height: 1.4; }
+  .vs-item::before { content: '• '; color: #666; }
+  .vs-verdict {
+    margin-top: 10px; border-radius: 10px; padding: 9px 12px;
+    background: rgba(123,97,255,0.1); border: 1px solid rgba(123,97,255,0.3);
+    font-size: 0.72rem; color: #b39ddb; text-align: center; line-height: 1.5;
+  }
+  .vs-verdict strong { color: #c4b5fd; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .posdc-grid { grid-template-columns: repeat(3, 1fr); }
+    .posdc-desc { display: none; }
+    .skills-grid { grid-template-columns: 1fr 1fr 1fr; }
+    .role-list { grid-template-columns: 1fr; }
+    .vs-grid { grid-template-columns: 1fr; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ MGMT</a><span style="flex:1"></span><a href="notes-m1.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">M2 ›</a></div>
+
+<div class="header">
+  <h1>Principles of Management — Module 1</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL NODE -->
+  <div class="central">
+    <h1>Introduction to Management</h1>
+    <p>Getting things done through others — optimising human, material & financial resources</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Definitions</span>
+      <span class="central-chip c2">Art vs Science</span>
+      <span class="central-chip c3">POSDC Functions</span>
+      <span class="central-chip c4">Levels of Management</span>
+      <span class="central-chip c5">Katz's Skills</span>
+      <span class="central-chip c6">Mintzberg's Roles</span>
+      <span class="central-chip c7">Importance of Principles</span>
+      <span class="central-chip c8">Need for Principles</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITIONS -->
+  <div class="card red wide">
+    <div class="card-title">
+      <div class="card-icon">📖</div>
+      <h2>Key Definitions <span class="badge key">EXAM ⭐</span></h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead>
+          <tr><th>Author</th><th>Definition (exam-ready)</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Koontz</strong></td><td>Art of getting things done through & with people in formally organised groups</td></tr>
+          <tr><td><strong>Fayol</strong></td><td>To forecast, plan, organise, command, co-ordinate & control</td></tr>
+          <tr><td><strong>F.W. Taylor</strong></td><td>Art of knowing what you want to do & seeing it done in the best & cheapest way</td></tr>
+          <tr><td><strong>Drucker</strong></td><td>Multi-purpose organ — manages a business, a manager, and workers & work</td></tr>
+          <tr><td><strong>George Terry</strong></td><td>Distinct process of planning, organising, actuating & controlling to accomplish stated objectives</td></tr>
+          <tr><td><strong>J. Lundy</strong></td><td>Task of planning, coordinating, motivating & controlling efforts of others</td></tr>
+          <tr><td><strong>E.F.L. Breech</strong></td><td>Social process for effective & efficient planning & regulation of enterprise operations</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>Clinical analogy:</span> Management = Cardiac ICU. The manager is the intensivist — doesn't do every procedure but coordinates the team to keep the patient (organisation) optimal.
+    </div>
+  </div>
+
+  <!-- CARD 2: IMPORTANCE & NEED -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">💡</div>
+      <h2>Importance & Need of Principles</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Importance (4 points)</div>
+      <div class="tags">
+        <span class="tag highlight">Improves Understanding</span>
+        <span class="tag highlight">Direction for Training</span>
+        <span class="tag highlight">Makes Role Concrete</span>
+        <span class="tag highlight">Guides Research</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Need (5 points)</div>
+      <div class="tags">
+        <span class="tag">Enhance Efficiency</span>
+        <span class="tag">Comprehend Nature of Mgmt</span>
+        <span class="tag">Train Managers</span>
+        <span class="tag">Facilitate Research</span>
+        <span class="tag">Coordinate Resources</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Fayol said:</span> "Management principles are necessary to train and educate future managers."
+    </div>
+  </div>
+
+  <!-- CARD 3: ART vs SCIENCE -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">⚗️</div>
+      <h2>Art vs Science <span class="badge star">BOTH</span></h2>
+    </div>
+    <div class="vs-grid">
+      <div class="vs-col vs-art">
+        <div class="vs-title">🎨 ART</div>
+        <div class="vs-item">Personal skill</div>
+        <div class="vs-item">Practical knowledge</div>
+        <div class="vs-item">Result-oriented</div>
+        <div class="vs-item">Regular practice</div>
+        <div class="vs-item">Creativity</div>
+      </div>
+      <div class="vs-col vs-sci">
+        <div class="vs-title">🔬 SCIENCE</div>
+        <div class="vs-item">Systematised knowledge</div>
+        <div class="vs-item">Continued observation</div>
+        <div class="vs-item">Universal application</div>
+        <div class="vs-item">Cause & effect</div>
+        <div class="vs-item">Validity & predictability</div>
+      </div>
+    </div>
+    <div class="vs-verdict">
+      <strong>Verdict:</strong> Inexact / Social Science — BOTH art & science<br>
+      Deals with human behaviour → cannot be fully predicted<br>
+      Teele: <em>"90% art, 10% science → heading to 80:20"</em>
+    </div>
+    <div class="analogy" style="margin-top:8px;">
+      <span>Analogy:</span> Like Cardiology — evidence-based science (RCTs, guidelines) + clinical art (reading the patient, experience).
+    </div>
+  </div>
+
+  <!-- CARD 4: POSDC FUNCTIONS -->
+  <div class="card purple wide">
+    <div class="card-title">
+      <div class="card-icon">⚙️</div>
+      <h2>Functions of Management — POSDC <span class="badge key">HIGH YIELD ⭐</span></h2>
+    </div>
+    <div class="posdc-grid">
+      <div class="posdc-item p1">
+        <div class="posdc-letter">P</div>
+        <div class="posdc-name">Planning</div>
+        <div class="posdc-desc">Deciding in advance — what, when, how. Bridges gap between where we are & where we want to be.</div>
+      </div>
+      <div class="posdc-item p2">
+        <div class="posdc-letter">O</div>
+        <div class="posdc-name">Organising</div>
+        <div class="posdc-desc">Bringing together physical, financial & human resources. Identifying & grouping activities, assigning duties.</div>
+      </div>
+      <div class="posdc-item p3">
+        <div class="posdc-letter">S</div>
+        <div class="posdc-name">Staffing</div>
+        <div class="posdc-desc">Right man on right job. Recruitment → Selection → Training → Appraisal → Promotions.</div>
+      </div>
+      <div class="posdc-item p4">
+        <div class="posdc-letter">D</div>
+        <div class="posdc-name">Directing</div>
+        <div class="posdc-desc">"Life-spark" of enterprise. Supervision + Motivation + Leadership + Communication.</div>
+      </div>
+      <div class="posdc-item p5">
+        <div class="posdc-letter">C</div>
+        <div class="posdc-name">Controlling</div>
+        <div class="posdc-desc">Measuring performance vs standards → finding deviation → corrective action.</div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Controlling — 4 Steps (in order)</div>
+      <div class="tags">
+        <span class="tag highlight">1. Set Standards</span>
+        <span class="tag highlight">2. Measure Actual</span>
+        <span class="tag highlight">3. Compare → Find Deviation</span>
+        <span class="tag highlight">4. Corrective Action</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Also know:</span> Gullick's acronym <strong>POSDCORB</strong> = Planning, Organising, Staffing, Directing, Co-ordinating, Reporting, Budgeting
+    </div>
+  </div>
+
+  <!-- CARD 5: LEVELS OF MANAGEMENT -->
+  <div class="card blue">
+    <div class="card-title">
+      <div class="card-icon">🏗️</div>
+      <h2>Levels of Management <span class="badge key">⭐</span></h2>
+    </div>
+    <div class="pyramid">
+      <div class="level-row lv-top">
+        <div class="level-badge">TOP</div>
+        <div class="level-content">
+          <div class="level-title">Top Level</div>
+          <div class="level-who">Board of Directors · CEO · MD</div>
+          <div class="level-focus">Sets objectives & policies · Strategic plans · Appoints middle managers · Accountable to shareholders · Focus: Planning & Coordinating</div>
+        </div>
+      </div>
+      <div class="level-row lv-mid">
+        <div class="level-badge">MID</div>
+        <div class="level-content">
+          <div class="level-title">Middle Level</div>
+          <div class="level-who">Branch Managers · Departmental Managers</div>
+          <div class="level-focus">Executes top-level plans · Trains lower level · Interprets policies downward · Evaluates junior managers · Focus: Organising & Directing</div>
+        </div>
+      </div>
+      <div class="level-row lv-low">
+        <div class="level-badge">LOW</div>
+        <div class="level-content">
+          <div class="level-title">Lower Level</div>
+          <div class="level-who">Supervisors · Foremen · Section Officers</div>
+          <div class="level-focus">Assigns tasks · Day-to-day instruction · Quality & quantity control · Motivates workers · Image builders · Focus: Directing & Controlling</div>
+        </div>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>Analogy:</span> Top = HOD Cardiology | Middle = Senior Consultant | Lower = Resident/Fellow
+    </div>
+  </div>
+
+  <!-- CARD 6: KATZ'S SKILLS -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">🧠</div>
+      <h2>Katz's Managerial Skills <span class="badge key">⭐</span></h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-box sk1">
+        <div class="skill-icon">🔧</div>
+        <div class="skill-name">Technical</div>
+        <div class="skill-desc">Ability to perform specific tasks; knowledge of methods & tools</div>
+        <div class="skill-level">Lower Level</div>
+      </div>
+      <div class="skill-box sk2">
+        <div class="skill-icon">🤝</div>
+        <div class="skill-name">Human</div>
+        <div class="skill-desc">Work well with people; lead, motivate & communicate effectively</div>
+        <div class="skill-level">All Levels</div>
+      </div>
+      <div class="skill-box sk3">
+        <div class="skill-icon">🔭</div>
+        <div class="skill-name">Conceptual</div>
+        <div class="skill-desc">Think abstractly; see the big picture; coordinate full range of activities</div>
+        <div class="skill-level">Top Level</div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:10px;">
+      <span>Memory tip:</span> Lower → Hands (Technical) | Middle → Heart (Human) | Top → Head (Conceptual)
+    </div>
+  </div>
+
+  <!-- CARD 7: MINTZBERG'S ROLES -->
+  <div class="card pink wide">
+    <div class="card-title">
+      <div class="card-icon">🎭</div>
+      <h2>Mintzberg's 10 Managerial Roles <span class="badge star">3 CATEGORIES ⭐</span></h2>
+    </div>
+
+    <div class="roles-section">
+      <span class="roles-header rh-inter">A. Interpersonal — Providing Information & Ideas</span>
+      <div class="role-list">
+        <div class="role-item ri-pink">
+          <div class="role-name">👑 Figurehead</div>
+          <div class="role-desc">Social, ceremonial & legal responsibilities; source of inspiration & authority</div>
+        </div>
+        <div class="role-item ri-pink">
+          <div class="role-name">🦁 Leader</div>
+          <div class="role-desc">Provides leadership; manages team/department performance & responsibilities</div>
+        </div>
+        <div class="role-item ri-pink">
+          <div class="role-name">🔗 Liaison</div>
+          <div class="role-desc">Networks & communicates with internal & external contacts</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roles-section">
+      <span class="roles-header rh-info">B. Informational — Processing Information</span>
+      <div class="role-list">
+        <div class="role-item ri-green">
+          <div class="role-name">📡 Monitor</div>
+          <div class="role-desc">Seeks information about environment & industry; watches team productivity & wellbeing</div>
+        </div>
+        <div class="role-item ri-green">
+          <div class="role-name">📢 Disseminator</div>
+          <div class="role-desc">Passes useful information to colleagues & team members</div>
+        </div>
+        <div class="role-item ri-green">
+          <div class="role-name">🗣️ Spokesperson</div>
+          <div class="role-desc">Transmits organisational goals & information to the outside world</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="roles-section">
+      <span class="roles-header rh-dec">C. Decisional — Using Information</span>
+      <div class="role-list">
+        <div class="role-item ri-blue">
+          <div class="role-name">💡 Entrepreneur</div>
+          <div class="role-desc">Creates & controls change; generates & implements new ideas</div>
+        </div>
+        <div class="role-item ri-blue">
+          <div class="role-name">🚨 Disturbance Handler</div>
+          <div class="role-desc">Manages unexpected roadblocks; mediates disputes</div>
+        </div>
+        <div class="role-item ri-blue">
+          <div class="role-name">💰 Resource Allocator</div>
+          <div class="role-desc">Decides best use of funding, staff & organisational resources</div>
+        </div>
+        <div class="role-item ri-blue">
+          <div class="role-name">🤝 Negotiator</div>
+          <div class="role-desc">Directs important negotiations within/outside the organisation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: HIGH YIELD SUMMARY -->
+  <div class="card indigo wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield Exam Summary</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead>
+          <tr><th>Topic</th><th>What to Know</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Definitions</strong></td><td>7 authors — Koontz, Fayol, Taylor, Drucker, Terry, Lundy, Breech — one line each</td></tr>
+          <tr><td><strong>POSDC</strong></td><td>One line per function + Controlling's 4 steps in order + Gullick's POSDCORB</td></tr>
+          <tr><td><strong>3 Levels</strong></td><td>Who sits where + their focus function (Top=Planning, Middle=Organising, Lower=Controlling)</td></tr>
+          <tr><td><strong>Katz's Skills</strong></td><td>Technical→Lower, Human→All, Conceptual→Top</td></tr>
+          <tr><td><strong>Mintzberg</strong></td><td>3 categories × 10 roles — don't mix Interpersonal/Informational/Decisional</td></tr>
+          <tr><td><strong>Art vs Science</strong></td><td>Inexact social science = BOTH — Teele's 90:10 ratio quote</td></tr>
+          <tr><td><strong>Principles</strong></td><td>Importance (4) + Need (5) — Fayol's quote on training</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- end grid -->
+
+</body>
+</html>

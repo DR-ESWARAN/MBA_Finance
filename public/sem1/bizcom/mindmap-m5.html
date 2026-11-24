@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZCOM Module 5 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color:#e74c6f; border-color:rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color:#f5a623; border-color:rgba(245,166,35,0.3); }
+  .tag.teal-hl   { background: rgba(78,205,196,0.15); color:#4ecdc4; border-color:rgba(78,205,196,0.3); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color:#43e97b; border-color:rgba(67,233,123,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color:#4facfe; border-color:rgba(79,172,254,0.3); }
+  .tag.purple-hl { background: rgba(123,97,255,0.15); color:#7b61ff; border-color:rgba(123,97,255,0.3); }
+  .tag.pink-hl   { background: rgba(248,87,166,0.15); color:#f857a6; border-color:rgba(248,87,166,0.3); }
+  .tag.yellow-hl { background: rgba(249,212,35,0.15); color:#f9d423; border-color:rgba(249,212,35,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.key { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .tip-row { display: flex; align-items: flex-start; gap: 6px; font-size: 0.73rem; color: #ccc; padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.04); line-height: 1.4; }
+  .tip-row:first-child { border-top: none; }
+  .num-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; min-width: 20px; border-radius: 50%; font-size: 0.6rem; font-weight: 700; }
+  .red .num-badge { background:rgba(231,76,111,0.25); color:#e74c6f; } .orange .num-badge { background:rgba(245,166,35,0.25); color:#f5a623; }
+  .teal .num-badge { background:rgba(78,205,196,0.25); color:#4ecdc4; } .green .num-badge { background:rgba(67,233,123,0.25); color:#43e97b; }
+  .blue .num-badge { background:rgba(79,172,254,0.25); color:#4facfe; } .pink .num-badge { background:rgba(248,87,166,0.25); color:#f857a6; }
+  .yellow .num-badge { background:rgba(249,212,35,0.25); color:#f9d423; } .purple .num-badge { background:rgba(123,97,255,0.25); color:#7b61ff; }
+  .central { grid-column:1/-1; background:linear-gradient(135deg,#1f1433,#281a40); border:1px solid rgba(123,97,255,0.3); border-radius:18px; padding:20px; text-align:center; }
+  .central h1 { font-size:clamp(1.1rem,4vw,1.6rem); font-weight:800; background:linear-gradient(90deg,#e74c6f,#4ecdc4,#f5a623); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; line-height:1.3; }
+  .central p { color:#888; font-size:0.78rem; }
+  .central-chips { display:flex; justify-content:center; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .central-chip { padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+  .c1{background:rgba(231,76,111,0.15);color:#e74c6f;border:1px solid rgba(231,76,111,0.3);}
+  .c2{background:rgba(245,166,35,0.15);color:#f5a623;border:1px solid rgba(245,166,35,0.3);}
+  .c3{background:rgba(78,205,196,0.15);color:#4ecdc4;border:1px solid rgba(78,205,196,0.3);}
+  .c4{background:rgba(123,97,255,0.15);color:#7b61ff;border:1px solid rgba(123,97,255,0.3);}
+  .c5{background:rgba(67,233,123,0.15);color:#43e97b;border:1px solid rgba(67,233,123,0.3);}
+  .c6{background:rgba(79,172,254,0.15);color:#4facfe;border:1px solid rgba(79,172,254,0.3);}
+  .c7{background:rgba(248,87,166,0.15);color:#f857a6;border:1px solid rgba(248,87,166,0.3);}
+  .c8{background:rgba(249,212,35,0.15);color:#f9d423;border:1px solid rgba(249,212,35,0.3);}
+  .wide { grid-column: span 2; }
+  @media (max-width:480px) { body{padding:14px 10px 50px;} .grid{gap:12px;grid-template-columns:1fr;} .wide{grid-column:span 1;} .card{padding:14px 12px;border-radius:12px;} .mini-table{font-size:0.72rem;} .tag{font-size:0.72rem;padding:4px 10px;} .central{padding:16px 12px;} .central-chip{font-size:0.7rem;padding:4px 10px;} }
+  @media (min-width:481px) and (max-width:768px) { .grid{grid-template-columns:1fr;} .wide{grid-column:span 1;} }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ BIZCOM</a><span style="flex:1"></span><a href="notes-m5.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">‹ M4</a></div>
+
+<div class="header">
+  <h1>BIZCOM — Module 5</h1>
+  <p>Crisis Communication · Intercultural · Group Communication · Leadership · Positive Messages</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL BANNER -->
+  <div class="card central">
+    <h1>Module 5: Crisis, International &amp; Group Communication</h1>
+    <p>Exam: 15 May 2026 · Source: EBook + Study Guide</p>
+    <div class="central-chips">
+      <span class="central-chip c1">7 Goals — Negative News</span>
+      <span class="central-chip c2">4 Crisis Plan Elements</span>
+      <span class="central-chip c3">Ethnocentrism</span>
+      <span class="central-chip c4">5 Cross-Cultural Factors</span>
+      <span class="central-chip c5">Group Psychologies</span>
+      <span class="central-chip c6">3 Leader Types</span>
+      <span class="central-chip c7">5 Leader Styles</span>
+      <span class="central-chip c8">3-Step Positive Message</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: Negative News 7 Goals -->
+  <div class="card red">
+    <div class="card-title">
+      <div class="card-icon">⚠️</div>
+      <h2>Negative News — 7 Goals</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">What is Negative News?</div>
+      <div class="tags">
+        <span class="tag">Something audience does NOT want to hear</span>
+        <span class="tag">Rumors spin out of control in emergencies</span>
+        <span class="tag red-hl">Delivery method influences response</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">7 Goals When Delivering Negative News</div>
+      <div class="tip-row"><span class="num-badge">1</span> Be clear and concise — no additional clarification needed</div>
+      <div class="tip-row"><span class="num-badge">2</span> Help receiver understand and accept the news</div>
+      <div class="tip-row"><span class="num-badge">3</span> Maintain trust and respect for organization and receiver</div>
+      <div class="tip-row"><span class="num-badge">4</span> Avoid legal liability or admission of guilt <span class="badge key">TRAP</span></div>
+      <div class="tip-row"><span class="num-badge">5</span> Maintain the relationship even if formal association ends</div>
+      <div class="tip-row"><span class="num-badge">6</span> Reduce anxiety to increase comprehension</div>
+      <div class="tip-row"><span class="num-badge">7</span> Achieve the designated business outcome</div>
+    </div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> Breaking bad news (SPIKES protocol) maps perfectly — Goals 2, 3, 5, 6 are the heart of compassionate disclosure. "Avoid legal liability" = document carefully, like cath lab notes.
+    </div>
+  </div>
+
+  <!-- CARD 2: Crisis Communication Plan -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">🚨</div>
+      <h2>Crisis Communication Plan — 4 Elements</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Element</th><th>Purpose / Description</th></tr>
+        <tr><td><strong style="color:#f5a623;">Crisis Team + Contact Info</strong></td><td>Members decide actions, carry them out, offer expertise; prevents indecisiveness</td></tr>
+        <tr><td><strong style="color:#f5a623;">Designated Spokesperson</strong></td><td>One person listens to everyone and speaks the common point; prevents egocentric behavior and chorus talking</td></tr>
+        <tr><td><strong style="color:#f5a623;">Meeting Place / Location</strong></td><td>Undisturbed location; comfortable and reachable for all team members</td></tr>
+        <tr><td><strong style="color:#f5a623;">Media Plan + Procedures</strong></td><td>Prevents rumors; enables spreading of correct and confirmed news only</td></tr>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> Code Blue team = Crisis communication team. The team leader calling the code = Designated spokesperson. Resus bay = Meeting location. PA announcement protocol = Media plan.
+    </div>
+  </div>
+
+  <!-- CARD 3: Intercultural Communication + Ethnocentrism -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">🌍</div>
+      <h2>Intercultural &amp; Cross-Cultural Factors</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Ethnocentrism — Definition</div>
+      <div class="tags">
+        <span class="tag teal-hl">Belief that one's own cultural group is innately superior</span>
+        <span class="tag">Deceptive — members see own behavior as logical</span>
+        <span class="tag">People treat cultural values as absolute values</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">5 Factors Affecting Cross-Cultural Communication</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Factor</th><th>Key Issue</th></tr>
+          <tr><td><strong style="color:#4ecdc4;">Language</strong></td><td>Most cited barrier; accent/dialect bias; use a good translator</td></tr>
+          <tr><td><strong style="color:#4ecdc4;">Environment &amp; Technology</strong></td><td>Climate, topography, natural resources; divergent views of technology's role</td></tr>
+          <tr><td><strong style="color:#4ecdc4;">Social Organization &amp; History</strong></td><td>Nepotism, class, gender, religion, racism — hard to communicate without bias</td></tr>
+          <tr><td><strong style="color:#4ecdc4;">Conceptions of Authority</strong></td><td>Each culture distributes authority differently; affects rank-based messaging</td></tr>
+          <tr><td><strong style="color:#4ecdc4;">Nonverbal Communication</strong></td><td>Body language, eye contact, touching, personal space — meaning varies by culture</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="tags" style="margin-top:8px;">
+      <span class="tag teal-hl">Business improves when different cultures combine perspectives</span>
+    </div>
+  </div>
+
+  <!-- CARD 4: Group Communication -->
+  <div class="card purple">
+    <div class="card-title">
+      <div class="card-icon">👥</div>
+      <h2>Group Communication</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <div class="tags">
+        <span class="tag purple-hl">More than 2 individuals involved</span>
+        <span class="tag">Interaction &amp; exchange among culturally/geographically/linguistically similar members</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Group vs Crowd vs Organization vs Interpersonal</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Feature</th><th>Groups</th><th>Crowds</th><th>Organizations</th><th>Interpersonal</th></tr>
+          <tr><td>Common goals</td><td>✅</td><td>❌</td><td>✅</td><td>❌</td></tr>
+          <tr><td>Know each other</td><td>✅</td><td>❌</td><td>❌</td><td>✅</td></tr>
+          <tr><td>Informal rules</td><td>✅</td><td>❌</td><td>❌</td><td>✅</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Group Psychologies</div>
+      <div class="tags">
+        <span class="tag purple-hl">More discussion → more polarization (2 extreme opinions)</span>
+        <span class="tag">Group takes cautious OR risky decisions</span>
+        <span class="tag purple-hl">Members shift stand to align with group (groupthink)</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Quality Group Communication Requires</div>
+      <div class="tags">
+        <span class="tag">Sense of belonging</span>
+        <span class="tag">Mutual respect</span>
+        <span class="tag">Common goals</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Group Norms</div>
+      <div class="tags">
+        <span class="tag">Standards, customs, behavioral expectations</span>
+        <span class="tag purple-hl">Emerge from members as group forms</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: Teamwork -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">🤝</div>
+      <h2>Teamwork</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <div class="tags">
+        <span class="tag green-hl">Collaborative effort of a group to achieve a common goal effectively and efficiently</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Key Facts</div>
+      <div class="tags">
+        <span class="tag">Teams = form of group dedicated to production or problem solving</span>
+        <span class="tag green-hl">Group communication is the BASE of teamwork</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">10 Considerations for Setting Up a Good Team</div>
+      <div class="tags">
+        <span class="tag green-hl">Select members wisely</span>
+        <span class="tag green-hl">Select a responsible leader</span>
+        <span class="tag green-hl">Promote cooperation</span>
+        <span class="tag green-hl">Clarify goals</span>
+        <span class="tag green-hl">Elicit commitment</span>
+        <span class="tag green-hl">Clarify responsibilities</span>
+        <span class="tag green-hl">Instill prompt action</span>
+        <span class="tag green-hl">Apply technology</span>
+        <span class="tag green-hl">Technological compatibility</span>
+        <span class="tag green-hl">Provide prompt feedback</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>💉 Carnegie Quote:</span> "Teamwork is the ability to work together toward a common vision... It is the fuel that allows common people to attain uncommon results."
+    </div>
+  </div>
+
+  <!-- CARD 6: Leadership (WIDE) -->
+  <div class="card blue wide">
+    <div class="card-title">
+      <div class="card-icon">👑</div>
+      <h2>Leadership — 3 Types + 5 Styles</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <div class="tags">
+        <span class="tag blue-hl">Art of motivating a group to act toward achieving a common goal</span>
+        <span class="tag">Leaders are appointed, elected, or emerge into role</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">3 Ways Leaders Take on Role</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Description</th></tr>
+          <tr><td><strong style="color:#4facfe;">Appointed Leader</strong></td><td>Designated by authority regardless of group's wishes; group may not accept them</td></tr>
+          <tr><td><strong style="color:#4facfe;">Democratic Leader</strong></td><td>Elected/chosen by group; involves group in decision-making; open and free discussions</td></tr>
+          <tr><td><strong style="color:#4facfe;">Emergent Leader</strong></td><td>Grows into role through group interaction over time; most often the natural leader</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">5 Types/Styles of Leaders</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Style</th><th>Description</th></tr>
+          <tr><td><strong style="color:#00f2fe;">Autocratic</strong></td><td>Self-directed; establishes norms; controls all decisions; little input from group</td></tr>
+          <tr><td><strong style="color:#00f2fe;">Laissez-faire</strong></td><td>"Live and let live"; gives professionals space and tools; balances control with freedom</td></tr>
+          <tr><td><strong style="color:#00f2fe;">Leader-as-Technician</strong></td><td>Has skills others do not; role occurs when specialized skill is needed</td></tr>
+          <tr><td><strong style="color:#00f2fe;">Leader-as-Conductor</strong></td><td>Brings people together for a common goal; central coordinating role</td></tr>
+          <tr><td><strong style="color:#00f2fe;">Leader-as-Coach</strong></td><td>Teacher + motivator + goal-keeper; combines many talents; can be autocratic at times</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>💉 Clinical Bridge:</span> Cath lab HOD = Autocratic when needed in emergencies. Laissez-faire = giving senior interventionalists independence. Leader-as-Technician = the only one who can do complex bifurcation PCI. Leader-as-Coach = training junior cardiologists. Know ALL 5 styles for MCQ.
+    </div>
+  </div>
+
+  <!-- CARD 7: Advantages/Disadvantages Group + Routine/Positive Messages -->
+  <div class="card pink">
+    <div class="card-title">
+      <div class="card-icon">✉️</div>
+      <h2>Group Adv/Disadv + Positive Messages</h2>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Advantages of Group Communication</div>
+      <div class="tags">
+        <span class="tag pink-hl">Primary purpose: share information</span>
+        <span class="tag">Manage conflicts; overcome difficult circumstances</span>
+        <span class="tag pink-hl">Generation of ideas from different viewpoints</span>
+        <span class="tag">More comprehensive solutions</span>
+        <span class="tag">Group achieves more favourable outcomes than individuals with superior authorities</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Disadvantages of Group Communication</div>
+      <div class="tags">
+        <span class="tag">Few dominate → actual viewpoints not shared</span>
+        <span class="tag">Personally related members may deviate into personal discussions</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Routine vs Positive Message — Definitions</div>
+      <div class="tags">
+        <span class="tag pink-hl">Routine: reader pleased/interested/neutral; who/when/what/where/why/how</span>
+        <span class="tag pink-hl">Positive: good news, acceptance, or congratulations</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">3-Step Process for Positive/Routine Messages</div>
+      <div class="tip-row"><span class="num-badge">1</span> <strong>Planning</strong> — Analyze situation, gather info, select right medium</div>
+      <div class="tip-row"><span class="num-badge">2</span> <strong>Writing</strong> — Adapt to audience; open with main idea; details in body; close cordially</div>
+      <div class="tip-row"><span class="num-badge">3</span> <strong>Completing</strong> — Revise, produce, proofread, and distribute</div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">Strategy</div>
+      <div class="tags">
+        <span class="tag pink-hl">Opening: main idea first (direct approach)</span>
+        <span class="tag">Body: explain all relevant details</span>
+        <span class="tag">Close: cordially; tell audience what to do next</span>
+        <span class="tag pink-hl">Any negative info → present in positive context</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: MCQ Targets (WIDE) -->
+  <div class="card yellow wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield MCQ Targets — Module 5</h2>
+    </div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Topic</th><th>What to Know</th></tr>
+        <tr><td>7 Goals — Negative News</td><td>All 7 labels — "Avoid legal liability" is a common trap answer (Goal #4)</td></tr>
+        <tr><td>4 Crisis Plan Elements</td><td>Team + Spokesperson + Location + Media Plan</td></tr>
+        <tr><td>Ethnocentrism <span class="badge key">DEF</span></td><td>Belief that one's own cultural group is innately superior to others</td></tr>
+        <tr><td>5 Cross-Cultural Factors</td><td>Language / Environment-Technology / Social Organization / Authority / Nonverbal</td></tr>
+        <tr><td>Language = Most Cited <span class="badge key">TRAP</span></td><td>Language is the MOST OFTEN CITED barrier to cross-cultural communication</td></tr>
+        <tr><td>Group vs Crowd</td><td>Crowd has NO common goals; Group does ✅</td></tr>
+        <tr><td>Group Psychologies</td><td>More discussion → polarization → cautious OR risky decisions</td></tr>
+        <tr><td>Group Norms</td><td>Standards, customs, behavioral expectations; emerge from members as group forms</td></tr>
+        <tr><td>Teamwork Definition</td><td>Collaborative effort to achieve common goal effectively and efficiently</td></tr>
+        <tr><td>3 Ways Leaders Take Role</td><td>Appointed / Democratic / Emergent</td></tr>
+        <tr><td>5 Leader Styles</td><td>Autocratic / Laissez-faire / Technician / Conductor / Coach</td></tr>
+        <tr><td>Laissez-faire <span class="badge key">TRAP</span></td><td>"Live and let live" — gives professionals space and tools; NOT complete hands-off</td></tr>
+        <tr><td>3-Step Positive Message</td><td>Planning / Writing / Completing — sequence matters</td></tr>
+        <tr><td>Routine vs Positive Message</td><td>Routine = neutral/interested; Positive = good news/acceptance/congratulations</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

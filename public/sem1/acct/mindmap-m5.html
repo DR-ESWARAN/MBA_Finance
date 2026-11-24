@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCT Module 5 — Final Accounts</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#43e97b,#4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .central { grid-column: 1/-1; background: linear-gradient(135deg,#1f1433,#281a40); border: 1px solid rgba(231,76,111,0.3); border-radius: 18px; padding: 20px; text-align: center; }
+  .central h1 { font-size: clamp(1.1rem,4vw,1.6rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#43e97b,#4facfe); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; line-height: 1.3; }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background:rgba(231,76,111,0.15); color:#e74c6f; border:1px solid rgba(231,76,111,0.3); }
+  .c2 { background:rgba(245,166,35,0.15); color:#f5a623; border:1px solid rgba(245,166,35,0.3); }
+  .c3 { background:rgba(78,205,196,0.15); color:#4ecdc4; border:1px solid rgba(78,205,196,0.3); }
+  .c4 { background:rgba(123,97,255,0.15); color:#7b61ff; border:1px solid rgba(123,97,255,0.3); }
+  .c5 { background:rgba(67,233,123,0.15); color:#43e97b; border:1px solid rgba(67,233,123,0.3); }
+  .c6 { background:rgba(79,172,254,0.15); color:#4facfe; border:1px solid rgba(79,172,254,0.3); }
+  .wide { grid-column: span 2; }
+  .formula { background: rgba(231,76,111,0.1); border: 1px solid rgba(231,76,111,0.3); border-radius: 10px; padding: 10px 14px; font-size: clamp(0.82rem,2.5vw,0.92rem); color: #ff8a80; text-align: center; font-weight: 700; margin-top: 8px; }
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-top: 10px; justify-content: center; }
+  .flow-step { border-radius: 10px; padding: 8px 14px; font-size: 0.72rem; font-weight: 700; text-align: center; }
+  .flow-step.trading { background: rgba(245,166,35,0.15); border: 1px solid rgba(245,166,35,0.4); color: #f5a623; }
+  .flow-step.pl      { background: rgba(67,233,123,0.15); border: 1px solid rgba(67,233,123,0.4); color: #43e97b; }
+  .flow-step.bs      { background: rgba(79,172,254,0.15); border: 1px solid rgba(79,172,254,0.4); color: #4facfe; }
+  .flow-step.tb      { background: rgba(123,97,255,0.15); border: 1px solid rgba(123,97,255,0.4); color: #7b61ff; }
+  .flow-arrow        { color: #555; font-size: 1rem; font-weight: 700; }
+  /* T-Account style */
+  .t-account { border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin-top: 8px; }
+  .t-header { background: rgba(255,255,255,0.05); padding: 5px 10px; font-size: 0.7rem; font-weight: 700; text-align: center; color: #aaa; letter-spacing: 0.4px; text-transform: uppercase; }
+  .t-body { display: grid; grid-template-columns: 1fr 1fr; }
+  .t-dr, .t-cr { padding: 8px 10px; }
+  .t-dr { border-right: 1px solid rgba(255,255,255,0.07); }
+  .t-side-label { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+  .t-dr .t-side-label { color: #43e97b; }
+  .t-cr .t-side-label { color: #ff8a80; }
+  .t-item { font-size: 0.7rem; color: #bbb; padding: 2px 0; line-height: 1.4; }
+  @media (max-width:480px) {
+    body { padding:14px 10px 50px; }
+    .grid { gap:12px; grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr !important; }
+    .three-col { grid-template-columns:1fr !important; }
+    .card { padding:14px 12px; border-radius:12px; }
+    .card-title h2 { font-size:0.85rem; }
+    .mini-table { font-size:0.72rem; }
+    .tag { font-size:0.72rem; padding:4px 10px; }
+    .central { padding:16px 12px; }
+    .central-chip { font-size:0.7rem; padding:4px 10px; }
+    .t-body { grid-template-columns: 1fr; }
+    .t-dr { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.07); }
+  }
+  @media (min-width:481px) and (max-width:768px) {
+    .grid { grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ACCT</a><span style="flex:1"></span><a href="notes-m5.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">‹ M4</a></div>
+<div class="header">
+  <h1>Principles of Accounting — Module 5</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>ACCT Module 5: Final Accounts</h1>
+    <p>Prepared at end of accounting year · Based on Trial Balance · Shows Performance + Financial Position</p>
+    <div class="central-chips">
+      <span class="central-chip c2">Trading Account</span>
+      <span class="central-chip c5">P&L Account</span>
+      <span class="central-chip c6">Balance Sheet</span>
+      <span class="central-chip c1">Adjustments</span>
+      <span class="central-chip c4">TB vs BS</span>
+      <span class="central-chip c3">Objectives</span>
+    </div>
+    <!-- Flow -->
+    <div class="flow">
+      <div class="flow-step tb">Trial Balance</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step trading">Trading A/c<br><small>Gross Profit / Loss</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step pl">P&L A/c<br><small>Net Profit / Loss</small></div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step bs">Balance Sheet<br><small>Financial Position</small></div>
+    </div>
+  </div>
+
+  <!-- CARD 1: OVERVIEW -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📊</div><h2>1. What are Final Accounts?</h2></div>
+    <div class="branch">
+      <div class="branch-label">3 Components</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Account</th><th>Shows</th></tr>
+          <tr><td>1</td><td><b style="color:#f5a623">Trading Account</b></td><td>Gross Profit or Gross Loss</td></tr>
+          <tr><td>2</td><td><b style="color:#43e97b">Profit & Loss A/c</b></td><td>Net Profit or Net Loss</td></tr>
+          <tr><td>3</td><td><b style="color:#4facfe">Balance Sheet</b></td><td>Financial Position on a specific date</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Primary Objectives</div>
+      <div class="tags">
+        <span class="tag highlight">Know profit earned / loss suffered</span>
+        <span class="tag highlight">Know assets and liabilities</span>
+        <span class="tag highlight">Know owner's capital/equity</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Trading A/c = Gross revenue from cath lab procedures. P&L = Net income after hospital overheads. Balance Sheet = Your net worth statement — assets vs liabilities on a given date.
+    </div>
+  </div>
+
+  <!-- CARD 2: TRADING ACCOUNT — WIDE -->
+  <div class="card orange wide">
+    <div class="card-title"><div class="card-icon">🔄</div><h2>2. Trading Account</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="branch">
+      <div class="branch-label">Purpose</div>
+      <p style="font-size:0.73rem;color:#bbb;line-height:1.5;">Shows result of <b>buying and selling of goods</b>. Finds difference between Selling Price and Cost Price → <b>Gross Profit or Gross Loss</b>.</p>
+    </div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div class="t-account">
+          <div class="t-header">Trading Account</div>
+          <div class="t-body">
+            <div class="t-dr">
+              <div class="t-side-label">Dr Side (Cost Items)</div>
+              <div class="t-item">Opening Stock</div>
+              <div class="t-item">Purchases</div>
+              <div class="t-item">Less: Purchase Returns</div>
+              <div class="t-item" style="color:#f5a623;">= Net Purchases</div>
+              <div class="t-item">Wages (Productive)</div>
+              <div class="t-item">Carriage Inwards</div>
+              <div class="t-item">Octroi Duty</div>
+              <div class="t-item">Customs / Import duty</div>
+              <div class="t-item">Fuel, Power, Lighting</div>
+              <div class="t-item">Packing charges</div>
+              <div class="t-item" style="color:#43e97b;margin-top:6px;"><b>→ Gross Loss</b> (if Dr &gt; Cr)</div>
+            </div>
+            <div class="t-cr">
+              <div class="t-side-label">Cr Side (Revenue Items)</div>
+              <div class="t-item">Sales (Cash + Credit)</div>
+              <div class="t-item">Less: Sales Returns</div>
+              <div class="t-item" style="color:#f5a623;">= Net Sales</div>
+              <div class="t-item">Closing Stock</div>
+              <div class="t-item" style="color:#888;font-style:italic;font-size:0.65rem;">(Closing stock: outside TB — adjustment item)</div>
+              <div class="t-item" style="color:#43e97b;margin-top:6px;"><b>→ Gross Profit</b> (if Cr &gt; Dr)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Balancing the Trading Account</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Situation</th><th>Result</th><th>Transfer to</th></tr>
+            <tr><td>Cr side &gt; Dr side</td><td style="color:#43e97b;"><b>Gross Profit</b></td><td>Cr side of P&L A/c</td></tr>
+            <tr><td>Dr side &gt; Cr side</td><td style="color:#e74c6f;"><b>Gross Loss</b></td><td>Dr side of P&L A/c</td></tr>
+          </table>
+        </div>
+        <div class="branch-label" style="margin-top:10px;">Advantages of Trading Account</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>✅ Clearly shows result of purchases and sales</td></tr>
+            <tr><td>✅ Gross Profit % to Sales → helps determine pricing</td></tr>
+            <tr><td>✅ GP to Direct Expenses ratio → eliminate waste</td></tr>
+            <tr><td>✅ Year-on-year comparison → better policy decisions</td></tr>
+          </table>
+        </div>
+        <div class="branch-label" style="margin-top:10px;">Key Distinction</div>
+        <div class="tags">
+          <span class="tag orange-hl">Direct expenses → Trading A/c</span>
+          <span class="tag green-hl">Indirect expenses → P&L A/c</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: P&L ACCOUNT -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">💹</div><h2>3. Profit & Loss Account</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="branch">
+      <div class="branch-label">Starts with Gross Profit (from Trading A/c) → reveals Net Profit / Net Loss</div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Debit Side — 4 Groups of Indirect Expenses</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Group</th><th>Examples</th></tr>
+          <tr><td><b style="color:#e74c6f">Selling Expenses</b></td><td>Carriage outwards, Travelling, Advertising</td></tr>
+          <tr><td><b style="color:#f5a623">Office Expenses</b></td><td>Office salaries, Rent, Tax, Postage, Stationery</td></tr>
+          <tr><td><b style="color:#7b61ff">Maintenance Expenses</b></td><td>Repairs &amp; Renewals, <b>Depreciation</b></td></tr>
+          <tr><td><b style="color:#4facfe">Financial Expenses</b></td><td>Interest on loan, Discount allowed</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Balancing P&L A/c</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>Cr &gt; Dr</td><td style="color:#43e97b;"><b>Net Profit</b> → increases Capital A/c</td></tr>
+          <tr><td>Dr &gt; Cr</td><td style="color:#e74c6f;"><b>Net Loss</b> → reduces Capital A/c</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: BALANCE SHEET -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🏦</div><h2>4. Balance Sheet</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.73rem;color:#bbb;line-height:1.5;font-style:italic;">"A statement which sets out the Assets and Liabilities of a business firm and which serves to ascertain the financial position of the same on any particular date."</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Points</div>
+      <div class="tags">
+        <span class="tag highlight">Statement — NOT an account</span>
+        <span class="tag highlight">Prepared on a specific DATE (not period)</span>
+        <span class="tag blue-hl">Both sides must always be EQUAL</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Structure</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th style="color:#e74c6f;">LEFT Side</th><th style="color:#43e97b;">RIGHT Side</th></tr>
+          <tr><td><b>Liabilities + Capital</b></td><td><b>Assets</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Equations</div>
+      <div class="formula" style="background:rgba(79,172,254,0.1);border-color:rgba(79,172,254,0.3);color:#a8d8ff;font-size:0.8rem;">
+        Assets = Liabilities + Capital<br>
+        Capital = Assets − Liabilities<br>
+        Liabilities = Assets − Capital
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">5 Objectives of Balance Sheet</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>1</td><td>Shows accurate <b>financial position</b></td></tr>
+          <tr><td>2</td><td>Gist of all transactions at a given date</td></tr>
+          <tr><td>3</td><td>Shows if assets are sufficient to <b>repay liabilities</b></td></tr>
+          <tr><td>4</td><td>Verifies <b>accuracy of final accounts</b></td></tr>
+          <tr><td>5</td><td>Shows profit/loss carried from P&L A/c</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: TB vs BS — WIDE -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">📑</div><h2>5. Trial Balance vs Balance Sheet</h2><span class="badge star">⭐ MCQ TARGET</span></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Basis</th>
+          <th>Trial Balance</th>
+          <th>Balance Sheet</th>
+        </tr>
+        <tr><td>Accounts shown</td><td>All ledger accounts</td><td>Personal + Real accounts only</td></tr>
+        <tr><td>When prepared</td><td>After Ledger accounts</td><td>After Trading A/c + P&L A/c</td></tr>
+        <tr><td>Objective</td><td style="color:#4facfe;">Check arithmetical accuracy</td><td style="color:#43e97b;">Reveal financial position</td></tr>
+        <tr><td>Item order</td><td>Not in specific order</td><td>Items in proper order</td></tr>
+        <tr><td>Stock shown</td><td style="color:#f5a623;"><b>Opening stock</b></td><td style="color:#f9d423;"><b>Closing stock</b></td></tr>
+        <tr><td>Headings</td><td>Debit and Credit</td><td>Assets and Liabilities</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 6: ADJUSTMENTS -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🔧</div><h2>6. Adjustments — Golden Rule</h2></div>
+    <div class="branch">
+      <div class="formula" style="background:rgba(123,97,255,0.1);border-color:rgba(123,97,255,0.3);color:#b39ddb;font-size:0.78rem;">
+        Trial Balance items → entered at <b>ONE place</b><br>
+        Adjustment items → treated at <b>TWO places</b>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Outstanding Expenses (example)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Where</th><th>Treatment</th></tr>
+          <tr><td>P&L Account</td><td>Add to relevant expense (Dr side)</td></tr>
+          <tr><td>Balance Sheet</td><td>Show as <b>Liability</b> (Cr side)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Closing Stock (important)</div>
+      <div class="tags">
+        <span class="tag highlight">Does NOT appear in Trial Balance</span>
+        <span class="tag green-hl">Cr side of Trading A/c</span>
+        <span class="tag blue-hl">Asset side of Balance Sheet</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: HIGH YIELD -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">⚡</div><h2>High-Yield Exam Targets</h2><span class="badge star">⭐ EXAM FOCUS</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Point</th><th>Key Fact</th></tr>
+          <tr><td>Final Accounts basis</td><td>Prepared from <b>Trial Balance</b></td></tr>
+          <tr><td>Trading A/c result</td><td>Gross Profit or Gross Loss</td></tr>
+          <tr><td>P&L A/c result</td><td>Net Profit or Net Loss</td></tr>
+          <tr><td>Balance Sheet</td><td><b>Statement</b> (not account) on a specific date</td></tr>
+          <tr><td>Balance Sheet LHS</td><td>Liabilities + Capital</td></tr>
+          <tr><td>Balance Sheet RHS</td><td>Assets</td></tr>
+          <tr><td>Closing stock in TB?</td><td><b>No</b> — appears outside TB (adjustment)</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Item</th><th>Goes In</th></tr>
+          <tr><td>Wages, Carriage inwards, Octroi</td><td style="color:#f5a623;">Trading A/c (Dr)</td></tr>
+          <tr><td>Closing stock</td><td style="color:#f5a623;">Trading A/c (Cr) + Balance Sheet</td></tr>
+          <tr><td>Office salaries, Rent, Stationery</td><td style="color:#43e97b;">P&L A/c (Dr)</td></tr>
+          <tr><td>Depreciation, Repairs</td><td style="color:#43e97b;">P&L A/c — Maintenance group</td></tr>
+          <tr><td>Interest on loan</td><td style="color:#43e97b;">P&L A/c — Financial group</td></tr>
+          <tr><td>Advertising, Carriage outwards</td><td style="color:#43e97b;">P&L A/c — Selling group</td></tr>
+          <tr><td>Outstanding expenses</td><td>P&L A/c + Balance Sheet (2 places)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;color:#444;font-size:0.7rem;margin-top:30px;padding-bottom:20px;">ACCT Module 5 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

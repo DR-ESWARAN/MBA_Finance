@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECON Module 3 — Cost & Production Theory</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #140b24;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #f59e0b;
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: #1e2130;
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid #f59e0b;
+  }
+  .card.wide { grid-column: 1 / -1; }
+  .card.blue { border-left-color: #3b82f6; }
+  .card.green { border-left-color: #10b981; }
+  .card.purple { border-left-color: #8b5cf6; }
+  .card.red { border-left-color: #ef4444; }
+  .card.cyan { border-left-color: #06b6d4; }
+  .card.pink { border-left-color: #ec4899; }
+  .card.orange { border-left-color: #f97316; }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 0.65rem;
+    background: #f59e0b22;
+    color: #f59e0b;
+    border: 1px solid #f59e0b44;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-weight: 600;
+  }
+  .badge.blue { background: #3b82f622; color: #3b82f6; border-color: #3b82f644; }
+  .badge.green { background: #10b98122; color: #10b981; border-color: #10b98144; }
+  .badge.purple { background: #8b5cf622; color: #8b5cf6; border-color: #8b5cf644; }
+  .badge.red { background: #ef444422; color: #ef4444; border-color: #ef444444; }
+  .badge.cyan { background: #06b6d422; color: #06b6d4; border-color: #06b6d444; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 6px; }
+  th { background: #2d3148; color: #94a3b8; font-weight: 600; padding: 6px 8px; text-align: left; font-size: 0.75rem; }
+  td { padding: 5px 8px; border-bottom: 1px solid #2d3148; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #252840; }
+  ul { padding-left: 16px; }
+  li { margin-bottom: 4px; font-size: 0.85rem; }
+  .highlight { color: #f59e0b; font-weight: 600; }
+  .blue-hl { color: #60a5fa; font-weight: 600; }
+  .green-hl { color: #34d399; font-weight: 600; }
+  .purple-hl { color: #a78bfa; font-weight: 600; }
+  .red-hl { color: #f87171; font-weight: 600; }
+  .cyan-hl { color: #22d3ee; font-weight: 600; }
+  .formula {
+    background: #140b24;
+    border: 1px solid #2d3148;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #a78bfa;
+    margin: 6px 0;
+  }
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .pill {
+    background: #2d3148;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .pill.amber { background: #f59e0b22; color: #f59e0b; }
+  .pill.blue { background: #3b82f622; color: #60a5fa; }
+  .pill.green { background: #10b98122; color: #34d399; }
+  .pill.purple { background: #8b5cf622; color: #a78bfa; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 10px 0 4px;
+  }
+  .curve-box {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .curve-item {
+    flex: 1;
+    min-width: 120px;
+    background: #252840;
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 0.78rem;
+  }
+  .curve-name { font-weight: 700; font-size: 0.8rem; margin-bottom: 3px; }
+  @media (max-width: 480px) {
+    body { padding: 12px 10px; }
+    h1 { font-size: 1.1rem; }
+    .card { padding: 13px; }
+    .curve-item { min-width: 100%; }
+    .card.wide { grid-column: auto; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ECON</a><span style="flex:1"></span><a href="notes-m3.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">‹ M2</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">M4 ›</a></div>
+
+<h1>⚙️ ECON Module 3 — Cost Concept & Production Theory</h1>
+<p class="subtitle">Exam: 15 May 2026 | Source: EBook Module 3</p>
+
+<div class="grid">
+
+  <!-- CARD 1: Cost Classifications -->
+  <div class="card blue wide">
+    <div class="card-title">💰 6 Cost Classifications <span class="badge blue">HIGH YIELD</span></div>
+    <table>
+      <tr><th>Basis</th><th>Type 1</th><th>Type 2</th></tr>
+      <tr>
+        <td><span class="blue-hl">Treatment</span></td>
+        <td><span class="highlight">Accounting</span> — cash paid; in financial statements</td>
+        <td><span class="highlight">Economic</span> — accounting + opportunity costs; used for supernormal profit</td>
+      </tr>
+      <tr>
+        <td><span class="blue-hl">Expense Nature</span></td>
+        <td><span class="highlight">Outlay</span> — actual expenditure (wages, rent)</td>
+        <td><span class="highlight">Opportunity</span> — income foregone from next best alternative</td>
+      </tr>
+      <tr>
+        <td><span class="blue-hl">Traceability</span></td>
+        <td><span class="highlight">Direct</span> — traceable to specific product/process</td>
+        <td><span class="highlight">Indirect</span> — can't trace; affects overall profitability</td>
+      </tr>
+      <tr>
+        <td><span class="blue-hl">Purpose</span></td>
+        <td><span class="highlight">Incremental</span> — from policy decisions (new products, machinery)</td>
+        <td><span class="highlight">Sunk</span> — already paid; non-recoverable (R&D, ads)</td>
+      </tr>
+      <tr>
+        <td><span class="blue-hl">Payer</span></td>
+        <td><span class="highlight">Private</span> — borne by business (manufacturing, selling)</td>
+        <td><span class="highlight">Social</span> — borne by society (pollution, environmental use)</td>
+      </tr>
+      <tr>
+        <td><span class="blue-hl">Variability</span></td>
+        <td><span class="highlight">Fixed</span> — constant regardless of output (rent, loan interest)</td>
+        <td><span class="highlight">Variable</span> — changes with output (raw materials, wages)</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- CARD 2: Short-Run Cost Curves -->
+  <div class="card green">
+    <div class="card-title">📉 Short-Run Cost Curves <span class="badge green">EXAM FAVOURITE</span></div>
+    <div class="curve-box">
+      <div class="curve-item">
+        <div class="curve-name" style="color:#34d399">AFC</div>
+        Falls continuously<br>Rectangular hyperbola<br><span style="color:#64748b;font-size:0.72rem">Fixed TC ÷ more units</span>
+      </div>
+      <div class="curve-item">
+        <div class="curve-name" style="color:#60a5fa">AVC</div>
+        U-shaped; turns first<br><span style="color:#64748b;font-size:0.72rem">Efficiency → overcrowding</span>
+      </div>
+      <div class="curve-item">
+        <div class="curve-name" style="color:#f59e0b">ATC</div>
+        U-shaped; turns LATER<br>ATC = AFC + AVC<br><span style="color:#64748b;font-size:0.72rem">AFC fall offsets AVC rise</span>
+      </div>
+      <div class="curve-item">
+        <div class="curve-name" style="color:#f87171">MC</div>
+        U-shaped<br><span class="red-hl">Cuts AVC & ATC at their MINIMUM</span>
+      </div>
+    </div>
+    <div class="section-label">Key Rule</div>
+    <div style="font-size:0.82rem">
+      MC &lt; AC → pulls AC <span class="green-hl">DOWN</span> &nbsp;|&nbsp; MC &gt; AC → pulls AC <span class="red-hl">UP</span> &nbsp;|&nbsp; MC = AC → <span class="highlight">minimum point</span>
+    </div>
+  </div>
+
+  <!-- CARD 3: Long Run & Economies of Scale -->
+  <div class="card purple">
+    <div class="card-title">📈 Long-Run Costs & Economies of Scale <span class="badge purple">LRAC</span></div>
+    <ul>
+      <li>In LR, <span class="purple-hl">ALL costs are variable</span> — firm can resize plant</li>
+      <li>LRAC = <span class="highlight">envelope curve</span> — tangential to all SR-ATC curves</li>
+      <li>Theoretical shape: U-shaped | Empirical: <span class="purple-hl">L-shaped</span></li>
+    </ul>
+    <div class="section-label">5 Internal Economies of Scale</div>
+    <table>
+      <tr><th>Type</th><th>How</th></tr>
+      <tr><td><span class="highlight">Technical</span></td><td>Efficient machines; learning curve; mfg costs fall 70–90% on doubling output</td></tr>
+      <tr><td><span class="highlight">Monopsony</span></td><td>Bulk buying power → lower input prices (Walmart)</td></tr>
+      <tr><td><span class="highlight">Managerial</span></td><td>Can afford specialist managers (expert sales, HR)</td></tr>
+      <tr><td><span class="highlight">Financial</span></td><td>IPO access, higher credit rating → cheaper capital</td></tr>
+      <tr><td><span class="highlight">Network</span></td><td>Near-zero marginal cost per extra user (eBay)</td></tr>
+    </table>
+    <div class="section-label" style="margin-top:8px">Diseconomies</div>
+    <div style="font-size:0.82rem">Slow decisions · Miscommunication · Culture clashes from acquisitions</div>
+  </div>
+
+  <!-- CARD 4: Cost Control -->
+  <div class="card">
+    <div class="card-title">🎯 Cost Control Tools <span class="badge">PREVENTIVE</span></div>
+    <div class="section-label">Budgetary Control</div>
+    <ul>
+      <li>Budget = anticipated plan in numerical terms for a period</li>
+      <li>Compare actual vs budget → identify deviations → correct</li>
+      <li><span class="highlight">Fixed Budget</span> — specific output level</li>
+      <li><span class="highlight">Flexible Budget</span> — adapts to output changes</li>
+      <li><span class="highlight">ZBB (Zero-Base Budget)</span> — Texas Instruments 1971; every manager justifies from zero; eliminates wasteful activities</li>
+      <li><span class="highlight">Performance Budget</span> — links inputs to outputs (USA 1960s)</li>
+    </ul>
+    <div class="section-label">Standard Costing</div>
+    <ul>
+      <li>Pre-determined cost under efficient conditions</li>
+      <li>Actual vs Standard → variance → corrective action</li>
+      <li>Standards: Ideal → Target → Currently Attainable → Basic</li>
+    </ul>
+  </div>
+
+  <!-- CARD 5: Variance Analysis -->
+  <div class="card red">
+    <div class="card-title">📊 Variance Analysis — 4 Kinds <span class="badge red">STANDARD COSTING</span></div>
+    <table>
+      <tr><th>Variance</th><th>Sub-types</th></tr>
+      <tr>
+        <td><span class="red-hl">Material</span></td>
+        <td>Price · Usage · Mix · Yield</td>
+      </tr>
+      <tr>
+        <td><span class="red-hl">Labour</span></td>
+        <td>Wage Rate · Efficiency</td>
+      </tr>
+      <tr>
+        <td><span class="red-hl">Sales</span></td>
+        <td>Mix · Quantity · Volume · Price</td>
+      </tr>
+      <tr>
+        <td><span class="red-hl">Overhead</span></td>
+        <td>Expenditure · Efficiency</td>
+      </tr>
+    </table>
+    <div class="section-label">12 Cost Reduction Techniques</div>
+    <div class="pill-row">
+      <span class="pill">O&M</span>
+      <span class="pill">Work Study</span>
+      <span class="pill">Materials Handling</span>
+      <span class="pill">Automation</span>
+      <span class="pill amber">Value Analysis</span>
+      <span class="pill">Variety Reduction</span>
+      <span class="pill">Production Control</span>
+      <span class="pill">Design</span>
+      <span class="pill">Materials Control</span>
+      <span class="pill">Quality Control</span>
+      <span class="pill">Terotechnology</span>
+      <span class="pill amber">Cost-Benefit Analysis</span>
+    </div>
+    <div style="font-size:0.78rem;color:#64748b;margin-top:6px">C/B &lt; 1 → benefit &gt; cost → proceed</div>
+  </div>
+
+  <!-- CARD 6: Cost Estimation -->
+  <div class="card cyan">
+    <div class="card-title">🔬 Cost Estimation — LR Methods <span class="badge cyan">4 METHODS</span></div>
+    <table>
+      <tr><th>Method</th><th>Basis</th><th>Key Point</th></tr>
+      <tr>
+        <td><span class="cyan-hl">Engineering</span></td>
+        <td>Physical inputs × prices</td>
+        <td>Expert opinion; ignores selling/admin costs</td>
+      </tr>
+      <tr>
+        <td><span class="cyan-hl">Survivor (Stigler)</span></td>
+        <td>Firms classified by size; efficient ones gain share</td>
+        <td>U-shaped LRAC with flat middle (steel industry)</td>
+      </tr>
+      <tr>
+        <td><span class="cyan-hl">Statistical</span></td>
+        <td>Historical cost + regression</td>
+        <td>Linear=constant MC; Cubic=U-shaped AC & MC</td>
+      </tr>
+      <tr>
+        <td><span class="cyan-hl">Cross-Section</span></td>
+        <td>Compare different-sized firms at one time</td>
+        <td>LAC tends to be <span class="highlight">L-shaped</span>; MES = QM</td>
+      </tr>
+    </table>
+    <div class="section-label">Short-Run Estimation</div>
+    <div style="font-size:0.82rem">Time-series data + regression analysis → linear cost function fits SR well</div>
+  </div>
+
+  <!-- CARD 7: Production Functions -->
+  <div class="card wide" style="border-left-color:#ec4899">
+    <div class="card-title">🏭 Production Function <span class="badge" style="background:#ec489922;color:#ec4899;border-color:#ec489944">HIGH YIELD</span></div>
+    <div class="formula">Q = f(L, C, N) &nbsp;|&nbsp; Q = output, L = Labour, C = Capital, N = Land</div>
+    <div style="font-size:0.82rem;margin:4px 0 10px">3 Features: <span class="highlight">Substitutability</span> (variable proportions) · <span class="highlight">Complementarity</span> (returns to scale) · <span class="highlight">Specificity</span> (factors specific to products)</div>
+    <table>
+      <tr><th>Function</th><th>Formula</th><th>Returns to Scale</th><th>Key Fact</th></tr>
+      <tr>
+        <td><span style="color:#ec4899;font-weight:600">Linear Homogeneous</span></td>
+        <td><code>nQ = f(nL, nK)</code></td>
+        <td>Constant</td>
+        <td>n-fold inputs → n-fold output; fixed optimum proportions</td>
+      </tr>
+      <tr>
+        <td><span style="color:#ec4899;font-weight:600">Cobb-Douglas</span></td>
+        <td><code>Q = AL^α K^β</code></td>
+        <td>α+β&gt;1: Increasing<br>α+β=1: Constant<br>α+β&lt;1: Decreasing</td>
+        <td>Log Q = log A + α log L + β log K | α = labour share; β = capital share | Most used in econometrics</td>
+      </tr>
+      <tr>
+        <td><span style="color:#ec4899;font-weight:600">CES</span></td>
+        <td><code>Q = A[αC^(-θ)+(1-α)L^(-θ)]^(-1/θ)</code></td>
+        <td>All types</td>
+        <td>Constant (not necessarily unitary) elasticity of substitution; more general than C-D</td>
+      </tr>
+      <tr>
+        <td><span style="color:#ec4899;font-weight:600">VES</span></td>
+        <td><code>V/L = a + b log W + c log K/L</code></td>
+        <td>Variable</td>
+        <td>σ = b/(1-c)(1+WL/rK); most general; neo-classical properties</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- CARD 8: Indifference Curves -->
+  <div class="card" style="border-left-color:#f97316">
+    <div class="card-title">〰️ Indifference Curves</div>
+    <ul>
+      <li>Combinations of 2 goods giving <span class="highlight">equal satisfaction</span></li>
+      <li><span class="highlight">Convex to origin</span> — MRS = Marginal Rate of Substitution</li>
+      <li>No two curves intersect</li>
+      <li>Higher curve = higher satisfaction (further from origin)</li>
+      <li><span class="highlight">Optimal consumption:</span> tangent point of indifference curve & budget constraint</li>
+    </ul>
+  </div>
+
+  <!-- CARD 9: Quick Reference -->
+  <div class="card" style="border-left-color:#10b981">
+    <div class="card-title">⚡ Quick Exam Reference</div>
+    <table>
+      <tr><th>Concept</th><th>One-liner</th></tr>
+      <tr><td>Sunk costs</td><td>Non-recoverable; irrelevant to current decisions</td></tr>
+      <tr><td>AFC shape</td><td>Always falls; rectangular hyperbola</td></tr>
+      <tr><td>MC rule</td><td>Cuts AVC & ATC at their minimum points</td></tr>
+      <tr><td>ATC vs AVC minimum</td><td>ATC minimum comes at HIGHER output than AVC minimum</td></tr>
+      <tr><td>LRAC empirical</td><td>L-shaped (not U-shaped)</td></tr>
+      <tr><td>ZBB origin</td><td>Texas Instruments, USA, 1971</td></tr>
+      <tr><td>Cobb-Douglas α+β</td><td>&gt;1 increasing; =1 constant; &lt;1 decreasing returns</td></tr>
+      <tr><td>MES</td><td>Smallest output where LAC is minimum</td></tr>
+      <tr><td>Cost control vs reduction</td><td>Control = preventive/present; Reduction = corrective/future</td></tr>
+      <tr><td>Internal economies — 5</td><td>Technical · Monopsony · Managerial · Financial · Network</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECON Module 4 — Pricing Decisions</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #140b24;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #f59e0b;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: #1e2130;
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid #f59e0b;
+  }
+  .card.wide { grid-column: 1 / -1; }
+  .card.blue { border-left-color: #3b82f6; }
+  .card.green { border-left-color: #10b981; }
+  .card.purple { border-left-color: #8b5cf6; }
+  .card.red { border-left-color: #ef4444; }
+  .card.cyan { border-left-color: #06b6d4; }
+  .card.pink { border-left-color: #ec4899; }
+  .card.orange { border-left-color: #f97316; }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 0.65rem;
+    background: #f59e0b22;
+    color: #f59e0b;
+    border: 1px solid #f59e0b44;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-weight: 600;
+  }
+  .badge.blue { background: #3b82f622; color: #3b82f6; border-color: #3b82f644; }
+  .badge.green { background: #10b98122; color: #10b981; border-color: #10b98144; }
+  .badge.purple { background: #8b5cf622; color: #8b5cf6; border-color: #8b5cf644; }
+  .badge.red { background: #ef444422; color: #ef4444; border-color: #ef444444; }
+  .badge.cyan { background: #06b6d422; color: #06b6d4; border-color: #06b6d444; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 6px; }
+  th { background: #2d3148; color: #94a3b8; font-weight: 600; padding: 6px 8px; text-align: left; font-size: 0.75rem; }
+  td { padding: 5px 8px; border-bottom: 1px solid #2d3148; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #252840; }
+  ul { padding-left: 16px; }
+  li { margin-bottom: 4px; font-size: 0.85rem; }
+  .highlight { color: #f59e0b; font-weight: 600; }
+  .blue-hl { color: #60a5fa; font-weight: 600; }
+  .green-hl { color: #34d399; font-weight: 600; }
+  .purple-hl { color: #a78bfa; font-weight: 600; }
+  .red-hl { color: #f87171; font-weight: 600; }
+  .cyan-hl { color: #22d3ee; font-weight: 600; }
+  .pink-hl { color: #f472b6; font-weight: 600; }
+  .formula {
+    background: #140b24;
+    border: 1px solid #2d3148;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #a78bfa;
+    margin: 6px 0;
+  }
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .pill {
+    background: #2d3148;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .pill.amber { background: #f59e0b22; color: #f59e0b; }
+  .pill.blue { background: #3b82f622; color: #60a5fa; }
+  .pill.green { background: #10b98122; color: #34d399; }
+  .pill.red { background: #ef444422; color: #f87171; }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 10px 0 4px;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 6px;
+    font-size: 0.83rem;
+  }
+  .step-num {
+    background: #f59e0b;
+    color: #140b24;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-num.blue { background: #3b82f6; }
+  .market-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .market-card {
+    background: #252840;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 0.78rem;
+  }
+  .market-name { font-weight: 700; font-size: 0.82rem; margin-bottom: 5px; }
+  @media (max-width: 480px) {
+    body { padding: 12px 10px; }
+    h1 { font-size: 1.1rem; }
+    .card { padding: 13px; }
+    .card.wide { grid-column: auto; }
+    .market-grid { grid-template-columns: 1fr; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ECON</a><span style="flex:1"></span><a href="notes-m4.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">‹ M3</a><a href="mindmap-m5.html" style="color:#c9d1d9;text-decoration:none">M5 ›</a></div>
+
+<h1>💰 ECON Module 4 — Pricing Decisions</h1>
+<p class="subtitle">Exam: 15 May 2026 | Source: EBook Module 4</p>
+
+<div class="grid">
+
+  <!-- CARD 1: Factors -->
+  <div class="card blue">
+    <div class="card-title">🎯 3 Major Pricing Influences <span class="badge blue">START HERE</span></div>
+    <div class="step-row"><div class="step-num">1</div><div><span class="blue-hl">Customers</span> — willingness to pay; price hike → lose to competitor or substitute</div></div>
+    <div class="step-row"><div class="step-num">2</div><div><span class="blue-hl">Competitors</span> — aggressive rival forces price down; no rival = price higher</div></div>
+    <div class="step-row"><div class="step-num">3</div><div><span class="blue-hl">Costs</span> — lower cost → more supply; pricing below cost = resource drain</div></div>
+    <div class="section-label">External Factors (11)</div>
+    <div class="pill-row">
+      <span class="pill">Demand & elasticity</span>
+      <span class="pill">Competitors' number</span>
+      <span class="pill">Quality of rivals</span>
+      <span class="pill">Rival prices</span>
+      <span class="pill">Customer preferences</span>
+      <span class="pill">Sole source vs competition</span>
+      <span class="pill">Seasonal vs continual</span>
+      <span class="pill">Product life</span>
+      <span class="pill">Economic/political climate</span>
+      <span class="pill">Industry type</span>
+      <span class="pill">Govt guidelines</span>
+    </div>
+  </div>
+
+  <!-- CARD 2: Pricing Methods -->
+  <div class="card wide" style="border-left-color:#10b981">
+    <div class="card-title">📐 Pricing Methods <span class="badge green">6 METHODS</span></div>
+    <table>
+      <tr><th>Method</th><th>Basis</th><th>Best For</th><th>Limitation</th></tr>
+      <tr>
+        <td><span class="green-hl">Full Cost Plus</span></td>
+        <td>All costs (direct + indirect) + margin</td>
+        <td>Long-term contracts; regulated industries</td>
+        <td>Ignores demand; circular reasoning if volume changes</td>
+      </tr>
+      <tr>
+        <td><span class="green-hl">Manufacturing Cost Plus</span></td>
+        <td>Mfg cost only + higher margin (covers non-mfg too)</td>
+        <td>Standard product pricing</td>
+        <td>Doesn't include admin/selling in base</td>
+      </tr>
+      <tr>
+        <td><span class="green-hl">Conversion Cost Plus</span></td>
+        <td>Labour + overhead (customer provides material)</td>
+        <td>Customer-supplied materials</td>
+        <td>Narrow applicability</td>
+      </tr>
+      <tr>
+        <td><span class="green-hl">Marginal Cost Plus</span></td>
+        <td>Variable cost only + markup</td>
+        <td>Special orders; spare capacity; new markets</td>
+        <td>Fixed cost recovery not guaranteed</td>
+      </tr>
+      <tr>
+        <td><span class="green-hl">Differential Cost Plus</span></td>
+        <td>Incremental total cost (variable + some fixed) + markup</td>
+        <td>One-time extra orders</td>
+        <td>Limited to marginal volume decisions</td>
+      </tr>
+      <tr>
+        <td><span class="green-hl">Standard Costs</span></td>
+        <td>Pre-determined efficient cost + markup</td>
+        <td>Quick pricing; avoids absorbing inefficiency</td>
+        <td>Outdated standards = wrong prices</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- CARD 3: Target Pricing -->
+  <div class="card purple">
+    <div class="card-title">🎯 Target Pricing — 5 Steps <span class="badge purple">HIGH YIELD</span></div>
+    <div class="step-row"><div class="step-num" style="background:#8b5cf6">1</div><div><span class="highlight">Develop</span> product satisfying customer needs</div></div>
+    <div class="step-row"><div class="step-num" style="background:#8b5cf6">2</div><div><span class="highlight">Choose target price</span> based on perceived value + competitor prices</div></div>
+    <div class="step-row"><div class="step-num" style="background:#8b5cf6">3</div><div><span class="highlight">Derive target cost</span> = Target Price − Desired Profit</div></div>
+    <div class="step-row"><div class="step-num" style="background:#8b5cf6">4</div><div><span class="highlight">Estimate actual cost</span> of the product</div></div>
+    <div class="step-row"><div class="step-num" style="background:#8b5cf6">5</div><div>If actual &gt; target cost → <span class="red-hl">investigate cost reduction</span> or redesign</div></div>
+    <div class="formula">Target Cost = Target Price − Target Profit</div>
+    <div class="section-label">Life Cycle Costing</div>
+    <div style="font-size:0.82rem">Track all costs from R&D → end of customer support. Price must cover full lifecycle costs.</div>
+    <div class="section-label">Pareto Analysis (80/20)</div>
+    <ul>
+      <li>80% revenue from <span class="highlight">20% of products</span></li>
+      <li>20% cost drivers cause 80% of total costs (ABC)</li>
+      <li>Proposed by: <span class="highlight">Vilfredo Pareto</span> (Italian economist)</li>
+    </ul>
+  </div>
+
+  <!-- CARD 4: Price Discrimination -->
+  <div class="card red wide">
+    <div class="card-title">✂️ Price Discrimination <span class="badge red">HIGH YIELD</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px;">
+      <div>
+        <div class="section-label">3 Types by Nature</div>
+        <table>
+          <tr><th>Type</th><th>Definition</th><th>Example</th></tr>
+          <tr><td><span class="red-hl">Personal</span></td><td>Different price per person</td><td>Doctor: rich vs poor patient fees</td></tr>
+          <tr><td><span class="red-hl">Geographical</span></td><td>Different price per market/region</td><td>Dumping: low price abroad, high domestically</td></tr>
+          <tr><td><span class="red-hl">By Use</span></td><td>Different price for different uses</td><td>Electricity: domestic (low) vs commercial (high)</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="section-label">3 Degrees of Price Discrimination</div>
+        <table>
+          <tr><th>Degree</th><th>Also Known As</th><th>How</th></tr>
+          <tr><td><span class="red-hl">1st</span></td><td>Perfect / Personalised</td><td>Max price each buyer pays; captures ALL consumer surplus</td></tr>
+          <tr><td><span class="red-hl">2nd</span></td><td>Product Versioning / Menu pricing</td><td>Different price for different quantities (bulk discounts)</td></tr>
+          <tr><td><span class="red-hl">3rd</span></td><td>Group Pricing</td><td>Different price per consumer group; <span class="highlight">MOST COMMON</span> (theatre: adult/senior/child)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:10px">5 Conditions for Price Discrimination</div>
+    <div class="pill-row">
+      <span class="pill red">Different elasticity in markets</span>
+      <span class="pill red">Market imperfections</span>
+      <span class="pill red">Differentiated product</span>
+      <span class="pill red">Legal sanction</span>
+      <span class="pill red">Monopoly power</span>
+    </div>
+    <div style="font-size:0.8rem;color:#64748b;margin-top:6px">Inelastic segment → higher price | Elastic segment → lower price</div>
+  </div>
+
+  <!-- CARD 5: Market Structures -->
+  <div class="card wide" style="border-left-color:#06b6d4">
+    <div class="card-title">🏪 Market Structures — Price & Output Decisions <span class="badge cyan">4 STRUCTURES</span></div>
+    <div class="market-grid">
+      <div class="market-card">
+        <div class="market-name" style="color:#34d399">Perfect Competition</div>
+        <ul>
+          <li>Many sellers, homogeneous products</li>
+          <li><span class="green-hl">Price TAKER</span></li>
+          <li>P = MR = MC at equilibrium</li>
+          <li>Demand curve = <span class="highlight">horizontal</span> (perfectly elastic)</li>
+          <li>Price = intersection of market demand & supply (Marshall's scissors)</li>
+          <li>No barriers to entry/exit</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <div class="market-name" style="color:#f87171">Monopoly</div>
+        <ul>
+          <li>Single producer; no close substitutes</li>
+          <li><span class="red-hl">Price MAKER</span></li>
+          <li>Equilibrium: <span class="highlight">MR = MC</span></li>
+          <li>AR (demand) curve slopes downward</li>
+          <li>MR &lt; AR; MR falls 2× rate of AR</li>
+          <li class="highlight">MR = AR[(e−1)/e]</li>
+          <li>MC = 0 → equilibrium at unitary elasticity</li>
+          <li style="color:#f59e0b">📊 Q=44, P=120, Profit=₹20,844</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <div class="market-name" style="color:#a78bfa">Monopolistic Competition</div>
+        <ul>
+          <li>Many firms, differentiated products</li>
+          <li><span class="purple-hl">Price MAKER</span> (limited)</li>
+          <li>Low barriers to entry/exit</li>
+          <li>Demand highly elastic</li>
+          <li>SR: positive profit</li>
+          <li>LR: profit → <span class="highlight">zero</span> (firms enter)</li>
+          <li>Heavy advertising</li>
+        </ul>
+      </div>
+      <div class="market-card">
+        <div class="market-name" style="color:#f59e0b">Oligopoly</div>
+        <ul>
+          <li>Few large firms; mutual interdependence</li>
+          <li><span class="highlight">Sticky prices</span> (change rarely)</li>
+          <li>Non-collusive: independent; price war possible</li>
+          <li>Collusive: joint profit max; cartel</li>
+          <li>Price leadership: Low-cost / Dominant / Barometric firm leads</li>
+          <li>Price settles between monopoly (upper) and competitive (lower) limits</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: Economic Approach + Price Indifference -->
+  <div class="card">
+    <div class="card-title">📉 Economic Approach & Indifference Point</div>
+    <div class="section-label">Economic (MR=MC) Approach</div>
+    <ul>
+      <li>Profit maximised where <span class="highlight">MR = MC</span></li>
+      <li>Produce as long as MR &gt; MC</li>
+      <li>Two practical problems: (1) Hard to estimate demand curve; (2) Demand depends on quality, ads — not just price</li>
+    </ul>
+    <div class="section-label">Price Indifference Point</div>
+    <ul>
+      <li>Sales volume where net income is <span class="highlight">same under 2 pricing options</span></li>
+      <li>Expected volume &gt; indifference point → <span class="green-hl">accept price change</span></li>
+      <li>Expected volume &lt; indifference point → <span class="red-hl">reject price change</span></li>
+      <li>Used in <span class="highlight">short-term decisions</span></li>
+    </ul>
+    <div class="section-label">SR vs LR Pricing</div>
+    <table>
+      <tr><th></th><th>SR</th><th>LR</th></tr>
+      <tr><td>Horizon</td><td>≤6 months</td><td>Multi-year</td></tr>
+      <tr><td>Cost basis</td><td>Incremental only</td><td>Full costs</td></tr>
+      <tr><td>Failure risk</td><td>Sets bad precedent</td><td>Losses → exit</td></tr>
+    </table>
+  </div>
+
+  <!-- CARD 7: Quick Reference -->
+  <div class="card" style="border-left-color:#10b981">
+    <div class="card-title">⚡ Quick Exam Reference</div>
+    <table>
+      <tr><th>Concept</th><th>Key Fact</th></tr>
+      <tr><td>Pareto rule</td><td>80% revenue from 20% products (Vilfredo Pareto)</td></tr>
+      <tr><td>Target cost formula</td><td>Target Price − Target Profit</td></tr>
+      <tr><td>Full cost plus flaw</td><td>Ignores demand; circular if volume changes</td></tr>
+      <tr><td>Marginal cost plus use</td><td>Spare capacity; special orders; new markets</td></tr>
+      <tr><td>1st degree PD</td><td>Perfect — captures ALL consumer surplus</td></tr>
+      <tr><td>3rd degree PD</td><td>Group pricing — MOST COMMON</td></tr>
+      <tr><td>Monopoly equilibrium</td><td>MR=MC; Q=44, P=120, π=₹20,844 (ebook)</td></tr>
+      <tr><td>MR formula (monopoly)</td><td>MR = AR[(e−1)/e]</td></tr>
+      <tr><td>Oligopoly hallmark</td><td>Sticky prices; price leadership</td></tr>
+      <tr><td>Monopolistic LR</td><td>Profit → zero; heavy advertising</td></tr>
+      <tr><td>Perfect competition</td><td>Price taker; P = MR = MC; horizontal demand</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

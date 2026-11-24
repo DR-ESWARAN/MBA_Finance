@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QT Module 5 — Measures of Central Tendency</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem,5vw,2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon { background: rgba(67,233,123,0.2); } .blue .card-icon { background: rgba(79,172,254,0.2); }
+  .pink .card-icon { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color: #e74c6f; } .orange .card-title h2 { color: #f5a623; } .teal .card-title h2 { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; } .green .card-title h2 { color: #43e97b; } .blue .card-title h2 { color: #4facfe; }
+  .pink .card-title h2 { color: #f857a6; } .yellow .card-title h2 { color: #f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .formula-box { background: rgba(123,97,255,0.12); border: 1px solid rgba(123,97,255,0.3); border-radius: 10px; padding: 10px 14px; margin-top: 8px; text-align: center; }
+  .formula-box .formula { font-size: clamp(0.85rem,2.5vw,1rem); font-weight: 700; color: #b39ddb; letter-spacing: 0.5px; }
+  .formula-box .formula-label { font-size: 0.65rem; color: #888; margin-top: 4px; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; } .badge.key { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .central { grid-column: 1 / -1; background: linear-gradient(135deg,#1f1433,#281a40); border: 1px solid rgba(67,233,123,0.3); border-radius: 18px; padding: 20px; text-align: center; }
+  .central h1 { font-size: clamp(1.1rem,4vw,1.6rem); font-weight: 800; background: linear-gradient(90deg,#43e97b,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; line-height: 1.3; }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .wide { grid-column: span 2; }
+  @media (max-width: 480px) { body { padding: 14px 10px 50px; } .grid { gap: 12px; grid-template-columns: 1fr; } .wide { grid-column: span 1; } .two-col { grid-template-columns: 1fr !important; } .three-col { grid-template-columns: 1fr !important; } .card { padding: 14px 12px; } .card-title h2 { font-size: 0.85rem; } .central { padding: 16px 12px; } }
+  @media (min-width: 481px) and (max-width: 768px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: span 1; } .two-col { grid-template-columns: 1fr 1fr !important; } }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ QT</a><span style="flex:1"></span><a href="notes-m5.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">‹ M4</a></div>
+<div class="header">
+  <h1>Quantitative Techniques — Module 5</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>QT Module 5: Measures of Central Tendency</h1>
+    <p>A single representative value that describes the entire dataset</p>
+    <div class="central-chips">
+      <span class="central-chip c1">7 Characteristics of Good Average</span>
+      <span class="central-chip c2">Arithmetic Mean</span>
+      <span class="central-chip c3">Median</span>
+      <span class="central-chip c4">Mode</span>
+      <span class="central-chip c5">Mean vs Median vs Mode</span>
+      <span class="central-chip c6">Empirical Relationship</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITIONS + TYPES -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📐</div><h2>1. Averages — Definitions & Types</h2></div>
+    <div class="branch">
+      <div class="branch-label">Key Definitions <span class="badge key">MCQ</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Author</th><th>Definition</th></tr>
+          <tr><td><b>Clark & Sekkade</b></td><td>"Attempt to find one single figure to describe whole of figures"</td></tr>
+          <tr><td><b>Murray R. Spiegal</b></td><td>"Value which is typical or representative of a set of data"</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Functions of an Average</div>
+      <div class="tags">
+        <span class="tag highlight">Summarise huge data</span>
+        <span class="tag highlight">Facilitate comparison</span>
+        <span class="tag highlight">Help in decision making</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Categories of Averages</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Category</th><th>Types</th></tr>
+          <tr><td><b style="color:#ff8a80">Mathematical</b></td><td>AM, Geometric Mean, Harmonic Mean, Quadratic Mean</td></tr>
+          <tr><td><b style="color:#ff8a80">Positional</b></td><td>Median, Mode</td></tr>
+          <tr><td><b style="color:#ff8a80">Commercial</b></td><td>Moving, Progressive, Composite (not in exam scope)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: 7 CHARACTERISTICS -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">✅</div><h2>2. Characteristics of Good Average <span class="badge key">7</span></h2></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><td>1</td><td><b style="color:#ffd580">Rigidly defined</b> — preferably by algebraic formula</td></tr>
+        <tr><td>2</td><td>Easy to compute</td></tr>
+        <tr><td>3</td><td>Easy to understand</td></tr>
+        <tr><td>4</td><td><b style="color:#ffd580">Based on ALL observations</b></td></tr>
+        <tr><td>5</td><td><b style="color:#ffd580">Capable of further algebraic treatment</b></td></tr>
+        <tr><td>6</td><td><b style="color:#ffd580">Not unduly affected by extreme observations</b></td></tr>
+        <tr><td>7</td><td>Not much affected by fluctuations of sampling</td></tr>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Like a good diagnostic criterion — must be reproducible (#1), apply to all patients (#4), usable for further risk scoring (#5), not swayed by one outlier reading (#6).
+    </div>
+  </div>
+
+  <!-- CARD 3: ARITHMETIC MEAN — FULL WIDTH -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">➕</div><h2>3. Arithmetic Mean (AM) <span class="badge key">MOST IMPORTANT</span></h2></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">Calculation Methods</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Data Type</th><th>Formula</th></tr>
+            <tr><td>Individual obs</td><td>X̄ = ΣX / n</td></tr>
+            <tr><td>Short-cut</td><td>X̄ = A + Σd/n (d = X−A)</td></tr>
+            <tr><td>Ungrouped freq</td><td>X̄ = ΣfX / Σf</td></tr>
+            <tr><td>Grouped freq</td><td>Use mid-values; same formula</td></tr>
+            <tr><td><b style="color:#a8edea">Weighted AM</b></td><td><b>X̄w = ΣwX / Σw</b></td></tr>
+          </table>
+        </div>
+        <div class="formula-box" style="margin-top:8px;">
+          <div class="formula">X̄ = (N₁X̄₁ + N₂X̄₂) / (N₁ + N₂)</div>
+          <div class="formula-label">Combined Mean Formula</div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">7 Properties of AM</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>1</td><td>Σ(X − X̄) = <b style="color:#a8edea">0</b> (centre of gravity)</td></tr>
+            <tr><td>2</td><td>Σ(X − X̄)² is <b style="color:#a8edea">minimum</b> (least squares)</td></tr>
+            <tr><td>3</td><td>Algebraically treatable</td></tr>
+            <tr><td>4</td><td>Combined mean formula applicable</td></tr>
+            <tr><td>5</td><td>Add/subtract constant B → mean shifts by B</td></tr>
+            <tr><td>6</td><td>Multiply/divide by b → mean multiplied/divided by b</td></tr>
+            <tr><td>7</td><td>Replace obs → mean changes by avg change</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Merits vs Demerits</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th style="color:#43e97b">Merits</th><th style="color:#ff8a80">Demerits</th></tr>
+            <tr><td>Rigidly defined</td><td>Can't locate by inspection</td></tr>
+            <tr><td>Based on all obs</td><td>Can't use for qualitative data</td></tr>
+            <tr><td>Algebraically treatable</td><td><b style="color:#ff8a80">Too affected by extreme values</b></td></tr>
+            <tr><td>Best for comparison</td><td>May give fictitious value</td></tr>
+            <tr><td>Centre of gravity</td><td>Can't use with open-end classes</td></tr>
+            <tr><td>Least sampling variation</td><td>Different distributions → same mean</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: MEDIAN -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>4. Median</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.74rem;color:#bbb;line-height:1.5;"><b style="color:#b39ddb">Positional average</b> — value that divides distribution into two equal halves. Depends on position, not magnitude.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Determination</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td><b>Odd n</b></td><td>Median = (n+1)/2 th value</td></tr>
+          <tr><td><b>Even n</b></td><td>Mean of (n/2)th and (n/2+1)th values</td></tr>
+          <tr><td><b>Graphically</b></td><td>Intersection of Less-than and More-than Ogives → drop perpendicular to X-axis</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Merits vs Demerits</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th style="color:#43e97b">Merits</th><th style="color:#ff8a80">Demerits</th></tr>
+          <tr><td>Not affected by extremes</td><td>Arrangement needed — cumbersome</td></tr>
+          <tr><td>Works with open-end classes</td><td>Not algebraically treatable</td></tr>
+          <tr><td>Can be located graphically</td><td>Not based on all obs</td></tr>
+          <tr><td><b style="color:#b39ddb">Best for skewed distributions</b></td><td>More affected by sampling than mean</td></tr>
+          <tr><td><b style="color:#b39ddb">Only avg for qualitative + rankable data</b></td><td>Weighted median not defined</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>📈 Trading Analogy:</span> Median return is better than mean for skewed P&L distributions — one huge losing trade won't drag the median down like it would the mean.
+    </div>
+  </div>
+
+  <!-- CARD 5: MODE -->
+  <div class="card pink">
+    <div class="card-title"><div class="card-icon">🏆</div><h2>5. Mode</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition <span class="badge key">MCQ</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Author</th><th>Definition</th></tr>
+          <tr><td><b>Croxton & Cowden</b></td><td>"Value at the point around which items tend to be most heavily concentrated"</td></tr>
+          <tr><td><b>A.M. Tuttle</b></td><td>"Value with greatest frequency density in its immediate neighbourhood"</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Determination Methods</div>
+      <div class="tags">
+        <span class="tag highlight">By Inspection — regular distribution</span>
+        <span class="tag highlight">By Grouping — irregular distribution (6-column table)</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Special Cases</div>
+      <div class="tags">
+        <span class="tag">Bi-modal — 2 values with max freq</span>
+        <span class="tag">Multi-modal — 2+ modes</span>
+        <span class="tag">No mode — all freq equal</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Merits vs Demerits</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th style="color:#43e97b">Merits</th><th style="color:#ff8a80">Demerits</th></tr>
+          <tr><td>Locatable by inspection</td><td>Not based on all observations</td></tr>
+          <tr><td>Not affected by extremes</td><td>Not mathematically treatable</td></tr>
+          <tr><td>Works with open-end classes</td><td>Not rigidly defined always</td></tr>
+          <tr><td>Best representative value</td><td>Unstable — depends on class width choice</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: RELATIONSHIP + WHEN TO USE — FULL WIDTH -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>6. Relationship + When to Use Which <span class="badge key">HIGH YIELD</span></h2></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">Mean–Median–Mode Relationship</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Distribution</th><th>Relationship</th></tr>
+            <tr><td><b style="color:#43e97b">Symmetrical</b></td><td>Mean = Median = Mode</td></tr>
+            <tr><td><b style="color:#f9d423">Positively Skewed</b></td><td>Mode &lt; Median &lt; Mean</td></tr>
+            <tr><td><b style="color:#f857a6">Negatively Skewed</b></td><td>Mean &lt; Median &lt; Mode</td></tr>
+          </table>
+        </div>
+        <div class="formula-box" style="margin-top:10px;">
+          <div class="formula">Mode = 3 Median − 2 Mean</div>
+          <div class="formula-label">Empirical Relationship (moderately skewed)</div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">When to Use Which Average</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Situation</th><th>Best Average</th></tr>
+            <tr><td>Normal, symmetric data</td><td><b style="color:#4ecdc4">Mean</b></td></tr>
+            <tr><td>Skewed data (e.g., income)</td><td><b style="color:#b39ddb">Median</b></td></tr>
+            <tr><td>Most typical value needed</td><td><b style="color:#f857a6">Mode</b></td></tr>
+            <tr><td>Open-end class intervals</td><td>Median or Mode</td></tr>
+            <tr><td>Qualitative + rankable data</td><td><b style="color:#b39ddb">Median</b></td></tr>
+            <tr><td>Further algebraic treatment</td><td><b style="color:#4ecdc4">Mean</b></td></tr>
+            <tr><td>Shoe size, garment size</td><td><b style="color:#f857a6">Mode</b></td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="tags" style="margin-top:12px;">
+      <span class="tag highlight">⭐ AM: Σ(X−X̄) = 0 always</span>
+      <span class="tag highlight">⭐ Median: sum of absolute deviations is minimum</span>
+      <span class="tag highlight">⭐ Mode: Croxton & Cowden + A.M. Tuttle definitions</span>
+      <span class="tag highlight">⭐ Empirical: Mode = 3Md − 2X̄</span>
+      <span class="tag">Weighted AM: X̄w = ΣwX / Σw</span>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;color:#555;font-size:0.7rem;margin-top:24px;padding-bottom:20px;">QT Module 5 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

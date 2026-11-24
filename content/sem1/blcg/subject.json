@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Corporate Governance"
+    },
+    {
+      "n": 2,
+      "title": "Moral Values & Ethics"
+    },
+    {
+      "n": 3,
+      "title": "The Sale of Goods Act"
+    },
+    {
+      "n": 4,
+      "title": "The Companies Act, 2013"
+    },
+    {
+      "n": 5,
+      "title": "Membership"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": null
+}

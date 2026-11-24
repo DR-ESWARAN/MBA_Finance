@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCT Module 1 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #4facfe, #43e97b, #f5a623, #e74c6f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  /* CARD TITLE */
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  /* BRANCH */
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  /* ANALOGY */
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  /* CENTRAL */
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(79,172,254,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#4facfe,#43e97b,#f5a623,#e74c6f);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+  /* WIDE */
+  .wide { grid-column: span 2; }
+
+  /* FORMULA BOX */
+  .formula {
+    background: rgba(123,97,255,0.1);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 10px; padding: 10px 14px;
+    font-size: clamp(0.82rem, 2.5vw, 0.95rem);
+    color: #b39ddb; text-align: center; font-weight: 700;
+    margin-top: 8px; letter-spacing: 0.3px;
+  }
+
+  /* MOBILE OVERRIDES */
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+
+  /* TABLET */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ACCT</a><span style="flex:1"></span><a href="notes-m1.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">M2 ›</a></div>
+
+<div class="header">
+  <h1>Principles of Accounting — Module 1</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL NODE -->
+  <div class="central">
+    <h1>ACCT Module 1: Introduction to Accounting</h1>
+    <p>Record · Classify · Summarise · Interpret — The Language of Financial Decisions</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Definition</span>
+      <span class="central-chip c2">3 Branches</span>
+      <span class="central-chip c3">Users of Info</span>
+      <span class="central-chip c4">Cash vs Accrual</span>
+      <span class="central-chip c5">Types of Accounts</span>
+      <span class="central-chip c6">9 Concepts</span>
+      <span class="central-chip c1">4 Conventions</span>
+      <span class="central-chip c2">Accounting Equation</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📖</div><h2>1. Definition of Accounting</h2></div>
+    <div class="branch">
+      <div class="branch-label">4 Key Functions (Exam Formula)</div>
+      <div class="tags">
+        <span class="tag highlight">📝 Record</span>
+        <span class="tag highlight">🗂 Classify</span>
+        <span class="tag highlight">📊 Summarise</span>
+        <span class="tag highlight">🔍 Interpret</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">In monetary terms only → Output = Financial Statements</div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Called</div>
+      <div class="tags">
+        <span class="tag">"Language of Business"</span>
+        <span class="tag highlight">"Language of Financial Decisions" ✅</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Process is a continuous cycle</div>
+      <div class="tags">
+        <span class="tag">Measure</span>
+        <span class="tag">→</span>
+        <span class="tag">Record</span>
+        <span class="tag">→</span>
+        <span class="tag">Report</span>
+        <span class="tag">→</span>
+        <span class="tag">Decide</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Accounting = ECG of a business. Records the financial pulse continuously. Lets you diagnose health at any point.
+    </div>
+  </div>
+
+  <!-- CARD 2: BRANCHES -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">🌿</div><h2>2. Branches of Accounting</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Branch</th><th>Focus</th><th>Output</th></tr>
+          <tr><td><b style="color:#f5a623">Financial</b></td><td>External reporting of all transactions</td><td>P&L, Balance Sheet</td></tr>
+          <tr><td><b style="color:#4ecdc4">Cost</b></td><td>Cost per product/process/job</td><td>Cost Sheet</td></tr>
+          <tr><td><b style="color:#7b61ff">Management</b></td><td>Internal decisions (drawn from FA + CA)</td><td>Budgets, Forecasts</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Financial Accounting — Limitations</div>
+      <div class="tags">
+        <span class="tag red-hl">Consolidated only (no dept breakup)</span>
+        <span class="tag red-hl">Historical — past focused</span>
+        <span class="tag red-hl">No fixed vs variable cost split</span>
+        <span class="tag red-hl">No tactical decisions support</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Management Accounting — Key Features</div>
+      <div class="tags">
+        <span class="tag green-hl">Forward-looking</span>
+        <span class="tag green-hl">Tailor-made</span>
+        <span class="tag green-hl">No rigid principles</span>
+        <span class="tag green-hl">Entity or segment reports</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: FA vs MA COMPARISON — WIDE -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>3. Financial vs Management Accounting</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Basis</th>
+          <th>Financial Accounting</th>
+          <th>Management Accounting</th>
+        </tr>
+        <tr><td><b>Primary Users</b></td><td>External (banks, creditors, govt) + managers</td><td>Internal (business managers only)</td></tr>
+        <tr><td><b>Decision Criterion</b></td><td>GAAP — Generally Accepted Accounting Principles</td><td>Cost-benefit of proposed action</td></tr>
+        <tr><td><b>Time Focus</b></td><td style="color:#ff8a80;">Past ← Historical</td><td style="color:#43e97b;">Future → Forward-looking</td></tr>
+        <tr><td><b>Reports</b></td><td>Summary — whole entity</td><td>Detailed — parts/segments of entity</td></tr>
+        <tr><td><b>Behavioural Focus</b></td><td>Adequacy of disclosure</td><td>How reports affect employee behaviour</td></tr>
+        <tr><td><b>Principles</b></td><td>Rigid — follows GAAP</td><td>Flexible — no set rules</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 4: USERS -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">👥</div><h2>4. Users of Accounting Info</h2></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">Internal Users</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>🏢 <b>Owners</b></td><td>Assess business performance</td></tr>
+            <tr><td>👔 <b>Managers</b></td><td>Goals, evaluation, corrective action</td></tr>
+            <tr><td>👷 <b>Employees</b></td><td>Wages, bonus, profit-sharing</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">External Users</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>📈 <b>Investors</b></td><td>Profitability & solvency check</td></tr>
+            <tr><td>🏦 <b>Banks</b></td><td>Lending decisions</td></tr>
+            <tr><td>🏛 <b>Govt / SEBI</b></td><td>Tax, regulation, compliance</td></tr>
+            <tr><td>🤝 <b>Creditors</b></td><td>Repayment capacity</td></tr>
+            <tr><td>🛍 <b>Consumers</b></td><td>Check if being overcharged</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>📈 Trading Analogy:</span> Investors read financial statements like you read a balance sheet before buying a stock — same information, same purpose.
+    </div>
+  </div>
+
+  <!-- CARD 5: BASIS OF ACCOUNTING — WIDE -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">💰</div><h2>5. Basis of Accounting</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label" style="color:#ff8a80;">❌ Cash Basis</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Feature</th><th>Detail</th></tr>
+            <tr><td>Revenue</td><td>Recorded when <b>cash received</b></td></tr>
+            <tr><td>Expenses</td><td>Recorded when <b>cash paid</b></td></tr>
+            <tr><td>✅ Pro</td><td>Simple, fewer adjustments, objective</td></tr>
+            <tr><td>❌ Con</td><td>Ignores outstanding & prepaid — NOT true P&L</td></tr>
+            <tr><td>Suited for</td><td>Mostly cash-based businesses</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#43e97b;">✅ Accrual / Mercantile Basis (Preferred)</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Feature</th><th>Detail</th></tr>
+            <tr><td>Revenue</td><td>Recognised when <b>earned</b></td></tr>
+            <tr><td>Expenses</td><td>Recognised when <b>incurred</b></td></tr>
+            <tr><td>✅ Pro</td><td>True & fair picture of profit/loss & financial position</td></tr>
+            <tr><td>❌ Con</td><td>Complex; many adjustments needed</td></tr>
+            <tr><td>Standard</td><td>Used in formal/corporate accounting</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Illustration — Ashok's Income (FY 2009-10)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Item</th><th>Cash Basis</th><th>Accrual Basis</th></tr>
+          <tr><td>Cash Sales ₹3,90,000</td><td style="color:#43e97b;">✅ Included</td><td style="color:#43e97b;">✅ Included</td></tr>
+          <tr><td>Credit Sales ₹1,60,000</td><td style="color:#ff8a80;">❌ Excluded</td><td style="color:#43e97b;">✅ Included</td></tr>
+          <tr><td>Expenses Paid ₹1,90,000</td><td style="color:#43e97b;">✅ Included</td><td style="color:#43e97b;">✅ Included</td></tr>
+          <tr><td>Outstanding Expenses ₹80,000</td><td style="color:#ff8a80;">❌ Excluded</td><td style="color:#43e97b;">✅ Included</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: TYPES OF ACCOUNTS -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">📂</div><h2>6. Classification of Accounts</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Description</th><th>Examples</th></tr>
+          <tr>
+            <td><b style="color:#4facfe">Personal</b></td>
+            <td>Persons — natural, artificial, representative</td>
+            <td>Debtor, Bank A/c, Capital A/c, Outstanding Salary A/c</td>
+          </tr>
+          <tr>
+            <td><b style="color:#43e97b">Real</b></td>
+            <td>Assets — tangible or intangible</td>
+            <td>Cash, Building, Goodwill, Patent A/c</td>
+          </tr>
+          <tr>
+            <td><b style="color:#f857a6">Nominal</b></td>
+            <td>Expenses, losses, income & gains</td>
+            <td>Salary, Rent, Interest Received, Commission A/c</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Golden Rules</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Account</th><th>Debit</th><th>Credit</th></tr>
+          <tr><td><b style="color:#4facfe">Personal</b></td><td>The Receiver</td><td>The Giver</td></tr>
+          <tr><td><b style="color:#43e97b">Real</b></td><td>What comes In</td><td>What goes Out</td></tr>
+          <tr><td><b style="color:#f857a6">Nominal</b></td><td>All Expenses & Losses</td><td>All Incomes & Gains</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: 9 ACCOUNTING CONCEPTS — WIDE -->
+  <div class="card pink wide">
+    <div class="card-title"><div class="card-icon">🧱</div><h2>7. Accounting Concepts (9 GAAP Concepts)</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>#</th><th>Concept</th><th>Core Idea</th></tr>
+            <tr><td>1</td><td><b style="color:#f857a6">Business Entity</b></td><td>Business ≠ Owner. Owner's capital = liability to business</td></tr>
+            <tr><td>2</td><td><b style="color:#f857a6">Money Measurement</b></td><td>Only monetary transactions recorded. Non-financial facts excluded</td></tr>
+            <tr><td>3</td><td><b style="color:#f857a6">Dual Aspect</b></td><td>Every transaction has 2 effects. Basis of double entry. A = L + C</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>#</th><th>Concept</th><th>Core Idea</th></tr>
+            <tr><td>4</td><td><b style="color:#f857a6">Going Concern</b></td><td>Business assumed to continue indefinitely. Justifies depreciation</td></tr>
+            <tr><td>5</td><td><b style="color:#f857a6">Accounting Period</b></td><td>Life divided into periods (1 year). Enables periodic reporting</td></tr>
+            <tr><td>6</td><td><b style="color:#f857a6">Cost Concept</b></td><td>Assets at historical cost (purchase + transport + install), NOT market value</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>#</th><th>Concept</th><th>Core Idea</th></tr>
+            <tr><td>7</td><td><b style="color:#f857a6">Matching</b></td><td>Expenses matched to revenue of same period. Basis of adjustments</td></tr>
+            <tr><td>8</td><td><b style="color:#f857a6">Accrual</b></td><td>Income/expense when earned/incurred — NOT when cash moves</td></tr>
+            <tr><td>9</td><td><b style="color:#f857a6">Realisation</b></td><td>Revenue at point of sale — when legal liability to pay arises</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;">
+      <div class="analogy">
+        <span>🫀 Matching Concept:</span> Cost of a stent attributed to the procedure it was used in — NOT the month it was purchased. Revenue and cost belong to same event.
+      </div>
+      <div class="analogy">
+        <span>🏥 Going Concern:</span> Assuming your hospital keeps running when planning 5-year capital expenditure. Without this — no long-term asset valuation.
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: CONVENTIONS + EQUATION -->
+  <div class="card yellow">
+    <div class="card-title"><div class="card-icon">📜</div><h2>8. Accounting Conventions</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Convention</th><th>Meaning</th></tr>
+          <tr><td><b style="color:#f9d423">Consistency</b></td><td>Same accounting methods year-on-year for comparability</td></tr>
+          <tr><td><b style="color:#f9d423">Conservatism (Prudence)</b></td><td>Anticipate losses; do NOT anticipate gains — be cautious</td></tr>
+          <tr><td><b style="color:#f9d423">Materiality</b></td><td>Disclose only items significant enough to influence decisions</td></tr>
+          <tr><td><b style="color:#f9d423">Disclosure</b></td><td>All relevant information must be disclosed to users</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Criteria for Accepting a Principle</div>
+      <div class="tags">
+        <span class="tag highlight">Usefulness</span>
+        <span class="tag highlight">Objectiveness</span>
+        <span class="tag highlight">Feasibility</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>⚠️ Conservatism:</span> Like a cardiologist erring on the side of caution — better to over-investigate than miss a MI. In accounting — recognise losses early, gains only when confirmed.
+    </div>
+  </div>
+
+  <!-- CARD 9: ACCOUNTING EQUATION -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>9. Accounting Equation</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="formula">Assets = Liabilities + Owner's Equity (Capital)</div>
+    <div class="formula" style="margin-top:8px;">Owner's Equity = Assets − Liabilities</div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Why it always balances</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;">All assets are claimed by either owners (equity) or outsiders (liabilities). Total claims = Total resources. Basis of the Balance Sheet and Double-Entry System.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Comes from</div>
+      <div class="tags">
+        <span class="tag highlight">Dual Aspect Concept</span>
+        <span class="tag">Double-Entry Book-Keeping</span>
+        <span class="tag">Luca Pacioli (1494)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 10: HIGH YIELD MCQ TARGETS — FULL WIDTH -->
+  <div class="card green wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield Exam Targets</h2>
+      <span class="badge star">⭐ EXAM FOCUS</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>Key Point</th></tr>
+          <tr><td>Definition</td><td>Record → Classify → Summarise → Interpret</td></tr>
+          <tr><td>Best name</td><td>"Language of Financial Decisions"</td></tr>
+          <tr><td>FA vs MA</td><td>FA = Past + External; MA = Future + Internal</td></tr>
+          <tr><td>Bookkeeping</td><td>Procedural element of accounting (like arithmetic to maths)</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>Key Point</th></tr>
+          <tr><td>Cash Basis</td><td>Simple but NOT true P&L</td></tr>
+          <tr><td>Accrual Basis</td><td>Preferred; true picture</td></tr>
+          <tr><td>Personal A/c rule</td><td>Debit receiver, Credit giver</td></tr>
+          <tr><td>Real A/c rule</td><td>Debit what comes in, Credit what goes out</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Concept</th><th>One-liner</th></tr>
+          <tr><td>Going Concern</td><td>Business continues indefinitely</td></tr>
+          <tr><td>Matching</td><td>Expense matched to its revenue period</td></tr>
+          <tr><td>Realisation</td><td>Revenue at point of sale</td></tr>
+          <tr><td>Accounting Equation</td><td>A = L + C (always balanced)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#444;font-size:0.7rem;margin-top:30px;padding-bottom:20px;">
+  ACCT Module 1 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

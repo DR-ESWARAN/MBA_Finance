@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZCOM Module 2 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .tag.teal-hl   { background: rgba(78,205,196,0.15); color: #4ecdc4; border-color: rgba(78,205,196,0.3); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.purple-hl { background: rgba(123,97,255,0.15); color: #7b61ff; border-color: rgba(123,97,255,0.3); }
+  .tag.pink-hl   { background: rgba(248,87,166,0.15); color: #f857a6; border-color: rgba(248,87,166,0.3); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  /* STEP FLOW */
+  .step-flow { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+  .step-box {
+    padding: 6px 12px; border-radius: 8px; font-size: 0.72rem;
+    font-weight: 600; text-align: center;
+  }
+  .step-arrow { color: #555; font-size: 0.9rem; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .c7 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+  .c8 { background: rgba(249,212,35,0.15); color: #f9d423; border: 1px solid rgba(249,212,35,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  .tip-row {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 0.73rem; color: #ccc; padding: 4px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.4;
+  }
+  .tip-row:first-child { border-top: none; }
+
+  .num-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; min-width: 20px; border-radius: 50%;
+    font-size: 0.6rem; font-weight: 700;
+  }
+  .red .num-badge    { background: rgba(231,76,111,0.25); color: #e74c6f; }
+  .orange .num-badge { background: rgba(245,166,35,0.25); color: #f5a623; }
+  .teal .num-badge   { background: rgba(78,205,196,0.25); color: #4ecdc4; }
+  .green .num-badge  { background: rgba(67,233,123,0.25); color: #43e97b; }
+  .blue .num-badge   { background: rgba(79,172,254,0.25); color: #4facfe; }
+  .pink .num-badge   { background: rgba(248,87,166,0.25); color: #f857a6; }
+  .yellow .num-badge { background: rgba(249,212,35,0.25); color: #f9d423; }
+  .purple .num-badge { background: rgba(123,97,255,0.25); color: #7b61ff; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+    .step-flow { gap: 4px; }
+    .step-box { font-size: 0.68rem; padding: 5px 8px; }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ BIZCOM</a><span style="flex:1"></span><a href="notes-m2.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="mindmap-m1.html" style="color:#c9d1d9;text-decoration:none">‹ M1</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">M3 ›</a></div>
+
+<div class="header">
+  <h1>Business Communication — Module 2</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>BIZCOM Module 2: Business Writing</h1>
+    <p>Professional communication tool — substantive, clear, correct, easy to scan, designed to be read quickly</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Definition &amp; Purposes</span>
+      <span class="central-chip c2">8 Characteristics</span>
+      <span class="central-chip c3">5-Step Process</span>
+      <span class="central-chip c4">14 Organizing Principles</span>
+      <span class="central-chip c5">Ethics &amp; Plagiarism</span>
+      <span class="central-chip c6">Revision &amp; Proofreading</span>
+      <span class="central-chip c7">5 Feedback Categories</span>
+      <span class="central-chip c8">Quant vs Qual Research</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION + PURPOSES -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">✍️</div><h2>1. Definition &amp; 5 Purposes</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.75rem;color:#ccc;line-height:1.5;">Professional communication tool for <b>internal or external audience</b>. Helps readers <b>know something or do something</b>. Must be: <b style="color:#e74c6f">Substantive · Clear · Correct · Easy to scan</b></p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Forms</div>
+      <div class="tags">
+        <span class="tag">Memos</span>
+        <span class="tag">Reports</span>
+        <span class="tag">Proposals</span>
+        <span class="tag">Emails</span>
+        <span class="tag">Presentations</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">5 Purposes</div>
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Convey information</b></div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Deliver news</b></div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Direct action</b></div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b>Explain or justify</b></div></div>
+      <div class="tip-row"><span class="num-badge">5</span><div><b>Influence</b> someone to take action</div></div>
+    </div>
+  </div>
+
+  <!-- CARD 2: 8 CHARACTERISTICS -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">📋</div><h2>2. 8 Characteristics of Effective Business Writing</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Characteristic</th><th>Key Point</th></tr>
+          <tr><td>1</td><td><b style="color:#f5a623">To the point</b></td><td>State exactly why you're writing upfront</td></tr>
+          <tr><td>2</td><td><b style="color:#f5a623">Everyday words</b></td><td>"about" not "concerning"; "expect" not "anticipate"</td></tr>
+          <tr><td>3</td><td><b style="color:#f5a623">Know your audience</b></td><td>Adjust tone to suit intended reader</td></tr>
+          <tr><td>4</td><td><b style="color:#f5a623">Use contractions</b></td><td>If improves flow — use it; if more persuasive without — don't</td></tr>
+          <tr><td>5</td><td><b style="color:#f5a623">Active verbs</b></td><td>Active = faster comprehension over passive</td></tr>
+          <tr><td>6</td><td><b style="color:#f5a623">Write tight</b></td><td>"decided" not "made the decision"</td></tr>
+          <tr><td>7</td><td><b style="color:#f5a623">Simple fonts</b></td><td>Helvetica / Times New Roman; limit variety</td></tr>
+          <tr><td>8</td><td><b style="color:#f5a623">Don't overuse visuals</b></td><td>Too many graphics confuse and detract</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: 5-STEP PROCESS + 3 PILLARS -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🔄</div><h2>3. Writing Process &amp; Preparation</h2></div>
+    <div class="branch">
+      <div class="branch-label">5-Step Writing Process <span class="badge star">⭐ Sequence MCQ</span></div>
+      <div class="step-flow">
+        <div class="step-box" style="background:rgba(78,205,196,0.15);color:#4ecdc4;border:1px solid rgba(78,205,196,0.3);">Preparation</div>
+        <span class="step-arrow">→</span>
+        <div class="step-box" style="background:rgba(78,205,196,0.1);color:#a8edea;border:1px solid rgba(78,205,196,0.2);">Research</div>
+        <span class="step-arrow">→</span>
+        <div class="step-box" style="background:rgba(78,205,196,0.1);color:#a8edea;border:1px solid rgba(78,205,196,0.2);">Organizing</div>
+        <span class="step-arrow">→</span>
+        <div class="step-box" style="background:rgba(78,205,196,0.1);color:#a8edea;border:1px solid rgba(78,205,196,0.2);">Drafting</div>
+        <span class="step-arrow">→</span>
+        <div class="step-box" style="background:rgba(78,205,196,0.1);color:#a8edea;border:1px solid rgba(78,205,196,0.2);">Review &amp; Revision</div>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Preparation Pillars</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Pillar</th><th>What it means</th></tr>
+          <tr><td><b style="color:#4ecdc4">Objective / Purpose</b></td><td>Define what document must achieve; specific = thesis statement; must be realistic &amp; achievable</td></tr>
+          <tr><td><b style="color:#4ecdc4">Readers / Audience</b></td><td>Who they are and what they need — determines scope and tone</td></tr>
+          <tr><td><b style="color:#4ecdc4">Scope</b></td><td>What to include and how much — guided by audience understanding</td></tr>
+        </table>
+      </div>
+      <p style="font-size:0.71rem;color:#4ecdc4;font-style:italic;margin-top:6px;">"Preparing to write is as important as the act itself"</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Research — 4 Focus Areas</div>
+      <div class="tags">
+        <span class="tag teal-hl">Narrow the topic</span>
+        <span class="tag teal-hl">Focus on key points</span>
+        <span class="tag teal-hl">Plan investigation</span>
+        <span class="tag teal-hl">Stay organized</span>
+      </div>
+      <p style="font-size:0.71rem;color:#888;margin-top:6px;">Thorough research = backbone of any successful business document</p>
+    </div>
+  </div>
+
+  <!-- CARD 4: ETHICS + PLAGIARISM -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>4. Ethics, Plagiarism &amp; Sources</h2></div>
+    <div class="branch">
+      <div class="branch-label">Plagiarism — 3 Forms</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Form</th><th>Description</th></tr>
+          <tr><td><b style="color:#43e97b">Verbatim copy</b></td><td>Word-for-word reproduction without credit</td></tr>
+          <tr><td><b style="color:#43e97b">Paraphrase without credit</b></td><td>Rewritten in own words but source uncredited</td></tr>
+          <tr><td><b style="color:#43e97b">Patch writing</b></td><td>Cut-and-paste insertion of fragments without crediting sources</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Paraphrase vs Summary vs Plagiarism <span class="badge star">⭐ MCQ</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Term</th><th>Definition</th></tr>
+          <tr><td><b style="color:#43e97b">Paraphrase</b></td><td>Same length as original; rewritten in own words; credit given informally</td></tr>
+          <tr><td><b style="color:#43e97b">Summary</b></td><td>Condensed version; highlights main ideas in own words</td></tr>
+          <tr><td><b style="color:#ff8a80">Plagiarism</b></td><td>Representing another's work as your own — neither paraphrasing nor summarizing</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Evaluating Sources</div>
+      <div class="tags">
+        <span class="tag green-hl">Reputable + reliable sources</span>
+        <span class="tag">How credible is the source?</span>
+        <span class="tag green-hl">Information literacy = essential skill</span>
+        <span class="tag">Business relies on reputation &amp; trust</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: 14 ORGANIZING PRINCIPLES — FULL WIDTH -->
+  <div class="card purple wide">
+    <div class="card-title"><div class="card-icon">🏗️</div><h2>5. Organizing Principles — 14</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Principle</th><th>Core Idea</th></tr>
+          <tr><td><b style="color:#7b61ff">Unity of Objectives</b></td><td>Goals defined for org, each dept &amp; each position</td></tr>
+          <tr><td><b style="color:#7b61ff">Specialization</b></td><td>Each person confined to a single job</td></tr>
+          <tr><td><b style="color:#7b61ff">Span of Control</b></td><td>Numerical limit of subordinates per manager</td></tr>
+          <tr><td><b style="color:#7b61ff">Exception</b></td><td>Only complex matters referred to higher levels</td></tr>
+          <tr><td><b style="color:#7b61ff">Scalar Principle</b></td><td>= Chain of Command — unbroken authority top to bottom</td></tr>
+          <tr><td><b style="color:#7b61ff">Unity of Command</b></td><td>One employee = ONE boss only; multiple bosses → confusion</td></tr>
+          <tr><td><b style="color:#7b61ff">Delegation of Authority</b></td><td>Authority delegated must equal responsibility</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Principle</th><th>Core Idea</th></tr>
+          <tr><td><b style="color:#b39ddb">Responsibility</b></td><td>Clearly defined; cannot be avoided by delegating</td></tr>
+          <tr><td><b style="color:#b39ddb">Authority</b></td><td>Clearly defined; must equal responsibility</td></tr>
+          <tr><td><b style="color:#b39ddb">Efficiency</b></td><td>Achieve goals at minimum cost; optimum resource use</td></tr>
+          <tr><td><b style="color:#b39ddb">Simplicity</b></td><td>Minimum levels; everyone understands duties &amp; relationships</td></tr>
+          <tr><td><b style="color:#b39ddb">Flexibility</b></td><td>Adaptable to change; allows replacement without disruption</td></tr>
+          <tr><td><b style="color:#b39ddb">Balance</b></td><td>Balance in dept size &amp; centralization vs decentralization</td></tr>
+          <tr><td><b style="color:#b39ddb">Unity of Direction</b></td><td>One objective + one plan for same-objective activities</td></tr>
+        </table>
+      </div>
+    </div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;">
+      <div class="tag purple-hl" style="font-size:0.73rem;">⚡ Scalar = Chain of Command</div>
+      <div class="tag purple-hl" style="font-size:0.73rem;">⚡ Unity of Command = 1 boss only</div>
+      <div class="tag purple-hl" style="font-size:0.73rem;">⚡ Delegation: Authority must = Responsibility</div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Unity of Command = a patient in ICU has ONE primary consultant. Multiple consultants giving conflicting orders = chaos, errors, delayed treatment. Same in management.
+    </div>
+  </div>
+
+  <!-- CARD 6: REVISION + PROOFREADING -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🔍</div><h2>6. Revision &amp; Proofreading</h2></div>
+    <div class="branch">
+      <div class="branch-label">Revision Checklist</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Area</th><th>Check For</th></tr>
+          <tr><td><b style="color:#4facfe">Content &amp; Structure</b></td><td>Completeness · Unity &amp; coherence · Key points stand out · Logical flow</td></tr>
+          <tr><td><b style="color:#4facfe">Format &amp; Accuracy</b></td><td>Facts · Names · Spelling · Punctuation · Grammar · Format</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Evaluating Others' Work</div>
+      <p style="font-size:0.73rem;color:#ccc;line-height:1.5;">Understand assignment → Evaluate how well writing fulfils it → Check assertions &amp; facts → Watch for errors → Deliver evaluation <b>logically and diplomatically</b> → Provide <b>both +ve and -ve</b> feedback</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Proofreading Tips</div>
+      <div class="tags">
+        <span class="tag">Make a checklist</span>
+        <span class="tag">Print hard copy</span>
+        <span class="tag">Read aloud</span>
+        <span class="tag">Remove unnecessary words</span>
+        <span class="tag">Check punctuation</span>
+        <span class="tag">Maintain formatting</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Design Evaluation — 3 Elements</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Element</th><th>What it covers</th></tr>
+          <tr><td><b style="color:#4facfe">Framing</b></td><td>Margins, line justification, templates — how info is presented</td></tr>
+          <tr><td><b style="color:#4facfe">Typefaces</b></td><td>Design of symbols, letters, numbers; font choice</td></tr>
+          <tr><td><b style="color:#4facfe">Paragraphs</b></td><td>Subsections that make document easier to read</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: FEEDBACK -->
+  <div class="card pink">
+    <div class="card-title"><div class="card-icon">💬</div><h2>7. Feedback in the Writing Process</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.73rem;color:#ccc;line-height:1.5;">Receiver's response to a source. The <b style="color:#f857a6">drive that steers the writer</b> through the writing process. Final step in the communication process.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Sources of Feedback</div>
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Peer feedback</b> — Active learning; multiple viewpoints; helps redraft writing</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Conferencing</b> — Collaborative reflective dialogue; multiple views at same time</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Written comments</b> — Positive (on track) or negative (error/ambiguity correction)</div></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">5 Categories of Feedback <span class="badge key">HIGH YIELD</span></div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Category</th><th>Description</th></tr>
+          <tr><td><b style="color:#f857a6">Evaluative</b></td><td>Marks / scores / grades allotted</td></tr>
+          <tr><td><b style="color:#f857a6">Interpretive</b></td><td>Overall judgment provided by interpreting the work</td></tr>
+          <tr><td><b style="color:#f857a6">Supportive</b></td><td>Mostly positive statements; acknowledges effort</td></tr>
+          <tr><td><b style="color:#f857a6">Probing</b></td><td>Leads to questioning for deeper information</td></tr>
+          <tr><td><b style="color:#f857a6">Understanding</b></td><td>Explanation and understanding both occur</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: QUANT VS QUAL -->
+  <div class="card yellow">
+    <div class="card-title"><div class="card-icon">📊</div><h2>8. Quantitative vs Qualitative Research</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Feature</th><th style="color:#f9d423">Quantitative</th><th style="color:#a8edea">Qualitative</th></tr>
+          <tr><td><b>Focus</b></td><td>Testing theories / hypotheses</td><td>Exploring ideas; formulating theory</td></tr>
+          <tr><td><b>Analysis</b></td><td>Math &amp; statistical analysis</td><td>Summarizing, categorizing, interpreting</td></tr>
+          <tr><td><b>Expressed in</b></td><td>Numbers, graphs, tables</td><td>Words</td></tr>
+          <tr><td><b>Respondents</b></td><td>Many</td><td>Few</td></tr>
+          <tr><td><b>Questions</b></td><td>Closed (MCQ)</td><td>Open-ended</td></tr>
+          <tr><td><b>Key terms</b></td><td>Testing · Measurement · Objectivity · Replicability</td><td>Understanding · Context · Complexity · Subjectivity</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Quantitative = RCT (numbers, p-values, large sample). Qualitative = patient interview or case study (words, context, small sample). Both valid — different questions need different methods.
+    </div>
+  </div>
+
+  <!-- MCQ TARGETS — FULL WIDTH -->
+  <div class="card teal wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield MCQ Targets — Module 2</h2>
+      <span class="badge key">EXAM FOCUS</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>5 Purposes of BW</td><td>Convey · Deliver · Direct · Explain · Influence</td></tr>
+          <tr><td>8 Characteristics</td><td>Labels + examples (active verbs, tight writing)</td></tr>
+          <tr><td>5-Step process</td><td>Sequence — Preparation is FIRST</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>3 Prep Pillars</td><td>Objective / Readers / Scope</td></tr>
+          <tr><td>Scalar Principle</td><td>= Chain of Command</td></tr>
+          <tr><td>Unity of Command</td><td>One employee = one boss only</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>5 Feedback categories</td><td>Evaluative · Interpretive · Supportive · Probing · Understanding</td></tr>
+          <tr><td>Paraphrase vs Summary</td><td>Length = same vs condensed</td></tr>
+          <tr><td>Quant vs Qual</td><td>Numbers vs Words; Closed vs Open questions</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;margin-top:24px;color:#444;font-size:0.72rem;">
+  BIZCOM Module 2 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>
