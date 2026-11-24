@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECON Module 5 — Profit & Inflation</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #140b24;
+    color: #e2e8f0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-size: 15px;
+    padding: 16px;
+    line-height: 1.5;
+  }
+  h1 {
+    text-align: center;
+    font-size: 1.3rem;
+    color: #f59e0b;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-bottom: 20px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+  }
+  .card {
+    background: #1e2130;
+    border-radius: 12px;
+    padding: 16px;
+    border-left: 4px solid #f59e0b;
+  }
+  .card.wide { grid-column: 1 / -1; }
+  .card.blue { border-left-color: #3b82f6; }
+  .card.green { border-left-color: #10b981; }
+  .card.purple { border-left-color: #8b5cf6; }
+  .card.red { border-left-color: #ef4444; }
+  .card.cyan { border-left-color: #06b6d4; }
+  .card.orange { border-left-color: #f97316; }
+  .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .badge {
+    font-size: 0.65rem;
+    background: #f59e0b22;
+    color: #f59e0b;
+    border: 1px solid #f59e0b44;
+    border-radius: 4px;
+    padding: 1px 6px;
+    font-weight: 600;
+  }
+  .badge.blue { background: #3b82f622; color: #3b82f6; border-color: #3b82f644; }
+  .badge.green { background: #10b98122; color: #10b981; border-color: #10b98144; }
+  .badge.purple { background: #8b5cf622; color: #8b5cf6; border-color: #8b5cf644; }
+  .badge.red { background: #ef444422; color: #ef4444; border-color: #ef444444; }
+  .badge.cyan { background: #06b6d422; color: #06b6d4; border-color: #06b6d444; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.82rem; margin-top: 6px; }
+  th { background: #2d3148; color: #94a3b8; font-weight: 600; padding: 6px 8px; text-align: left; font-size: 0.75rem; }
+  td { padding: 5px 8px; border-bottom: 1px solid #2d3148; vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: #252840; }
+  ul { padding-left: 16px; }
+  li { margin-bottom: 4px; font-size: 0.85rem; }
+  .highlight { color: #f59e0b; font-weight: 600; }
+  .blue-hl { color: #60a5fa; font-weight: 600; }
+  .green-hl { color: #34d399; font-weight: 600; }
+  .purple-hl { color: #a78bfa; font-weight: 600; }
+  .red-hl { color: #f87171; font-weight: 600; }
+  .cyan-hl { color: #22d3ee; font-weight: 600; }
+  .formula {
+    background: #140b24;
+    border: 1px solid #2d3148;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    color: #a78bfa;
+    margin: 6px 0;
+  }
+  .section-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 10px 0 4px;
+  }
+  .pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+  }
+  .pill {
+    background: #2d3148;
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    color: #94a3b8;
+  }
+  .pill.amber { background: #f59e0b22; color: #f59e0b; }
+  .pill.green { background: #10b98122; color: #34d399; }
+  .pill.red { background: #ef444422; color: #f87171; }
+  .theory-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .theory-card {
+    background: #252840;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 0.78rem;
+  }
+  .theory-name { font-weight: 700; font-size: 0.8rem; margin-bottom: 4px; }
+  @media (max-width: 480px) {
+    body { padding: 12px 10px; }
+    h1 { font-size: 1.1rem; }
+    .card { padding: 13px; }
+    .card.wide { grid-column: auto; }
+    .theory-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<h1>💹 ECON Module 5 — Profit & Inflation</h1>
+<p class="subtitle">Exam: 15 May 2026 | Source: EBook Module 5</p>
+
+<div class="grid">
+
+  <!-- CARD 1: Profit Types -->
+  <div class="card blue">
+    <div class="card-title">💰 Types of Profit <span class="badge blue">HIGH YIELD</span></div>
+    <div class="section-label">3 Differences: Profit vs Returns</div>
+    <table>
+      <tr><th>Aspect</th><th>Profit</th><th>Returns</th></tr>
+      <tr><td>Nature</td><td><span class="blue-hl">Residual</span> income</td><td>Total revenue</td></tr>
+      <tr><td>Sign</td><td>Can be <span class="red-hl">negative</span></td><td>Always positive</td></tr>
+      <tr><td>Volatility</td><td><span class="highlight">Greater fluctuations</span></td><td>More stable</td></tr>
+    </table>
+    <div class="section-label">3 Profit Formulas</div>
+    <div class="formula">Accounting Profit = TR − (W + R + I + M)</div>
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px">W=Wages, R=Rent, I=Interest, M=Materials | Also = Gross Profit</div>
+    <div class="formula">Economic Profit = TR − (Explicit + Implicit costs)</div>
+    <div style="font-size:0.75rem;color:#64748b;margin-bottom:4px">Implicit = own land rent, owner salary, own capital interest</div>
+    <div class="formula">Pure Profit = Accounting Profit − (Opportunity Cost + Bribes)</div>
+  </div>
+
+  <!-- CARD 2: Profit Theories -->
+  <div class="card wide" style="border-left-color:#8b5cf6">
+    <div class="card-title">🧠 5 Theories of Profit <span class="badge purple">HIGH YIELD</span></div>
+    <div class="theory-grid">
+      <div class="theory-card">
+        <div class="theory-name" style="color:#a78bfa">Walker's Rent Theory</div>
+        Profit = differential ability like land fertility<br>Most efficient entrepreneur earns profit above normal<br><span style="color:#64748b">Limitation: only measures, doesn't explain nature</span>
+      </div>
+      <div class="theory-card">
+        <div class="theory-name" style="color:#60a5fa">Clark's Dynamic Theory</div>
+        Profit arises only in <span class="blue-hl">dynamic</span> economy (changing pop, capital, wants, tech)<br>Static economy = only normal profit<br><span style="color:#64748b">Criticism (Knight): only unforeseen changes yield profit</span>
+      </div>
+      <div class="theory-card">
+        <div class="theory-name" style="color:#f59e0b">Hawley's Risk Theory</div>
+        Profit = reward for <span class="highlight">risk-taking</span> (1893)<br>Greater risk → higher expected profit<br><span style="color:#64748b">Criticism: profit doesn't always match risk; superior managers reduce risk</span>
+      </div>
+      <div class="theory-card">
+        <div class="theory-name" style="color:#34d399">Knight's Uncertainty Theory</div>
+        Profit = reward for <span class="green-hl">non-calculable uncertainty</span> (NOT insurable risk)<br>Calculable risks = insured by insurers<br>Uncertainty = market shifts → only entrepreneur bears<br><span style="color:#64748b">Key: Risk ≠ Uncertainty</span>
+      </div>
+      <div class="theory-card">
+        <div class="theory-name" style="color:#f87171">Schumpeter's Innovation</div>
+        Profit = reward for <span class="red-hl">innovation</span><br>New products, methods, markets, raw materials<br><span style="color:#64748b">Criticism: ignores uncertainty and risk</span>
+      </div>
+    </div>
+    <div class="section-label" style="margin-top:10px">Knight's Key Distinction</div>
+    <div style="font-size:0.82rem">
+      <span class="green-hl">Calculable (Insurable) risks</span>: fire, theft → insured → entrepreneur doesn't earn profit for these &nbsp;|&nbsp;
+      <span class="highlight">Non-calculable uncertainty</span>: demand shifts → entrepreneur bears → EARNS PROFIT
+    </div>
+  </div>
+
+  <!-- CARD 3: Peter Drucker & Profit Max -->
+  <div class="card green">
+    <div class="card-title">🎯 Profit Max & Drucker's Functions <span class="badge green">EXAM STAPLE</span></div>
+    <div class="section-label">Peter Drucker — 3 Functions of Profit</div>
+    <ul>
+      <li><span class="green-hl">Measure performance</span> — high profit = efficient management</li>
+      <li><span class="green-hl">Cover costs</span> — replacement, technical, uncertainty costs</li>
+      <li><span class="green-hl">Secure future capital</span> — retained profits → expansion, innovation</li>
+    </ul>
+    <div class="section-label">Profit Maximisation — 2 Rules</div>
+    <div class="formula">1. MC = MR &nbsp;|&nbsp; 2. MC cuts MR from BELOW</div>
+    <div class="formula">π(Q) = R(Q) − C(Q) → Maximise</div>
+    <div class="section-label">9 Criticisms of Profit Maximisation</div>
+    <div class="pill-row">
+      <span class="pill">Profits uncertain</span>
+      <span class="pill">No internal relevance</span>
+      <span class="pill">No perfect knowledge</span>
+      <span class="pill">Evidence vague</span>
+      <span class="pill">Don't use MC/MR</span>
+      <span class="pill amber">Avg cost principle used</span>
+      <span class="pill">Static theory</span>
+      <span class="pill">Not for oligopoly</span>
+      <span class="pill amber">Varied objectives</span>
+    </div>
+    <div style="font-size:0.78rem;color:#64748b;margin-top:6px">Hall & Hitch: businessmen haven't heard of MC/MR | Berle & Means (1932): managers ≠ shareholders</div>
+  </div>
+
+  <!-- CARD 4: Break-Even Analysis -->
+  <div class="card wide" style="border-left-color:#f97316">
+    <div class="card-title">📊 Break-Even Analysis <span class="badge" style="background:#f9731622;color:#f97316;border-color:#f9731644">HIGH YIELD</span></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;">
+      <div>
+        <div class="section-label">Key Formulas</div>
+        <div class="formula">BEP (units) = Fixed Cost / (P − AVC)</div>
+        <div class="formula">Contribution Margin = P − AVC</div>
+        <div class="formula">TCM = TNP + TFC = TR − TVC</div>
+        <div class="formula">P/V ratio = CM / Price = (P − AVC) / P</div>
+        <div class="formula">BEP (₹ sales) = FC / P/V ratio</div>
+        <div class="formula">BEP (% capacity) = BEP units / Max capacity</div>
+        <div style="font-size:0.78rem;color:#64748b;margin-top:4px">At BEP: ANP = 0 → AFC = ACM (average contribution margin)</div>
+      </div>
+      <div>
+        <div class="section-label">Indian Airlines Example (Ebook)</div>
+        <table>
+          <tr><th>Item</th><th>Value</th></tr>
+          <tr><td>Capacity</td><td>10,000 passengers/month</td></tr>
+          <tr><td>Fare (P)</td><td>₹500</td></tr>
+          <tr><td>Variable cost (AVC)</td><td>₹100/passenger</td></tr>
+          <tr><td>Fixed Cost</td><td>₹3,00,000/month</td></tr>
+          <tr><td>Contribution Margin</td><td>₹500 − ₹100 = <span class="highlight">₹400</span></td></tr>
+          <tr><td><span class="highlight">BEP</span></td><td>3,00,000 / 400 = <span class="highlight">750 passengers</span></td></tr>
+        </table>
+        <div class="section-label" style="margin-top:8px">Product Mix with Constraints</div>
+        <div style="font-size:0.82rem">When capacity is a bottleneck → prioritise product with highest <span class="highlight">contribution per machine/facility hour</span></div>
+      </div>
+    </div>
+    <div class="section-label">7 Applications of BEA</div>
+    <div class="pill-row">
+      <span class="pill">New product profitability</span>
+      <span class="pill">Target profit sales level</span>
+      <span class="pill">Price change impact</span>
+      <span class="pill">New equipment effect</span>
+      <span class="pill">Compare two investments</span>
+      <span class="pill">Process change implications</span>
+      <span class="pill amber">Make vs Buy vs Lease</span>
+    </div>
+  </div>
+
+  <!-- CARD 5: Inflation Types & Causes -->
+  <div class="card red">
+    <div class="card-title">📈 Inflation — Types & Measurement <span class="badge red">HIGH YIELD</span></div>
+    <div class="section-label">3 Causes / Types</div>
+    <table>
+      <tr><th>Type</th><th>Cause</th><th>Mechanism</th></tr>
+      <tr>
+        <td><span class="red-hl">Demand-Pull</span></td>
+        <td>Excess demand > production capacity</td>
+        <td>Demand gap → prices rise; also: ↑ money supply → ↑ spending → inflation</td>
+      </tr>
+      <tr>
+        <td><span class="red-hl">Cost-Push</span></td>
+        <td>Rise in production input costs</td>
+        <td>Higher wages/raw materials → higher finished product prices</td>
+      </tr>
+      <tr>
+        <td><span class="red-hl">Built-In</span></td>
+        <td>Adaptive expectations (wage-price spiral)</td>
+        <td>Prices ↑ → workers demand ↑ wages → costs ↑ → prices ↑ → self-perpetuating</td>
+      </tr>
+    </table>
+    <div class="section-label">3 Inflation Indexes</div>
+    <table>
+      <tr><th>Index</th><th>Measures</th><th>Perspective</th></tr>
+      <tr><td><span class="red-hl">CPI</span></td><td>Consumer basket (food, transport, medical) — retail prices</td><td>Buyer's perspective; US BLS monthly since 1913</td></tr>
+      <tr><td><span class="red-hl">WPI</span></td><td>Prices at wholesale/producer level</td><td>Pre-retail; used in India</td></tr>
+      <tr><td><span class="red-hl">PPI</span></td><td>Average selling prices received by domestic producers</td><td>Seller's perspective; USA variant of WPI</td></tr>
+    </table>
+    <div class="section-label">Inflation Formula & Example</div>
+    <div class="formula">Change in Inflation = Final CPI / Initial CPI</div>
+    <div style="font-size:0.82rem;margin-top:4px">
+      Sept 1975 CPI=54.6 → Sept 2018 CPI=252.439<br>
+      Ratio = 252.439/54.6 = <span class="highlight">4.6234 (462.34%)</span><br>
+      $10,000 in 1975 → <span class="highlight">$56,234.25</span> in 2018
+    </div>
+  </div>
+
+  <!-- CARD 6: Effects & Hedging -->
+  <div class="card cyan">
+    <div class="card-title">⚖️ Inflation Effects & Hedging <span class="badge cyan">TRADING RELEVANT</span></div>
+    <div class="section-label">Effects on Income Distribution</div>
+    <table>
+      <tr><th>Group</th><th>Effect</th></tr>
+      <tr><td><span class="green-hl">Debtors/Borrowers</span></td><td>GAIN — repay in cheaper rupees</td></tr>
+      <tr><td><span class="red-hl">Creditors/Lenders</span></td><td>LOSE — receive cheaper rupees</td></tr>
+      <tr><td><span class="red-hl">Bond/Debenture holders</span></td><td>LOSE — fixed interest eroded</td></tr>
+      <tr><td><span class="green-hl">Equity investors</span></td><td>GAIN — stock prices rise with inflation</td></tr>
+      <tr><td><span class="red-hl">Salaried/fixed income</span></td><td>LOSE — wage hikes lag price rises</td></tr>
+      <tr><td><span class="green-hl">Speculators/profit-earners</span></td><td>GAIN — flexible incomes outpace prices</td></tr>
+    </table>
+    <div class="section-label">Effects on Growth</div>
+    <ul>
+      <li><span class="green-hl">Mild inflation</span> → incentivises investment → higher output (multiplier)</li>
+      <li><span class="red-hl">High inflation</span> → uncertainty → less investment → lower growth</li>
+      <li><span class="red-hl">Hyperinflation</span> (≥50%/month) → capital flight, savings collapse, balance of payments crisis</li>
+    </ul>
+    <div class="section-label">Inflation Hedges (Best to Worst)</div>
+    <div class="pill-row">
+      <span class="pill green">Stocks (best)</span>
+      <span class="pill green">TIPS</span>
+      <span class="pill green">Gold</span>
+      <span class="pill green">REITs</span>
+      <span class="pill green">Commodities</span>
+      <span class="pill red">Cash (worst)</span>
+      <span class="pill red">Fixed bonds (worst)</span>
+    </div>
+    <div class="section-label">Control Mechanism</div>
+    <div style="font-size:0.82rem">Monetary policy — central bank raises interest rates, tightens money supply | Targets: USA 2%, India 4%, Brazil 4.25%</div>
+  </div>
+
+  <!-- CARD 7: Quick Reference -->
+  <div class="card wide" style="border-left-color:#10b981">
+    <div class="card-title">⚡ Quick Exam Reference</div>
+    <table>
+      <tr><th>Concept</th><th>Key Fact</th></tr>
+      <tr><td>Accounting profit</td><td>TR − (W+R+I+M) = Gross Profit</td></tr>
+      <tr><td>Economic profit</td><td>TR − (explicit + implicit costs)</td></tr>
+      <tr><td>Pure profit</td><td>Accounting profit − (opportunity cost + unauthorized payments)</td></tr>
+      <tr><td>Walker</td><td>Profit = differential ability (rent analogy)</td></tr>
+      <tr><td>Hawley</td><td>Profit = reward for all risk-taking (1893)</td></tr>
+      <tr><td>Knight</td><td>Profit = uncertainty-bearing (non-insurable only)</td></tr>
+      <tr><td>Schumpeter</td><td>Profit = innovation reward</td></tr>
+      <tr><td>Clark</td><td>Profit = dynamic change reward</td></tr>
+      <tr><td>Drucker — 3 functions</td><td>Measure performance · Cover costs · Secure future capital</td></tr>
+      <tr><td>Profit max rule</td><td>MC = MR AND MC cuts MR from BELOW</td></tr>
+      <tr><td>BEP formula</td><td>FC / (P − AVC)</td></tr>
+      <tr><td>TCM</td><td>TNP + TFC = TR − TVC</td></tr>
+      <tr><td>Indian Airlines BEP</td><td>750 passengers (FC=₹3L, P=₹500, AVC=₹100)</td></tr>
+      <tr><td>3 inflation types</td><td>Demand-pull · Cost-push · Built-in</td></tr>
+      <tr><td>Inflation formula</td><td>Final CPI / Initial CPI</td></tr>
+      <tr><td>$10k in 1975</td><td>= $56,234.25 in 2018</td></tr>
+      <tr><td>Hyperinflation</td><td>≥50% per month (Germany 1923: 1.3 billion × price rise)</td></tr>
+      <tr><td>Best inflation hedge</td><td>Stocks (price rises pass through to profits)</td></tr>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

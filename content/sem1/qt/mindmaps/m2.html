@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QT Module 2 — Classification of Data</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .formula-box {
+    background: rgba(123,97,255,0.12);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 10px; padding: 10px 14px;
+    margin-top: 8px; text-align: center;
+  }
+  .formula-box .formula {
+    font-size: clamp(0.85rem, 2.5vw, 1rem);
+    font-weight: 700; color: #b39ddb; letter-spacing: 0.5px;
+  }
+  .formula-box .formula-label {
+    font-size: 0.65rem; color: #888; margin-top: 4px;
+  }
+
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(78,205,196,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#4ecdc4,#7b61ff,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Quantitative Techniques — Module 2</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>QT Module 2: Classification of Data</h1>
+    <p>Organising raw data into meaningful, comparable, analysable groups</p>
+    <div class="central-chips">
+      <span class="central-chip c1">5 Characteristics</span>
+      <span class="central-chip c2">6 Objectives</span>
+      <span class="central-chip c3">8 Requisites</span>
+      <span class="central-chip c4">5 Types</span>
+      <span class="central-chip c5">Frequency Distribution</span>
+      <span class="central-chip c6">Bivariate / Multivariate</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: CHARACTERISTICS & OBJECTIVES -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📋</div><h2>1. Characteristics & Objectives</h2></div>
+    <div class="branch">
+      <div class="branch-label">5 Chief Characteristics</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>1</td><td>Data arranged into <b style="color:#ff8a80">homogeneous groups</b></td></tr>
+          <tr><td>2</td><td>Basis = <b style="color:#ff8a80">similarity of characteristics</b></td></tr>
+          <tr><td>3</td><td>Signifies <b style="color:#ff8a80">unity in diversity</b></td></tr>
+          <tr><td>4</td><td>May be <b style="color:#ff8a80">actual or notional</b></td></tr>
+          <tr><td>5</td><td>Measurable, non-measurable, or <b style="color:#ff8a80">both</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">6 Objectives</div>
+      <div class="tags">
+        <span class="tag">Condense data</span>
+        <span class="tag">Similarity & dissimilarity</span>
+        <span class="tag">Variable relationships</span>
+        <span class="tag">Eliminate other effects</span>
+        <span class="tag">Facilitate comparison</span>
+        <span class="tag">Prepare for tabulation</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: 8 REQUISITES — HIGH YIELD -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">✅</div><h2>2. Requisites of Good Classification <span class="badge key">8 — MCQ</span></h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Requisite</th><th>Key Point</th></tr>
+          <tr><td>1</td><td><b style="color:#ffd580">Unambiguous</b></td><td>No confusion or overlap in placing items</td></tr>
+          <tr><td>2</td><td><b style="color:#ffd580">Exhaustive</b></td><td>Every item fits somewhere — no item left out</td></tr>
+          <tr><td>3</td><td><b style="color:#ffd580">Mutually Exclusive</b></td><td>Each item in ONE class only</td></tr>
+          <tr><td>4</td><td><b style="color:#ffd580">Flexible</b></td><td>Adjustable to changed situations</td></tr>
+          <tr><td>5</td><td><b style="color:#ffd580">Stable</b></td><td>Same principle throughout — enables time comparison</td></tr>
+          <tr><td>6</td><td><b style="color:#ffd580">Suitable</b></td><td>Matches investigation objective</td></tr>
+          <tr><td>7</td><td><b style="color:#ffd580">Homogeneous</b></td><td>Similar items within same class</td></tr>
+          <tr><td>8</td><td><b style="color:#ffd580">Revealing</b></td><td>Brings out patterns — not too few or too many classes</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Classifying patients into diagnostic groups — must be Exhaustive (no patient left unclassified), Mutually Exclusive (one diagnosis per patient), Revealing (groups show clinical pattern).
+    </div>
+  </div>
+
+  <!-- CARD 3: 5 TYPES OF CLASSIFICATION -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🗂️</div><h2>3. Types of Classification <span class="badge key">5</span></h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Basis</th><th>Example</th></tr>
+          <tr><td><b style="color:#a8edea">Geographical</b></td><td>Location / region</td><td>State-wise sales</td></tr>
+          <tr><td><b style="color:#a8edea">Chronological</b></td><td>Time of occurrence</td><td>Annual GDP, monthly expenses</td></tr>
+          <tr><td><b style="color:#a8edea">Conditional</b></td><td>Other conditions</td><td>Conditions beyond time/place</td></tr>
+          <tr><td><b style="color:#a8edea">Qualitative</b></td><td>Non-measurable attributes</td><td>Sex, marital status, colour</td></tr>
+          <tr><td><b style="color:#a8edea">Quantitative</b></td><td>Measurable variables</td><td>Height, income, age</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Qualitative Sub-types</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Sub-type</th><th>Categories</th></tr>
+          <tr><td><b>Dichotomous</b></td><td>2 only — presence/absence (Male/Female)</td></tr>
+          <tr><td><b>Manifold</b></td><td>&gt;2 categories (eye colour: black/brown/grey/blue)</td></tr>
+          <tr><td><b>One-way</b></td><td>Single attribute</td></tr>
+          <tr><td><b>Two-way / Multiway</b></td><td>2+ attributes simultaneously</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Quantitative Variable Types</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Variable</th><th>Definition</th><th>Example</th></tr>
+          <tr><td><b style="color:#43e97b">Discrete</b></td><td>Only specific values in interval</td><td>No. of children, rooms</td></tr>
+          <tr><td><b style="color:#4facfe">Continuous</b></td><td>Any value in interval</td><td>Income ₹1,500.25, height</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: FREQUENCY DISTRIBUTION — DISCRETE -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">📊</div><h2>4. Frequency Distribution — Discrete</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Feature</th></tr>
+          <tr><td><b style="color:#b39ddb">Ungrouped</b></td><td>Individual values + frequencies; original identity <b>preserved</b></td></tr>
+          <tr><td><b style="color:#b39ddb">Grouped</b></td><td>Values grouped into intervals; pattern visible; identity <b>lost</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Tally Marks Method</div>
+      <div class="tags">
+        <span class="tag">Each obs = one tally mark |</span>
+        <span class="tag">5th mark crosses previous 4: ||||</span>
+        <span class="tag">Used to count frequencies</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">When to Group?</div>
+      <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">When ungrouped distribution fails to reveal any pattern, or when the number of possible values is too large.</p>
+    </div>
+  </div>
+
+  <!-- CARD 5: FREQUENCY DISTRIBUTION — CONTINUOUS — FULL WIDTH -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">📈</div><h2>5. Frequency Distribution — Continuous <span class="badge key">KEY FORMULAS</span></h2></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">Key Decisions</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Decision</th><th>Rule</th></tr>
+            <tr><td>No. of classes</td><td>Min 5–6, Max 20</td></tr>
+            <tr><td>Width</td><td>(L − S) / n</td></tr>
+            <tr><td>Mid-value</td><td>(Lower + Upper) / 2</td></tr>
+          </table>
+        </div>
+        <div class="formula-box" style="margin-top:10px;">
+          <div class="formula">n = 1 + 3.322 × log₁₀N</div>
+          <div class="formula-label">Sturge's Formula — number of classes</div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Class Limit Methods</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Method</th><th>Rule</th></tr>
+            <tr><td><b style="color:#43e97b">Exclusive</b></td><td>Upper limit = lower limit of next class<br>Includes: ≥ lower, &lt; upper<br>e.g. 10–20 excludes 20</td></tr>
+            <tr><td><b style="color:#4facfe">Inclusive</b></td><td>Includes: ≥ lower, ≤ upper<br>Gap between classes → need <b>class boundaries</b></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Types of Freq. Distributions</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Type</th><th>Description</th></tr>
+            <tr><td><b>Relative / %</b></td><td>Frequencies replaced by proportions or percentages</td></tr>
+            <tr><td><b>Less than Cum.</b></td><td>Add frequencies lowest → highest</td></tr>
+            <tr><td><b>More than Cum.</b></td><td>Add frequencies highest → lowest</td></tr>
+            <tr><td><b>Freq. Density</b></td><td>Freq / Class width — rate of concentration</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:12px;">
+      <span>📈 Trading Analogy:</span> Frequency distribution of stock returns = histogram of daily P&L — tells you where returns cluster, how wide the spread is, and whether distribution is skewed.
+    </div>
+  </div>
+
+  <!-- CARD 6: BIVARIATE & MULTIVARIATE -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🔲</div><h2>6. Bivariate & Multivariate Distributions</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Characteristics</th><th>Representation</th></tr>
+          <tr><td><b style="color:#4facfe">Univariate</b></td><td>1 characteristic</td><td>Standard freq. table</td></tr>
+          <tr><td><b style="color:#4facfe">Bivariate</b></td><td>2 characteristics simultaneously</td><td><b>Contingency Table</b></td></tr>
+          <tr><td><b style="color:#4facfe">Multivariate</b></td><td>&gt;2 characteristics</td><td>Complex cross-table</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Example — Bivariate</div>
+      <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">100 couples classified by Age of Husband AND Age of Wife simultaneously → Contingency Table</p>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Bivariate = cross-tabulating patients by Age Group AND Blood Pressure Category. One variable alone tells half the story.
+    </div>
+  </div>
+
+  <!-- CARD 7: HIGH YIELD MCQ TARGETS -->
+  <div class="card yellow wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield Exam Targets</h2>
+      <span class="badge key">HIGH YIELD</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div>
+        <div class="branch-label">Count-Based MCQs</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Topic</th><th>Count</th></tr>
+            <tr><td>Characteristics of classification</td><td><b style="color:#f9d423">5</b></td></tr>
+            <tr><td>Objectives of classification</td><td><b style="color:#f9d423">6</b></td></tr>
+            <tr><td>Requisites of classification</td><td><b style="color:#f9d423">8</b></td></tr>
+            <tr><td>Types of classification</td><td><b style="color:#f9d423">5</b></td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Key Terms to Know</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Term</th><th>Definition</th></tr>
+            <tr><td>Exhaustive</td><td>No item left unclassified</td></tr>
+            <tr><td>Mutually Exclusive</td><td>One class per item only</td></tr>
+            <tr><td>Dichotomous</td><td>2-category qualitative</td></tr>
+            <tr><td>Contingency Table</td><td>Bivariate freq. distribution</td></tr>
+            <tr><td>Freq. Density</td><td>Freq ÷ Class width</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Formulas to Remember</div>
+        <div class="formula-box">
+          <div class="formula">n = 1 + 3.322 × log₁₀N</div>
+          <div class="formula-label">Sturge's Formula</div>
+        </div>
+        <div class="formula-box" style="margin-top:8px;">
+          <div class="formula">Width = (L − S) / n</div>
+          <div class="formula-label">Class interval width</div>
+        </div>
+        <div class="formula-box" style="margin-top:8px;">
+          <div class="formula">Mid-value = (L + U) / 2</div>
+          <div class="formula-label">Mid-point of class</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#555;font-size:0.7rem;margin-top:24px;padding-bottom:20px;">
+  QT Module 2 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

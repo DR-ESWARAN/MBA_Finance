@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCT Module 2 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #f5a623, #e74c6f, #7b61ff, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .tag.purple-hl { background: rgba(123,97,255,0.15); color: #7b61ff; border-color: rgba(123,97,255,0.3); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#f5a623,#e74c6f,#7b61ff,#4ecdc4);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  /* JOURNAL FORMAT VISUAL */
+  .journal-format {
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 8px;
+    font-size: clamp(0.65rem, 1.8vw, 0.72rem);
+  }
+  .jf-header {
+    display: grid;
+    grid-template-columns: 60px 1fr 50px 70px 70px;
+    background: rgba(245,166,35,0.12);
+    padding: 6px 8px;
+    gap: 6px;
+    font-weight: 700;
+    color: #f5a623;
+    text-transform: uppercase;
+    font-size: 0.6rem;
+    letter-spacing: 0.4px;
+  }
+  .jf-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 50px 70px 70px;
+    padding: 6px 8px;
+    gap: 6px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc;
+    line-height: 1.4;
+  }
+  .jf-row:nth-child(odd) { background: rgba(255,255,255,0.02); }
+
+  /* FLOW ARROWS */
+  .flow {
+    display: flex; align-items: center; flex-wrap: wrap;
+    gap: 4px; margin-top: 8px;
+  }
+  .flow-step {
+    background: rgba(123,97,255,0.15);
+    border: 1px solid rgba(123,97,255,0.3);
+    color: #b39ddb; border-radius: 8px;
+    padding: 4px 10px; font-size: 0.7rem; font-weight: 600;
+  }
+  .flow-arrow { color: #555; font-size: 0.8rem; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+    .jf-header, .jf-row { grid-template-columns: 48px 1fr 36px 56px 56px; font-size: 0.62rem; }
+  }
+
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ACCT</a><span style="flex:1"></span><a href="notes-m2.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m2.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m1.html" style="color:#c9d1d9;text-decoration:none">‹ M1</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">M3 ›</a></div>
+
+<div class="header">
+  <h1>Principles of Accounting — Module 2</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>ACCT Module 2: Primary Book — Journal</h1>
+    <p>Book of Original Entry · "JOUR" (French) = Day · First step in Accounting Cycle</p>
+    <div class="central-chips">
+      <span class="central-chip c2">What is Journal?</span>
+      <span class="central-chip c1">Journalising</span>
+      <span class="central-chip c3">5-Column Format</span>
+      <span class="central-chip c4">Opening Entry</span>
+      <span class="central-chip c5">Simple vs Compound</span>
+      <span class="central-chip c6">Debit & Credit</span>
+      <span class="central-chip c1">Golden Rules</span>
+      <span class="central-chip c2">Worked Examples</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: JOURNAL DEFINITION -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">📖</div><h2>1. What is a Journal?</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition — L.C. Cropper</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;font-style:italic;">"A book employed to classify or sort out transactions in a form convenient for their subsequent entries in Ledger."</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Identity</div>
+      <div class="tags">
+        <span class="tag highlight">JOUR (French) = Day</span>
+        <span class="tag highlight">Book of Original Entry</span>
+        <span class="tag highlight">Primary Book</span>
+        <span class="tag">Day-to-day transactions</span>
+        <span class="tag">Chronological order</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Journal vs Ledger — Position in Cycle</div>
+      <div class="flow">
+        <span class="flow-step">Transaction</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step" style="background:rgba(245,166,35,0.2);border-color:#f5a623;color:#f5a623;">Journal ✅</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Ledger</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Trial Balance</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">Final Accounts</span>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>📈 Trading Analogy:</span> Journal = Trade log. Every order execution stamped with time, instrument, quantity, price. You verify the raw log before looking at P&L — same principle here.
+    </div>
+  </div>
+
+  <!-- CARD 2: JOURNALISING -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">✍️</div><h2>2. Journalising</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;">Process of <b>entering transaction data</b> into the Journal — chronologically, with debit/credit and narration.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Components of a Complete Journal Entry</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Component</th><th>Content</th></tr>
+          <tr><td>1</td><td><b style="color:#e74c6f">Date</b></td><td>Date, month, year of transaction</td></tr>
+          <tr><td>2</td><td><b style="color:#e74c6f">Accounts + Amounts</b></td><td>Dr account, Cr account, with amounts</td></tr>
+          <tr><td>3</td><td><b style="color:#e74c6f">Narration</b></td><td>Brief explanation — starts with <b>"Being..."</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Today's Method</div>
+      <div class="tags">
+        <span class="tag highlight">Software (e.g. Tally)</span>
+        <span class="tag">Earlier: Physical books</span>
+        <span class="tag">Each transaction = Separate entry</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: JOURNAL FORMAT — WIDE -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">📋</div><h2>3. Journal Format — 5 Columns</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="journal-format">
+      <div class="jf-header">
+        <div>Date</div>
+        <div>Particulars</div>
+        <div>L.F.</div>
+        <div>Dr Amount</div>
+        <div>Cr Amount</div>
+      </div>
+      <div class="jf-row">
+        <div style="color:#f9d423;">Apr 1</div>
+        <div>
+          <span style="color:#43e97b;">Cash A/c</span> &nbsp;<span style="color:#aaa;font-size:0.65rem;">Dr</span><br>
+          &nbsp;&nbsp;&nbsp;<span style="color:#ff8a80;">To Capital A/c</span><br>
+          <span style="color:#666;font-size:0.65rem;">(Being business started with cash)</span>
+        </div>
+        <div style="color:#888;">1</div>
+        <div style="color:#43e97b;">25,000</div>
+        <div style="color:#ff8a80;">25,000</div>
+      </div>
+      <div class="jf-row">
+        <div style="color:#f9d423;">Apr 3</div>
+        <div>
+          <span style="color:#43e97b;">Electricity A/c</span> &nbsp;<span style="color:#aaa;font-size:0.65rem;">Dr</span><br>
+          &nbsp;&nbsp;&nbsp;<span style="color:#ff8a80;">To Cash A/c</span><br>
+          <span style="color:#666;font-size:0.65rem;">(Being electricity charges paid)</span>
+        </div>
+        <div style="color:#888;">2</div>
+        <div style="color:#43e97b;">900</div>
+        <div style="color:#ff8a80;">900</div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">Writing Rules in Particulars Column</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Element</th><th>Rule</th></tr>
+          <tr><td><b>Dr Account</b></td><td>Written <b>first</b>; "Dr" written near L.F. column</td></tr>
+          <tr><td><b>Cr Account</b></td><td>Next line, begins with <b>"To"</b> (indented)</td></tr>
+          <tr><td><b>Narration</b></td><td>Below entry, in brackets, starts with <b>"Being"</b></td></tr>
+          <tr><td><b>L.F.</b></td><td>Ledger page no. — written in <b>red ink</b></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Casting of Journal (End of Page)</div>
+      <div class="tags">
+        <span class="tag highlight">Dr Total = Cr Total ← Arithmetical check</span>
+        <span class="tag">Total C/F → bottom of page</span>
+        <span class="tag">Total B/F → top of next page</span>
+        <span class="tag">Grand Total → last page</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: OPENING ENTRY -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🔓</div><h2>4. Opening Entry</h2></div>
+    <div class="branch">
+      <div class="branch-label">What it is</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;">The <b>first entry</b> in a new set of books / new financial year. Records opening balances transferred from previous year.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Rule</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Item</th><th>Treatment</th><th>Why</th></tr>
+          <tr><td><b>All Assets</b></td><td style="color:#43e97b;">→ Debit</td><td>Assets carry debit balance</td></tr>
+          <tr><td><b>All Liabilities</b></td><td style="color:#ff8a80;">→ Credit</td><td>Liabilities carry credit balance</td></tr>
+          <tr><td><b>Capital</b></td><td style="color:#ff8a80;">→ Credit</td><td>Owner's equity = credit balance</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Point</div>
+      <div class="tags">
+        <span class="tag highlight">Closing balance (Year N) = Opening balance (Year N+1)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: SIMPLE vs COMPOUND -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🔀</div><h2>5. Types of Journal Entry</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Structure</th><th>Example</th></tr>
+          <tr>
+            <td><b style="color:#7b61ff">Simple</b></td>
+            <td>1 Debit + 1 Credit (2 accounts only)</td>
+            <td>Cash paid for electricity → Electricity Dr, Cash Cr</td>
+          </tr>
+          <tr>
+            <td><b style="color:#b39ddb">Compound</b></td>
+            <td>&gt;1 Dr and/or &gt;1 Cr (3+ accounts)</td>
+            <td>Buy building (part cash + part loan) → Building Dr; Cash Cr + Notes Payable Cr</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Distinction</div>
+      <div class="tags">
+        <span class="tag highlight">Simple = exactly 2 accounts</span>
+        <span class="tag highlight">Compound = 3 or more accounts</span>
+        <span class="tag">Both: Total Dr = Total Cr always</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Prakash Example — Simple Entry</div>
+      <p style="font-size:0.73rem;color:#bbb;line-height:1.5;">Jan 1: Started business ₹15,000 → <b>Cash A/c Dr ₹15,000</b> | <b>To Capital A/c Cr ₹15,000</b></p>
+    </div>
+  </div>
+
+  <!-- CARD 6: DEBIT & CREDIT -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>6. Debit & Credit</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Aspect</th><th style="color:#43e97b;">Debit (Dr) — LEFT</th><th style="color:#ff8a80;">Credit (Cr) — RIGHT</th></tr>
+          <tr><td>Represents</td><td>Receiver of benefit</td><td>Giver of benefit</td></tr>
+          <tr><td><b>Increases</b></td><td style="color:#43e97b;">Assets, Expenses</td><td style="color:#43e97b;">Liabilities, Revenue, Equity</td></tr>
+          <tr><td><b>Decreases</b></td><td style="color:#ff8a80;">Liabilities, Revenue, Equity</td><td style="color:#ff8a80;">Assets, Expenses</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Memory Aid</div>
+      <div class="tags">
+        <span class="tag blue-hl">Dr = DEAD (Debit: Expenses, Assets, Dividends)</span>
+        <span class="tag blue-hl">Cr = CLIC (Credit: Liabilities, Income, Capital)</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">3 Steps to Find Dr / Cr for Any Transaction</div>
+      <div class="flow">
+        <span class="flow-step">1. Identify 2 accounts</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">2. Classify (Personal/Real/Nominal)</span>
+        <span class="flow-arrow">→</span>
+        <span class="flow-step">3. Apply Golden Rule</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: GOLDEN RULES — WIDE -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">🏆</div><h2>7. Golden Rules of Debit & Credit</h2><span class="badge star">⭐ HIGHEST YIELD</span></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label" style="color:#4facfe;">Personal Account</div>
+        <div style="background:rgba(79,172,254,0.08);border:1px solid rgba(79,172,254,0.25);border-radius:10px;padding:12px;text-align:center;margin-top:6px;">
+          <div style="font-size:1.2rem;margin-bottom:6px;">👤</div>
+          <div style="color:#4facfe;font-weight:700;font-size:0.78rem;margin-bottom:4px;">Natural, Artificial, Representative</div>
+          <div style="color:#43e97b;font-size:0.75rem;margin:4px 0;"><b>DEBIT</b> the <b>Receiver</b></div>
+          <div style="color:#ff8a80;font-size:0.75rem;"><b>CREDIT</b> the <b>Giver</b></div>
+          <div style="color:#777;font-size:0.65rem;margin-top:6px;">e.g. Debtor A/c, Bank A/c, Capital A/c</div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#43e97b;">Real Account</div>
+        <div style="background:rgba(67,233,123,0.08);border:1px solid rgba(67,233,123,0.25);border-radius:10px;padding:12px;text-align:center;margin-top:6px;">
+          <div style="font-size:1.2rem;margin-bottom:6px;">🏛️</div>
+          <div style="color:#43e97b;font-weight:700;font-size:0.78rem;margin-bottom:4px;">Tangible &amp; Intangible Assets</div>
+          <div style="color:#43e97b;font-size:0.75rem;margin:4px 0;"><b>DEBIT</b> what <b>Comes In</b></div>
+          <div style="color:#ff8a80;font-size:0.75rem;"><b>CREDIT</b> what <b>Goes Out</b></div>
+          <div style="color:#777;font-size:0.65rem;margin-top:6px;">e.g. Cash A/c, Building A/c, Goodwill A/c</div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label" style="color:#f857a6;">Nominal Account</div>
+        <div style="background:rgba(248,87,166,0.08);border:1px solid rgba(248,87,166,0.25);border-radius:10px;padding:12px;text-align:center;margin-top:6px;">
+          <div style="font-size:1.2rem;margin-bottom:6px;">📊</div>
+          <div style="color:#f857a6;font-weight:700;font-size:0.78rem;margin-bottom:4px;">Expenses, Losses, Income, Gains</div>
+          <div style="color:#43e97b;font-size:0.75rem;margin:4px 0;"><b>DEBIT</b> all <b>Expenses &amp; Losses</b></div>
+          <div style="color:#ff8a80;font-size:0.75rem;"><b>CREDIT</b> all <b>Incomes &amp; Gains</b></div>
+          <div style="color:#777;font-size:0.65rem;margin-top:6px;">e.g. Salary A/c, Rent A/c, Interest Received A/c</div>
+        </div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:12px;">
+      <span>🫀 Clinical Analogy:</span> Journal = real-time ECG strip. Every beat (transaction) recorded in sequence. Ledger = Echo report (summary). Golden Rules = ACLS protocol — you must know which drug (Dr or Cr) goes to which account type before acting.
+    </div>
+  </div>
+
+  <!-- CARD 8: WORKED EXAMPLES -->
+  <div class="card pink wide">
+    <div class="card-title"><div class="card-icon">🧮</div><h2>8. Worked Examples — Sunil's Journal (April 2013)</h2><span class="badge key">APPLY RULES</span></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Date</th>
+          <th>Transaction</th>
+          <th>Account Type</th>
+          <th style="color:#43e97b;">Dr Account</th>
+          <th style="color:#ff8a80;">Cr Account</th>
+          <th>Amount</th>
+        </tr>
+        <tr>
+          <td>Apr 1</td>
+          <td>Started business with cash ₹25,000</td>
+          <td>Real + Personal</td>
+          <td style="color:#43e97b;">Cash A/c</td>
+          <td style="color:#ff8a80;">Capital A/c</td>
+          <td>₹25,000</td>
+        </tr>
+        <tr>
+          <td>Apr 3</td>
+          <td>Paid electricity charges ₹900</td>
+          <td>Nominal + Real</td>
+          <td style="color:#43e97b;">Electricity A/c</td>
+          <td style="color:#ff8a80;">Cash A/c</td>
+          <td>₹900</td>
+        </tr>
+        <tr>
+          <td>Apr 15</td>
+          <td>Purchased goods from Z ₹10,000</td>
+          <td>Real + Personal</td>
+          <td style="color:#43e97b;">Purchases A/c</td>
+          <td style="color:#ff8a80;">Z A/c (Creditor)</td>
+          <td>₹10,000</td>
+        </tr>
+        <tr>
+          <td>Apr 22</td>
+          <td>Machinery purchased for cash ₹8,000</td>
+          <td>Real + Real</td>
+          <td style="color:#43e97b;">Machinery A/c</td>
+          <td style="color:#ff8a80;">Cash A/c</td>
+          <td>₹8,000</td>
+        </tr>
+        <tr>
+          <td>Apr 29</td>
+          <td>Salary paid by cheque ₹1,000</td>
+          <td>Nominal + Personal</td>
+          <td style="color:#43e97b;">Salary A/c</td>
+          <td style="color:#ff8a80;">Bank A/c</td>
+          <td>₹1,000</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 9: ADVANTAGES + HIGH YIELD -->
+  <div class="card teal wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>Advantages of Journal + High-Yield Exam Targets</h2>
+      <span class="badge star">⭐ EXAM FOCUS</span>
+    </div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">7 Advantages of Journal</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td>✅ No omission</td><td>Recorded immediately on occurrence</td></tr>
+            <tr><td>✅ Chronological</td><td>When + why of every transaction traceable</td></tr>
+            <tr><td>✅ Error check</td><td>Dr = Cr — mismatch is instantly visible</td></tr>
+            <tr><td>✅ Permanent record</td><td>Legally valid document</td></tr>
+            <tr><td>✅ Narration</td><td>Reason for every entry documented</td></tr>
+            <tr><td>✅ Ledger basis</td><td>Journal → Ledger → Trial Balance → Final A/cs</td></tr>
+            <tr><td>✅ Clean ledger</td><td>Details stay in Journal; ledger stays concise</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">High-Yield Exam Points ⚡</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><td><b>Journal origin</b></td><td>French "JOUR" = Day</td></tr>
+            <tr><td><b>Also called</b></td><td>Book of Original Entry</td></tr>
+            <tr><td><b>5 columns</b></td><td>Date | Particulars | L.F. | Dr ₹ | Cr ₹</td></tr>
+            <tr><td><b>Narration</b></td><td>Starts with "Being..."</td></tr>
+            <tr><td><b>Cr A/c prefix</b></td><td>"To" (indented)</td></tr>
+            <tr><td><b>L.F. ink</b></td><td>Red ink (to distinguish from amounts)</td></tr>
+            <tr><td><b>Casting rule</b></td><td>Dr Total = Cr Total at end of each page</td></tr>
+            <tr><td><b>Opening entry</b></td><td>Assets Dr | Liabilities + Capital Cr</td></tr>
+            <tr><td><b>Simple entry</b></td><td>Exactly 2 accounts</td></tr>
+            <tr><td><b>Compound entry</b></td><td>3 or more accounts</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;color:#444;font-size:0.7rem;margin-top:30px;padding-bottom:20px;">
+  ACCT Module 2 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

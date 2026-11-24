@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Nature & Scope of Managerial Economics"
+    },
+    {
+      "n": 2,
+      "title": "Demand Analysis"
+    },
+    {
+      "n": 3,
+      "title": "Cost Concept & Production Theory"
+    },
+    {
+      "n": 4,
+      "title": "Pricing Decisions"
+    },
+    {
+      "n": 5,
+      "title": "Profit & Inflation"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": "real.js"
+}

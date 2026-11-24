@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>QT Module 3 — Tabulation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem,5vw,2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color: #e74c6f; } .orange .card-title h2 { color: #f5a623; } .teal .card-title h2 { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; } .green .card-title h2 { color: #43e97b; } .blue .card-title h2 { color: #4facfe; }
+  .pink .card-title h2 { color: #f857a6; } .yellow .card-title h2 { color: #f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; } .badge.key { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .central { grid-column: 1 / -1; background: linear-gradient(135deg,#1f1433,#281a40); border: 1px solid rgba(245,166,35,0.3); border-radius: 18px; padding: 20px; text-align: center; }
+  .central h1 { font-size: clamp(1.1rem,4vw,1.6rem); font-weight: 800; background: linear-gradient(90deg,#f5a623,#e74c6f,#4ecdc4); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; line-height: 1.3; }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .wide { grid-column: span 2; }
+  @media (max-width: 480px) { body { padding: 14px 10px 50px; } .grid { gap: 12px; grid-template-columns: 1fr; } .wide { grid-column: span 1; } .two-col { grid-template-columns: 1fr !important; } .three-col { grid-template-columns: 1fr !important; } .card { padding: 14px 12px; } .card-title h2 { font-size: 0.85rem; } .central { padding: 16px 12px; } }
+  @media (min-width: 481px) and (max-width: 768px) { .grid { grid-template-columns: 1fr; } .wide { grid-column: span 1; } .two-col { grid-template-columns: 1fr 1fr !important; } }
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>Quantitative Techniques — Module 3</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <div class="central">
+    <h1>QT Module 3: Tabulation</h1>
+    <p>Systematic presentation of classified data in rows and columns for analysis</p>
+    <div class="central-chips">
+      <span class="central-chip c1">9 Objectives</span>
+      <span class="central-chip c2">8 Parts of a Table</span>
+      <span class="central-chip c3">8 General Rules</span>
+      <span class="central-chip c4">Types of Tables</span>
+      <span class="central-chip c5">Classification vs Tabulation</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION & OBJECTIVES -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📋</div><h2>1. Definition & Objectives</h2></div>
+    <div class="branch">
+      <div class="branch-label">Tuttle's Definition</div>
+      <p style="font-size:0.74rem;color:#bbb;line-height:1.5;">"Logical listing of related quantitative data in vertical columns and horizontal rows with explanatory words, headings and footnotes to make clear the full meaning of data and their origin."</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">9 Objectives <span class="badge key">MCQ</span></div>
+      <div class="tags">
+        <span class="tag highlight">Simplify complex data</span>
+        <span class="tag highlight">Highlight characteristics</span>
+        <span class="tag">Clarify objective</span>
+        <span class="tag">Minimum space</span>
+        <span class="tag">Detect errors</span>
+        <span class="tag">Facilitate comparison</span>
+        <span class="tag">Facilitate reference</span>
+        <span class="tag">Identify trends</span>
+        <span class="tag">Facilitate statistical analysis</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: CLASSIFICATION vs TABULATION -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>2. Classification vs Tabulation</h2></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Classification</th><th>Tabulation</th></tr>
+        <tr><td>Prerequisite — comes first</td><td>Follows classification</td></tr>
+        <tr><td>Divides into groups/subgroups based on similarity</td><td>Arranges classified data in rows + columns with headings</td></tr>
+        <tr><td>Process of grouping</td><td>Process of presenting in tabular form</td></tr>
+      </table>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Classification = sorting patients by diagnosis; Tabulation = entering them into a structured case register with rows + columns.
+    </div>
+  </div>
+
+  <!-- CARD 3: 8 PARTS OF A TABLE — HIGH YIELD -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">🗂️</div><h2>3. Main Parts of a Table <span class="badge key">8 — HIGH YIELD</span></h2></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Part</th><th>Description</th></tr>
+          <tr><td>1</td><td><b style="color:#a8edea">Table Number</b></td><td>Identification; at top of table</td></tr>
+          <tr><td>2</td><td><b style="color:#a8edea">Title</b></td><td>Scope + nature — concise, unambiguous</td></tr>
+          <tr><td>3</td><td><b style="color:#a8edea">Captions</b></td><td><b>Column headings</b> — must be self-explanatory</td></tr>
+          <tr><td>3</td><td><b style="color:#a8edea">Stubs</b></td><td><b>Row headings</b> — must be self-explanatory</td></tr>
+          <tr><td>4</td><td><b style="color:#a8edea">Main Body</b></td><td>Most important — numerical data; columns top→bottom, rows left→right</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Part</th><th>Description</th></tr>
+          <tr><td>5</td><td><b style="color:#4ecdc4">Ruling & Spacing</b></td><td>Vertical lines for columns; horizontal at top, bottom, totals only</td></tr>
+          <tr><td>6</td><td><b style="color:#4ecdc4">Head-note</b></td><td>Below title — units of measurement (in brackets)</td></tr>
+          <tr><td>7</td><td><b style="color:#4ecdc4">Footnote</b></td><td>Below last line — abbreviations, explanatory notes</td></tr>
+          <tr><td>8</td><td><b style="color:#4ecdc4">Source</b></td><td>Required for secondary data — indicates data origin</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="tags" style="margin-top:10px;">
+      <span class="tag highlight">⚠️ Caption = Column heading</span>
+      <span class="tag highlight">⚠️ Stub = Row heading</span>
+      <span class="tag highlight">⚠️ Head-note = units (below title)</span>
+      <span class="tag highlight">⚠️ Footnote = abbreviations (below last line)</span>
+    </div>
+  </div>
+
+  <!-- CARD 4: GENERAL RULES -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">📏</div><h2>4. General Rules for Tabulation <span class="badge star">8</span></h2></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><td>1</td><td>Simple and compact — not overloaded</td></tr>
+        <tr><td>2</td><td>In accordance with objective of investigation</td></tr>
+        <tr><td>3</td><td>Units of measurement must always be indicated</td></tr>
+        <tr><td>4</td><td>Captions and stubs arranged systematically</td></tr>
+        <tr><td>5</td><td>Complete and self-explanatory</td></tr>
+        <tr><td>6</td><td>Include totals, ratios, percentages where possible</td></tr>
+        <tr><td>7</td><td>Entries must be accurate</td></tr>
+        <tr><td>8</td><td>Attractive to draw reader attention</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 5: TYPES OF TABLES -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">📊</div><h2>5. Types of Tables <span class="badge key">3 Bases</span></h2></div>
+    <div class="three-col" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">By Purpose</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Type</th><th>Also Called</th><th>Feature</th></tr>
+            <tr><td><b style="color:#43e97b">General Purpose</b></td><td>Reference table</td><td>Large mass; no specific objective; in appendix</td></tr>
+            <tr><td><b style="color:#43e97b">Special Purpose</b></td><td>Text / Summary / Analytical</td><td>Specific problem; smaller; highlights relationships</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">By Nature of Data</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Type</th><th>Feature</th></tr>
+            <tr><td><b style="color:#38f9d7">Primary (Original)</b></td><td>Data in original collected form</td></tr>
+            <tr><td><b style="color:#38f9d7">Derivative</b></td><td>Derived figures — totals, averages, %, ratios, coefficients</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">By Construction <span class="badge key">MCQ</span></div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Type</th><th>Feature</th></tr>
+            <tr><td><b style="color:#ffd580">Simple</b></td><td>1 characteristic only; first-order table</td></tr>
+            <tr><td><b style="color:#ffd580">Complex</b></td><td>2–3 characteristics; Two-way / Three-way / Multi-way</td></tr>
+            <tr><td><b style="color:#ffd580">Cross-classified</b></td><td>Both row-wise AND column-wise classification</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: METHODS + HIGH YIELD -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>6. Methods of Tabulation + High-Yield Exam Targets</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div>
+        <div class="branch-label">Methods of Tabulation</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Method</th><th>When Used</th></tr>
+            <tr><td><b style="color:#f9d423">Manual</b></td><td>Small field; few characteristics</td></tr>
+            <tr><td><b style="color:#f9d423">Mechanical</b></td><td>Large data — computers; faster + more accurate</td></tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">Key Distinctions to Remember</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Term</th><th>Meaning</th></tr>
+            <tr><td><b>Caption</b></td><td>Column heading</td></tr>
+            <tr><td><b>Stub</b></td><td>Row heading</td></tr>
+            <tr><td><b>Head-note</b></td><td>Units of measurement (below title)</td></tr>
+            <tr><td><b>Footnote</b></td><td>Abbreviations / notes (below last line)</td></tr>
+            <tr><td><b>Source</b></td><td>Origin of secondary data</td></tr>
+            <tr><td><b>Derivative table</b></td><td>Contains derived values — not raw data</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;color:#555;font-size:0.7rem;margin-top:24px;padding-bottom:20px;">QT Module 3 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

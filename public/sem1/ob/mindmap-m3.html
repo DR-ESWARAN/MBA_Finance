@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OB Module 3 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24; color: #fff;
+    min-height: 100vh; padding: 20px 14px 60px;
+  }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800;
+    background: linear-gradient(90deg,#4ecdc4,#7b61ff,#e74c6f,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px; max-width: 1400px; margin: 0 auto;
+  }
+  .card {
+    border-radius: 14px; padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 4px; border-radius: 14px 14px 0 0;
+  }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f77fe1,#fb9dcc); }
+  .card.gold::before   { background: linear-gradient(90deg,#f9d423,#f7971e); }
+  .card-title {
+    font-size: 0.82rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; margin-bottom: 12px; margin-top: 4px;
+  }
+  .card.teal   .card-title { color: #4ecdc4; }
+  .card.purple .card-title { color: #a78bff; }
+  .card.red    .card-title { color: #e74c6f; }
+  .card.orange .card-title { color: #f5a623; }
+  .card.green  .card-title { color: #43e97b; }
+  .card.blue   .card-title { color: #4facfe; }
+  .card.pink   .card-title { color: #f77fe1; }
+  .card.gold   .card-title { color: #f9d423; }
+  .node {
+    background: rgba(255,255,255,0.04); border-radius: 8px;
+    padding: 8px 10px; margin-bottom: 7px; font-size: 0.84rem; line-height: 1.45;
+  }
+  .node:last-child { margin-bottom: 0; }
+  .node-label { font-weight: 700; font-size: 0.82rem; margin-bottom: 4px; }
+  .leaf {
+    padding: 3px 0 3px 12px; font-size: 0.80rem; color: #bbb;
+    border-left: 2px solid rgba(255,255,255,0.12);
+    margin-top: 3px; line-height: 1.4;
+  }
+  .leaf b { color: #fff; }
+  .leaf span.hi { color: #ffd580; font-weight: 600; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin-top: 6px; }
+  .mini-table th {
+    background: rgba(255,255,255,0.08); color: #ccc; font-weight: 700;
+    padding: 5px 8px; text-align: left; font-size: 0.74rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .mini-table td {
+    padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #bbb; vertical-align: top;
+  }
+  .mini-table td b { color: #fff; }
+  .mini-table tr:last-child td { border-bottom: none; }
+  .badge {
+    display: inline-block; background: rgba(255,255,255,0.1);
+    border-radius: 20px; padding: 2px 9px; font-size: 0.72rem;
+    font-weight: 600; margin: 2px 3px 2px 0; color: #ddd;
+  }
+  .callout {
+    background: rgba(255,255,255,0.05); border-left: 3px solid #4ecdc4;
+    border-radius: 0 8px 8px 0; padding: 8px 10px;
+    font-size: 0.78rem; color: #ccc; margin-top: 8px; line-height: 1.5;
+  }
+  .callout b { color: #a8edea; }
+  @media (min-width: 700px) { .span2 { grid-column: span 2; } }
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .card { padding: 13px; }
+    .mini-table th, .mini-table td { padding: 4px 6px; }
+    .card-title { font-size: 0.76rem; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ OB</a><span style="flex:1"></span><a href="notes-m3.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m3.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">‹ M2</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">M4 ›</a></div>
+
+<div class="header">
+  <h1>OB Module 3 — Teams &amp; Leadership</h1>
+  <p>DY Patil MBA · Organizational Behaviour · Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1. WHAT IS A GROUP -->
+  <div class="card teal">
+    <div class="card-title">1. What is a Group?</div>
+    <div class="node">
+      <div class="node-label">Definition</div>
+      <div class="leaf">2+ individuals, <b>interacting &amp; interdependent</b>, come together to achieve particular objectives</div>
+      <div class="leaf">Members: motivated to join · perceive as unified unit · contribute variably · reach agreements &amp; disagreements</div>
+    </div>
+    <div class="node">
+      <div class="node-label">5 Organizational Functions of Groups</div>
+      <div class="leaf">Work on complex tasks too large for one person</div>
+      <div class="leaf">Generate new ideas / creative solutions</div>
+      <div class="leaf">Serve liaison/coordinating functions across workgroups</div>
+      <div class="leaf">Facilitate implementation of complex decisions</div>
+      <div class="leaf">Train new employees in methods and group norms</div>
+    </div>
+  </div>
+
+  <!-- 2. TYPES OF GROUPS -->
+  <div class="card purple">
+    <div class="card-title">2. Types of Groups (9)</div>
+    <table class="mini-table">
+      <thead><tr><th>Type</th><th>Key Feature</th></tr></thead>
+      <tbody>
+        <tr><td><b>Formal</b></td><td>Mgmt-defined goals; coordination of work; tend to be permanent</td></tr>
+        <tr><td><b>Informal</b></td><td>Personal relationships; satisfy social/psychological needs</td></tr>
+        <tr><td><b>Managed</b></td><td>Under a named manager; may not work closely together</td></tr>
+        <tr><td><b>Process</b></td><td>Fixed set of instructions (e.g., production line); little/prescribed interaction</td></tr>
+        <tr><td><b>Semi-Formal</b></td><td>Distributed power; collaborative; negotiation over command</td></tr>
+        <tr><td><b>Goal</b></td><td>Shared objective; no fixed instructions; intelligence + experience needed</td></tr>
+        <tr><td><b>Learning</b></td><td>Increase net knowledge; collaborative or teacher-led</td></tr>
+        <tr><td><b>Problem-Solving</b></td><td>Address issues; different perspectives can cause disagreements</td></tr>
+        <tr><td><b>Friendship / Interest</b></td><td>Common characteristics / specific objective cutting across formal groups</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 3. 6 REASONS TO JOIN -->
+  <div class="card orange">
+    <div class="card-title">3. 6 Reasons to Join Groups (SEAPIH)</div>
+    <table class="mini-table">
+      <thead><tr><th>Reason</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td><b>Security</b> ⭐</td><td><span style="color:#ffd580">STRONGEST reason</span> — reduces insecurity, fewer self-doubts, more resistant to threats</td></tr>
+        <tr><td><b>Esteem</b></td><td>High-status group membership → recognition, praise, self-esteem boost</td></tr>
+        <tr><td><b>Affiliation</b></td><td>Enjoy company of others with common interests</td></tr>
+        <tr><td><b>Power</b></td><td>Collective strength ("united we stand"); informal leaders exercise power</td></tr>
+        <tr><td><b>Identity</b></td><td>Others' reactions shape self-concept — answers "Who am I?"</td></tr>
+        <tr><td><b>Huddling</b></td><td>Informal executive get-togethers; cuts red tape; compensates for lack of leadership</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. HEALTHY GROUP CLIMATE -->
+  <div class="card green">
+    <div class="card-title">4. Skills for Healthy Group Climate</div>
+    <div class="node">
+      <div class="leaf"><b>Openness</b> — willing to know others with different backgrounds; listen + elicit ideas</div>
+      <div class="leaf"><b>Trust &amp; Self-Disclosure</b> — share ideas/feelings; mutual trust built on honesty + accountability</div>
+      <div class="leaf"><b>Support</b> — team loyalty; collaborators not competitors; help struggling members</div>
+      <div class="leaf"><b>Respect</b> — "What can we learn?" over "Who is to blame?"</div>
+      <div class="leaf"><b>Individual Responsibility &amp; Accountability</b> — agree on who does what; hold self + others accountable</div>
+      <div class="leaf"><b>Constructive Feedback</b> — focus on ideas/behaviours not individuals; positive; suggest improvement; receive openly</div>
+    </div>
+  </div>
+
+  <!-- 5. HACKMAN'S MODEL -->
+  <div class="card red span2">
+    <div class="card-title">5. Work Group Effectiveness — Hackman's Model</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:4px;">
+      <div class="node">
+        <div class="node-label">3 Criteria for Effectiveness</div>
+        <div class="leaf"><b>Productive output</b> — meets/exceeds quantitative + qualitative org standards</div>
+        <div class="leaf"><b>Personal need satisfaction</b> — membership facilitates employee need satisfaction</div>
+        <div class="leaf"><b>Capacity for future cooperation</b> — social processes maintained; destructive processes avoided</div>
+      </div>
+      <div class="node">
+        <div class="node-label">3 Intermediate Determinants</div>
+        <div class="leaf"><b>Group effort</b> — amount of effort members exert toward task</div>
+        <div class="leaf"><b>Knowledge &amp; skill</b> — skills available for group effort</div>
+        <div class="leaf"><b>Task performance strategies</b> — appropriate problem-analysis approaches</div>
+        <div class="leaf" style="margin-top:6px;color:#aaa">Influenced by: Environmental context · Design factors · Interpersonal processes</div>
+      </div>
+      <div class="node">
+        <div class="node-label">4 Manager Actions</div>
+        <div class="leaf"><b>Managerial Awareness</b> — understand group dynamics + motivation</div>
+        <div class="leaf"><b>Sensitivity to Norms</b> — norms can facilitate OR inhibit performance</div>
+        <div class="leaf"><b>Understand Conformity</b> — balance dependable role performance vs innovative behaviour</div>
+        <div class="leaf"><b>Harness Cohesiveness</b> — align cohesive groups with org goals via reward systems</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:10px;border-color:#e74c6f">
+      <b>Social Loafing:</b> Tendency for individual members to reduce effort believing others will cover for them. &nbsp;|&nbsp; <b>Status Incongruence:</b> Person holds a status position inconsistent with conventional criteria for that position.
+    </div>
+  </div>
+
+  <!-- 6. MULTICULTURAL TEAMS -->
+  <div class="card blue">
+    <div class="card-title">6. Multicultural Teams</div>
+    <div class="node">
+      <div class="node-label">4 Cultural Differences (Harvard Business Review)</div>
+      <div class="leaf"><b>Direct vs Indirect communication</b> — explicit vs question-based; direct = offensive; indirect = passive-aggressive</div>
+      <div class="leaf"><b>Accents &amp; Fluency</b> — non-speakers feel excluded; perceived as less competent</div>
+      <div class="leaf"><b>Attitudes toward Hierarchy</b> — strict vs egalitarian; clashes over respect and status</div>
+      <div class="leaf"><b>Decision-making norms</b> — slow/analytical vs quick/intuitive; frustration with speed differences</div>
+    </div>
+    <div class="node">
+      <div class="node-label">4 Interventions (in order of escalation)</div>
+      <div class="leaf"><b>Adaptation</b> — work with/around differences; best when members acknowledge gaps</div>
+      <div class="leaf"><b>Structural intervention</b> — reorganize to reduce friction; separate cliques</div>
+      <div class="leaf"><b>Managerial intervention</b> — management decides; use sparingly</div>
+      <div class="leaf"><b>Exit</b> — voluntary/involuntary removal; last resort</div>
+    </div>
+    <div class="callout" style="border-color:#4facfe"><b>Cultural Intelligence</b> = competency enabling effective functioning in cross-cultural environments. Develops with awareness + behavioural adaptation.</div>
+  </div>
+
+  <!-- 7. MANAGERIAL COMMUNICATION -->
+  <div class="card pink">
+    <div class="card-title">7. Managerial Communication &amp; Corporate Reputation</div>
+    <div class="node">
+      <div class="leaf"><b>Peter Drucker:</b> "Managers have to learn to know language… respect for language as our most precious gift."</div>
+      <div class="leaf"><b>Communication = the work of managers</b> — speaking, writing, listening, critical thinking</div>
+      <div class="leaf"><b>Identity</b> = who your org IS &nbsp;·&nbsp; <b>Reputation</b> = who others think your org IS &nbsp;·&nbsp; <b>Confidence</b> = ability to communicate effectively</div>
+      <div class="leaf">"Words do matter. Without words we have no way of expressing strategic concepts." — Eccles &amp; Nohria</div>
+    </div>
+  </div>
+
+  <!-- 8. LEADERSHIP -->
+  <div class="card gold span2">
+    <div class="card-title">8. Leadership — Traits, 21st Century Needs &amp; Behavioural Approaches</div>
+    <div style="display:grid; grid-template-columns: repeat(auto-fit,minmax(240px,1fr)); gap:10px; margin-top:4px;">
+      <div class="node">
+        <div class="node-label">Trait Approach</div>
+        <div class="leaf">4 decades of research → leaders have "right stuff":</div>
+        <div class="leaf"><b>Drive · Self-confidence · Honesty · Integrity</b></div>
+        <div class="leaf">Traits = important but only PART of the story</div>
+      </div>
+      <div class="node">
+        <div class="node-label">6 Qualities — 21st Century Leaders (Conger)</div>
+        <div class="leaf"><b>Strategic opportunists</b> — identify opportunities before competitors</div>
+        <div class="leaf"><b>Globally aware</b> — 80% of orgs face foreign competition</div>
+        <div class="leaf"><b>Manage decentralized orgs</b> — speed, flexibility, leanness</div>
+        <div class="leaf"><b>Sensitive to diversity</b> — diverse workforce's different needs</div>
+        <div class="leaf"><b>Interpersonally competent</b> — multicultural awareness</div>
+        <div class="leaf"><b>Community builders</b> — develop sense of ownership in org members</div>
+      </div>
+      <div class="node">
+        <div class="node-label">Ohio State Studies (Stogdill)</div>
+        <div class="leaf"><b>Consideration</b> — relationship-oriented; supportive, friendly, open comms, recognizes people → addresses GROUP MAINTENANCE needs</div>
+        <div class="leaf"><b>Initiating Structure</b> — task-oriented; scheduling, directing, planning, standards → addresses GROUP TASK needs</div>
+        <div class="leaf">Leaders can display <span class="hi">ANY combination</span> of both</div>
+      </div>
+      <div class="node">
+        <div class="node-label">University of Michigan Studies</div>
+        <div class="leaf"><b>Job-centered</b> — planning, scheduling, coordinating, providing resources = Initiating Structure</div>
+        <div class="leaf"><b>Employee-centered</b> — consideration and support = Consideration</div>
+        <div class="leaf">Additional behaviours: support, work facilitation, goal emphasis, interaction facilitation</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HIGH YIELD -->
+  <div class="card teal span2" style="background:#0f1a1a;">
+    <div class="card-title" style="color:#4ecdc4;">⚡ High-Yield MCQ Targets — Module 3</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+      <span class="badge">Group definition (2+ interacting, interdependent)</span>
+      <span class="badge">5 organizational functions of groups</span>
+      <span class="badge">9 types of groups</span>
+      <span class="badge">Security = STRONGEST reason to join</span>
+      <span class="badge">SEAPIH mnemonic</span>
+      <span class="badge">Huddling — cuts red tape</span>
+      <span class="badge">Social Loafing</span>
+      <span class="badge">Status Incongruence</span>
+      <span class="badge">Hackman's 3 effectiveness criteria</span>
+      <span class="badge">3 intermediate determinants (Effort, Knowledge, Strategy)</span>
+      <span class="badge">4 manager actions for group effectiveness</span>
+      <span class="badge">4 multicultural differences (HBR)</span>
+      <span class="badge">4 multicultural interventions</span>
+      <span class="badge">Cultural Intelligence</span>
+      <span class="badge">Peter Drucker on language</span>
+      <span class="badge">Conger's 6 leadership qualities</span>
+      <span class="badge">Ohio State: Consideration vs Initiating Structure</span>
+      <span class="badge">Michigan: Job-centered vs Employee-centered</span>
+      <span class="badge">Any combination of both behaviours possible</span>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

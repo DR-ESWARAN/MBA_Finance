@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZCOM Module 3 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color:#e74c6f; border-color:rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color:#f5a623; border-color:rgba(245,166,35,0.3); }
+  .tag.teal-hl   { background: rgba(78,205,196,0.15); color:#4ecdc4; border-color:rgba(78,205,196,0.3); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color:#43e97b; border-color:rgba(67,233,123,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color:#4facfe; border-color:rgba(79,172,254,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.key { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .tip-row { display: flex; align-items: flex-start; gap: 6px; font-size: 0.73rem; color: #ccc; padding: 4px 0; border-top: 1px solid rgba(255,255,255,0.04); line-height: 1.4; }
+  .tip-row:first-child { border-top: none; }
+  .num-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; min-width: 20px; border-radius: 50%; font-size: 0.6rem; font-weight: 700; }
+  .red .num-badge { background:rgba(231,76,111,0.25); color:#e74c6f; } .orange .num-badge { background:rgba(245,166,35,0.25); color:#f5a623; }
+  .teal .num-badge { background:rgba(78,205,196,0.25); color:#4ecdc4; } .green .num-badge { background:rgba(67,233,123,0.25); color:#43e97b; }
+  .blue .num-badge { background:rgba(79,172,254,0.25); color:#4facfe; } .pink .num-badge { background:rgba(248,87,166,0.25); color:#f857a6; }
+  .yellow .num-badge { background:rgba(249,212,35,0.25); color:#f9d423; } .purple .num-badge { background:rgba(123,97,255,0.25); color:#7b61ff; }
+  .central { grid-column:1/-1; background:linear-gradient(135deg,#1f1433,#281a40); border:1px solid rgba(123,97,255,0.3); border-radius:18px; padding:20px; text-align:center; }
+  .central h1 { font-size:clamp(1.1rem,4vw,1.6rem); font-weight:800; background:linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; line-height:1.3; }
+  .central p { color:#888; font-size:0.78rem; }
+  .central-chips { display:flex; justify-content:center; flex-wrap:wrap; gap:7px; margin-top:12px; }
+  .central-chip { padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+  .c1{background:rgba(231,76,111,0.15);color:#e74c6f;border:1px solid rgba(231,76,111,0.3);}
+  .c2{background:rgba(245,166,35,0.15);color:#f5a623;border:1px solid rgba(245,166,35,0.3);}
+  .c3{background:rgba(78,205,196,0.15);color:#4ecdc4;border:1px solid rgba(78,205,196,0.3);}
+  .c4{background:rgba(123,97,255,0.15);color:#7b61ff;border:1px solid rgba(123,97,255,0.3);}
+  .c5{background:rgba(67,233,123,0.15);color:#43e97b;border:1px solid rgba(67,233,123,0.3);}
+  .c6{background:rgba(79,172,254,0.15);color:#4facfe;border:1px solid rgba(79,172,254,0.3);}
+  .c7{background:rgba(248,87,166,0.15);color:#f857a6;border:1px solid rgba(248,87,166,0.3);}
+  .c8{background:rgba(249,212,35,0.15);color:#f9d423;border:1px solid rgba(249,212,35,0.3);}
+  .wide { grid-column: span 2; }
+  @media (max-width:480px) { body{padding:14px 10px 50px;} .grid{gap:12px;grid-template-columns:1fr;} .wide{grid-column:span 1;} .two-col{grid-template-columns:1fr !important;} .three-col{grid-template-columns:1fr !important;} .card{padding:14px 12px;border-radius:12px;} .mini-table{font-size:0.72rem;} .tag{font-size:0.72rem;padding:4px 10px;} .central{padding:16px 12px;} .central-chip{font-size:0.7rem;padding:4px 10px;} }
+  @media (min-width:481px) and (max-width:768px) { .grid{grid-template-columns:1fr;} .wide{grid-column:span 1;} .two-col{grid-template-columns:1fr 1fr !important;} }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ BIZCOM</a><span style="flex:1"></span><a href="notes-m3.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m3.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">‹ M2</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">M4 ›</a></div>
+<div class="header">
+  <h1>Business Communication — Module 3</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>BIZCOM Module 3: Business Writing in Action</h1>
+    <p>Applying business writing skills across documents, presentations, and delivery techniques</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Resume (9 Tips)</span>
+      <span class="central-chip c2">Cover Letter</span>
+      <span class="central-chip c3">Business Proposal</span>
+      <span class="central-chip c4">Sales Message</span>
+      <span class="central-chip c5">Report Writing</span>
+      <span class="central-chip c6">Memorandums</span>
+      <span class="central-chip c7">Presentations</span>
+      <span class="central-chip c8">Non-verbal Delivery</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: RESUME -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">📄</div><h2>1. Resume Writing — 9 Tips</h2></div>
+    <div class="tip-row"><span class="num-badge">1</span><div><b>Keywords from job postings</b> — Match employer's "Requirements" / "Qualifications" language</div></div>
+    <div class="tip-row"><span class="num-badge">2</span><div><b>Review industry examples</b> — Simple, brief, includes metrics; do NOT copy</div></div>
+    <div class="tip-row"><span class="num-badge">3</span><div><b>Professional font</b> — Arial or Times New Roman; size 10–12pt</div></div>
+    <div class="tip-row"><span class="num-badge">4</span><div><b>Most relevant info first</b> — Hiring managers spend only <b style="color:#e74c6f">~6 seconds</b> per resume</div></div>
+    <div class="tip-row"><span class="num-badge">5</span><div><b>Active language</b> — Power words: "achieved," "earned," "completed," "accomplished"</div></div>
+    <div class="tip-row"><span class="num-badge">6</span><div><b>Call attention to achievements</b> — Top 3–4 per role; include measurable metrics</div></div>
+    <div class="tip-row"><span class="num-badge">7</span><div><b>Only necessary subheadings</b> — No empty sections; combine if fewer than 2 bullets</div></div>
+    <div class="tip-row"><span class="num-badge">8</span><div><b>Appropriate margins</b> — 1-inch all sides; single spacing</div></div>
+    <div class="tip-row"><span class="num-badge">9</span><div><b>Proofread and edit</b> — Multiple rounds; print and review; ask trusted colleagues</div></div>
+  </div>
+
+  <!-- CARD 2: COVER LETTER -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">✉️</div><h2>2. Cover Letter — 6 Parts</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Part</th><th>Content</th></tr>
+          <tr><td><b style="color:#f5a623">Header</b></td><td>Your name, address, phone, email + employer's contact info + date</td></tr>
+          <tr><td><b style="color:#f5a623">Salutation</b></td><td>"Dr./Mr./Ms. Last Name" — unknown: "Dear Hiring Manager"</td></tr>
+          <tr><td><b style="color:#f5a623">Introduction</b></td><td>State job applied for; where you heard about it; brief skills preview</td></tr>
+          <tr><td><b style="color:#f5a623">Body</b></td><td>Why interested + why excellent candidate; specific examples — show, don't just tell</td></tr>
+          <tr><td><b style="color:#f5a623">Closing</b></td><td>Restate fit; request interview; state follow-up; thank employer</td></tr>
+          <tr><td><b style="color:#f5a623">Signature</b></td><td>Complimentary close + handwritten signature + typed name</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Format Rules</div>
+      <div class="tags">
+        <span class="tag orange-hl">Same font as resume</span>
+        <span class="tag orange-hl">Max one page</span>
+        <span class="tag">Space between each section</span>
+        <span class="tag">Verify correct employer name</span>
+        <span class="tag">Print + read aloud to proofread</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: BUSINESS PROPOSAL -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">📋</div><h2>3. Business Proposal — 9 Steps</h2><span class="badge star">⭐ Sequence MCQ</span></div>
+    <div class="tip-row"><span class="num-badge">1</span><div><b>Title page</b> — Your name, company, date, client name</div></div>
+    <div class="tip-row"><span class="num-badge">2</span><div><b>Table of contents</b> — Clickable if electronic</div></div>
+    <div class="tip-row"><span class="num-badge">3</span><div><b>Executive summary</b> — Why sending; why your solution is best (value proposition)</div></div>
+    <div class="tip-row"><span class="num-badge">4</span><div><b>State the problem/need</b> — Show you understand the client's issue</div></div>
+    <div class="tip-row"><span class="num-badge">5</span><div><b>Propose a solution</b> — Customized; include deliverables, methods, timeframe</div></div>
+    <div class="tip-row"><span class="num-badge">6</span><div><b>Share qualifications</b> — Case studies, awards, accreditations</div></div>
+    <div class="tip-row"><span class="num-badge">7</span><div><b>Pricing options</b> — Optional fee table; don't under or over-price</div></div>
+    <div class="tip-row"><span class="num-badge">8</span><div><b>Terms and conditions</b> — Timeline, pricing, payment schedules</div></div>
+    <div class="tip-row"><span class="num-badge">9</span><div><b>Signature space</b> — Client signs; prompt for questions</div></div>
+  </div>
+
+  <!-- CARD 4: SALES + REPORT -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">💰</div><h2>4. Sales Message &amp; Report</h2></div>
+    <div class="branch">
+      <div class="branch-label">Sales Message — 4 Strategies</div>
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Start with greatest benefit</b> — Audiences remember beginning and end most</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Baby steps</b> — One product at a time; too many options = lost sale</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Know your audience</b> — Research buyer; individualize message</div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b style="color:#7b61ff">Lead with emotion, follow with reason</b> — Drama/humor → facts → call to action</div></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Report — Full Structure</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Part</th><th>Components</th></tr>
+          <tr><td><b style="color:#b39ddb">Preliminary</b></td><td>Cover · Title Page · Copyright · Acknowledgements · Authorization · TOC · Illustrations · Synopsis</td></tr>
+          <tr><td><b style="color:#b39ddb">Main Text</b></td><td>Introduction · Body · Conclusions · Recommendations</td></tr>
+          <tr><td><b style="color:#b39ddb">Supplementary</b></td><td>Appendixes · References · Bibliography · Glossary · Index</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">7 Steps to Write a Report</div>
+      <div class="tags">
+        <span class="tag">1. Determine objective</span><span class="tag">2. Collect facts</span><span class="tag">3. Study facts</span>
+        <span class="tag">4. Plan facts</span><span class="tag">5. Draft outline</span><span class="tag">6. Edit draft</span>
+        <span class="tag">7. Distribute for feedback</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 5: MEMOS -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">📝</div><h2>5. Memorandums — 5 Characteristics</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Characteristic</th><th>Key Point</th></tr>
+          <tr><td><b style="color:#43e97b">Audience Orientation</b></td><td>Consider audience needs; use terms known to ALL — not just management</td></tr>
+          <tr><td><b style="color:#43e97b">Professional, Formal Tone</b></td><td>Linear (org → employees); may have legal standing; reflects policies</td></tr>
+          <tr><td><b style="color:#43e97b">Subject Emphasis</b></td><td>Subject line = specific: "Thanksgiving weekend schedule" NOT "holiday observance"</td></tr>
+          <tr><td><b style="color:#43e97b">Direct Format</b></td><td><b>Always direct</b> — purpose clearly announced; no indirect format in memos</td></tr>
+          <tr><td><b style="color:#43e97b">Objectivity</b></td><td>Facts only — no personal bias, preference, or interest</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> A memo = a clinical protocol circular. Direct, formal, objective — sent to all staff. Not a discussion — an announcement. No personal opinion, just institutional policy.
+    </div>
+  </div>
+
+  <!-- CARD 6: PRESENTATIONS -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🎤</div><h2>6. Developing Business Presentations</h2></div>
+    <div class="branch">
+      <div class="branch-label">5 Tips</div>
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Tell a Story</b> — Connect emotionally; take audience on a journey</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Keep it Simple</b> — 3 to 5 main points only</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Know Your Stuff</b> — Be ready for Q&amp;A; review info beforehand for confidence</div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b>Speak Naturally</b> — Conversational; approachable and competent; avoid jargon</div></div>
+      <div class="tip-row"><span class="num-badge">5</span><div><b>Don't Put Everything on Slides</b> — Display a few points; you tell the information</div></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">4 Obstacles in Presentations</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Obstacle</th><th>Overcome by</th></tr>
+          <tr><td><b style="color:#4facfe">Language</b></td><td>Find common way to interact; adapt basic language; avoid jargon/slang</td></tr>
+          <tr><td><b style="color:#4facfe">Perception</b></td><td>Recognize others' perceptions differ; beware of stereotypes from cultural differences</td></tr>
+          <tr><td><b style="color:#4facfe">Ethnocentrism</b></td><td>Conviction of superiority → egoism, discrimination; avoid assuming your way is best</td></tr>
+          <tr><td><b style="color:#4facfe">Physical Barriers</b></td><td>Check all equipment in advance; always have a backup plan</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: NON-VERBAL + ORGANIZING -->
+  <div class="card pink wide">
+    <div class="card-title"><div class="card-icon">🤸</div><h2>7. Non-verbal Delivery &amp; Organizing Principles</h2></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div>
+        <div class="branch-label">10 Non-verbal Tips (Slides 19–20)</div>
+        <div class="tags">
+          <span class="tag highlight">Smile</span>
+          <span class="tag highlight">Don't Slouch</span>
+          <span class="tag highlight">Power Pose</span>
+          <span class="tag highlight">Use the Space</span>
+          <span class="tag highlight">Facial Expressions</span>
+          <span class="tag highlight">Speak Clearly</span>
+          <span class="tag highlight">Gesture</span>
+          <span class="tag highlight">Eye Contact</span>
+          <span class="tag highlight">Remember to Breathe</span>
+          <span class="tag highlight">Learn from Others</span>
+        </div>
+        <div style="margin-top:10px;">
+          <div class="branch-label">3 Properties of Non-verbal</div>
+          <div class="tags">
+            <span class="tag red-hl">Irreversible — cannot be taken back</span>
+            <span class="tag red-hl">Continuous — always occurring</span>
+            <span class="tag red-hl">Reveals thoughts before you're aware</span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="branch-label">8 Organizing Principles for Documents</div>
+        <div class="table-wrap">
+          <table class="mini-table">
+            <tr><th>Principle</th><th>Description</th></tr>
+            <tr><td><b style="color:#f857a6">Chronology</b></td><td>First → Next → Now → Future</td></tr>
+            <tr><td><b style="color:#f857a6">Comparison</b></td><td>One product/argument vs another</td></tr>
+            <tr><td><b style="color:#f857a6">Contrast</b></td><td>Highlights differences between items</td></tr>
+            <tr><td><b style="color:#f857a6">Cause and Effect</b></td><td>Relationship between two events</td></tr>
+            <tr><td><b style="color:#f857a6">Classification</b></td><td>Establishes categories</td></tr>
+            <tr><td><b style="color:#f857a6">Space (Spatial)</b></td><td>Parts and how they form the whole</td></tr>
+            <tr><td><b style="color:#f857a6">Elimination</b></td><td>Outlines all possibilities then eliminates</td></tr>
+            <tr><td><b style="color:#f857a6">Example</b></td><td>Vivid, specific examples to support main points</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ TARGETS -->
+  <div class="card yellow wide">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>High-Yield MCQ Targets — Module 3</h2><span class="badge key">EXAM FOCUS</span></div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="table-wrap"><table class="mini-table">
+        <tr><th>Topic</th><th>What to Know</th></tr>
+        <tr><td>Resume 6-second rule</td><td>Hiring managers spend ~6 seconds per resume</td></tr>
+        <tr><td>Cover letter parts</td><td>6 parts in sequence</td></tr>
+        <tr><td>Business proposal</td><td>9 steps; executive summary = step 3</td></tr>
+      </table></div>
+      <div class="table-wrap"><table class="mini-table">
+        <tr><th>Topic</th><th>What to Know</th></tr>
+        <tr><td>Sales message</td><td>Emotion BEFORE reason</td></tr>
+        <tr><td>Memo = always direct</td><td>No indirect format in memos</td></tr>
+        <tr><td>Report structure</td><td>3 parts: Preliminary / Main Text / Supplementary</td></tr>
+      </table></div>
+      <div class="table-wrap"><table class="mini-table">
+        <tr><th>Topic</th><th>What to Know</th></tr>
+        <tr><td>5 presentation tips</td><td>Tell Story / Simple / Know / Natural / No slide overload</td></tr>
+        <tr><td>Non-verbal = irreversible</td><td>Cannot be taken back once expressed</td></tr>
+        <tr><td>8 organizing principles</td><td>Chronology, Comparison, Contrast, C&amp;E, Classification, Spatial, Elimination, Example</td></tr>
+      </table></div>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;margin-top:24px;color:#444;font-size:0.72rem;">BIZCOM Module 3 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

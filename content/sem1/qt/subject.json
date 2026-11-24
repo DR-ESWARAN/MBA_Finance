@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Statistics — An Introduction"
+    },
+    {
+      "n": 2,
+      "title": "Classification of Data"
+    },
+    {
+      "n": 3,
+      "title": "Tabulation"
+    },
+    {
+      "n": 4,
+      "title": "Presentation & Collection of Data"
+    },
+    {
+      "n": 5,
+      "title": "Measures of Central Tendency"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": "real.js"
+}

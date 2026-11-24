@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECON Module 2 — Demand Analysis Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #4facfe, #43e97b, #f5a623, #f857a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card.indigo::before { background: linear-gradient(90deg,#667eea,#764ba2); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .indigo .card-icon { background: rgba(102,126,234,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+  .indigo .card-title h2 { color: #667eea; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.70rem; padding: 4px 10px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.hi { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.25); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.67rem, 2vw, 0.73rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.6rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.70rem, 2vw, 0.73rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .analogy.trade { background: rgba(123,97,255,0.08); border-color: rgba(123,97,255,0.3); color: #c5b8ff; }
+  .analogy.trade span { color: #7b61ff; }
+
+  .formula-box {
+    background: rgba(123,97,255,0.1);
+    border: 1px solid rgba(123,97,255,0.25);
+    border-radius: 10px; padding: 9px 14px;
+    font-size: clamp(0.78rem, 2.5vw, 0.85rem);
+    color: #c5b8ff; margin-top: 8px; font-family: monospace;
+    letter-spacing: 0.3px; text-align: center; font-weight: 700;
+  }
+
+  .badge {
+    display: inline-block; font-size: 0.58rem; padding: 2px 7px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.exam { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .badge.key  { background: rgba(249,212,35,0.2); color: #f9d423; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(67,233,123,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.7rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#4facfe,#43e97b,#f5a623,#f857a6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 13px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+
+  .wide { grid-column: span 2; }
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 10px 0; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .pill {
+    font-size: 0.68rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 600; border: 1px solid;
+  }
+  .pill.blue   { background: rgba(79,172,254,0.12); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .pill.green  { background: rgba(67,233,123,0.12); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .pill.red    { background: rgba(231,76,111,0.12); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .pill.orange { background: rgba(245,166,35,0.12); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .pill.purple { background: rgba(123,97,255,0.12); color: #7b61ff; border-color: rgba(123,97,255,0.3); }
+  .pill.pink   { background: rgba(248,87,166,0.12); color: #f857a6; border-color: rgba(248,87,166,0.3); }
+  .pill.teal   { background: rgba(78,205,196,0.12); color: #4ecdc4; border-color: rgba(78,205,196,0.3); }
+
+  .num-row { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; margin-top: 8px; }
+  .num-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 8px 10px;
+    font-size: 0.68rem; color: #ccc; line-height: 1.4;
+  }
+  .num-box strong { display: block; font-size: 0.7rem; color: #fff; margin-bottom: 2px; }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .tag { font-size: 0.70rem; }
+    .central h1 { font-size: 1.2rem; }
+    .num-row { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ECON</a><span style="flex:1"></span><a href="notes-m2.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m2.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m1.html" style="color:#c9d1d9;text-decoration:none">‹ M1</a><a href="mindmap-m3.html" style="color:#c9d1d9;text-decoration:none">M3 ›</a></div>
+
+<div class="header">
+  <h1>ECON Module 2 — Demand Analysis</h1>
+  <p>Determinants · Elasticity · Revenue Concepts · Demand Forecasting | Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="card central">
+    <h1>📊 Demand Analysis</h1>
+    <p>Demand = Willingness + Ability to buy at a given price</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Determinants (5)</span>
+      <span class="central-chip c2">Income &amp; Substitution Effect</span>
+      <span class="central-chip c3">Price Elasticity (5 types)</span>
+      <span class="central-chip c4">Income &amp; Cross Elasticity</span>
+      <span class="central-chip c5">Revenue — TR / AR / MR</span>
+      <span class="central-chip c6">Forecasting Methods (7)</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEMAND CONCEPT + DETERMINANTS -->
+  <div class="card blue">
+    <div class="card-title">
+      <div class="card-icon">🔍</div>
+      <h2>Demand &amp; Its Determinants</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">6 Objectives of Demand Analysis</div>
+      <div class="tags">
+        <span class="tag hi">Forecast sales &amp; revenue</span>
+        <span class="tag">Manipulate demand</span>
+        <span class="tag">Analyse market influences</span>
+        <span class="tag">Appraise salesman performance</span>
+        <span class="tag">Match competitive strength</span>
+        <span class="tag">Inventory control + working capital</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">5 Determinants of Demand</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Determinant</th><th>Effect</th></tr>
+          <tr><td><strong style="color:#4facfe">Price</strong></td><td>↑ Price → ↓ Demand (Law of Demand)</td></tr>
+          <tr><td><strong style="color:#43e97b">Income</strong></td><td>↑ Income → ↑ demand (normal); ↓ (inferior)</td></tr>
+          <tr><td><strong style="color:#f5a623">Related goods</strong></td><td>Complement: ↑Pa → ↓Qb; Substitute: ↑Pa → ↑Qb</td></tr>
+          <tr><td><strong style="color:#f857a6">Expectations</strong></td><td>Expected ↑ price → buy more now</td></tr>
+          <tr><td><strong style="color:#7b61ff">No. of buyers</strong></td><td>More buyers → higher total market demand</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <span>🫀 Clinical analogy:</span> Like sizing a cath lab — you need projected patient volume (demand) before setting capacity (plant size).
+    </div>
+  </div>
+
+  <!-- CARD 2: INCOME & SUBSTITUTION EFFECT -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">⚖️</div>
+      <h2>Income &amp; Substitution Effect</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">When price ↑ — Two effects occur</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Effect</th><th>Mechanism</th></tr>
+          <tr><td><strong style="color:#4ecdc4">Substitution</strong></td><td>Good more expensive → switch to cheaper alternatives</td></tr>
+          <tr><td><strong style="color:#f5a623">Income</strong></td><td>Higher price → less real income → buy less of the good</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Application: Wages (Work vs Leisure)</div>
+      <div class="tags">
+        <span class="tag hi">↑ Wages → work more (substitution effect early)</span>
+        <span class="tag hi">↑ Wages → work less later (income effect dominates)</span>
+        <span class="tag">Result: Backward-bending labour supply curve</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Application: Interest Rates &amp; Saving</div>
+      <div class="tags">
+        <span class="tag">↑ Interest → saving more rewarding (substitution → more saving)</span>
+        <span class="tag">↑ Interest → more income from savings (income → more spending)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: PRICE ELASTICITY — FULL DETAIL -->
+  <div class="card red wide">
+    <div class="card-title">
+      <div class="card-icon">📐</div>
+      <h2>Price Elasticity of Demand <span class="badge exam">EXAM HIGH-YIELD</span></h2>
+    </div>
+
+    <div class="formula-box">Ed = % ΔQ / % ΔP</div>
+
+    <div class="table-wrap" style="margin-top:12px">
+      <table class="mini-table">
+        <tr>
+          <th>Type</th><th>Ed Value</th><th>Meaning</th><th>Curve</th><th>Example</th>
+        </tr>
+        <tr>
+          <td><strong style="color:#e74c6f">Perfectly Elastic</strong></td>
+          <td>Ed = ∞</td>
+          <td>Infinite response to tiny ↑ price</td>
+          <td>Horizontal</td>
+          <td>Theoretical — competitive market</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f5a623">Elastic</strong></td>
+          <td>Ed &gt; 1</td>
+          <td>% ΔQ &gt; % ΔP</td>
+          <td>Flatter</td>
+          <td>Luxury goods, coffee (substitutes)</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#4ecdc4">Unitary</strong></td>
+          <td>Ed = 1</td>
+          <td>% ΔQ = % ΔP</td>
+          <td>Rectangular hyperbola</td>
+          <td>TR maximised; MR = 0</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#7b61ff">Inelastic</strong></td>
+          <td>Ed &lt; 1</td>
+          <td>% ΔQ &lt; % ΔP</td>
+          <td>Steeper</td>
+          <td>Salt, medicines, necessities</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#43e97b">Perfectly Inelastic</strong></td>
+          <td>Ed = 0</td>
+          <td>No response to any price change</td>
+          <td>Vertical</td>
+          <td>Life-saving drugs (insulin)</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="branch" style="margin-top:12px">
+      <div class="branch-label">Numerical Examples (Ebook)</div>
+      <div class="num-row">
+        <div class="num-box"><strong>Ed = 2 (Elastic)</strong>Price ↑10%, Qty ↓20% → 20/10 = 2</div>
+        <div class="num-box"><strong>Ed = 1/3 (Inelastic)</strong>Price ↑30%, Qty ↓10% → 10/30 = 0.33</div>
+        <div class="num-box"><strong>Ed = 1 (Unitary)</strong>Price ↑30%, Qty ↓30% → 30/30 = 1</div>
+        <div class="num-box"><strong>⚠️ Slope ≠ Elasticity</strong>Steep curve ≠ inelastic. Ed is % change, not absolute.</div>
+      </div>
+    </div>
+
+    <div class="branch" style="margin-top:10px">
+      <div class="branch-label">TR–Elasticity Relationship</div>
+      <div class="pill-row">
+        <span class="pill green">Ed &gt; 1: ↓ Price → ↑ TR</span>
+        <span class="pill red">Ed &lt; 1: ↓ Price → ↓ TR</span>
+        <span class="pill orange">Ed = 1: TR maximised, MR = 0</span>
+      </div>
+    </div>
+
+    <div class="branch" style="margin-top:10px">
+      <div class="branch-label">4 Uses of Price Elasticity in Management</div>
+      <div class="tags">
+        <span class="tag hi">Price discrimination — charge inelastic segment more</span>
+        <span class="tag hi">Public utility pricing — railways, water, postal services</span>
+        <span class="tag">Joint supply — price inelastic good higher (wool vs mutton)</span>
+        <span class="tag">Supermarket — lower prices on elastic goods for footfall</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: INCOME ELASTICITY -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">💰</div>
+      <h2>Income Elasticity of Demand</h2>
+    </div>
+
+    <div class="formula-box">Ey = % ΔQ / % ΔY</div>
+
+    <div class="branch" style="margin-top:10px">
+      <div class="branch-label">5 Types + Good Classification</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Ey Value</th><th>Type</th><th>Good Category</th></tr>
+          <tr><td><strong style="color:#43e97b">Ey &gt; 1</strong></td><td>High</td><td>Luxury (cars, jewellery, premium)</td></tr>
+          <tr><td><strong style="color:#4facfe">Ey = 1</strong></td><td>Unitary</td><td>Proportional change</td></tr>
+          <tr><td><strong style="color:#f5a623">0 &lt; Ey &lt; 1</strong></td><td>Low</td><td>Necessity (water, electricity, tobacco)</td></tr>
+          <tr><td><strong style="color:#ccc">Ey = 0</strong></td><td>Zero</td><td>Essential staples — demand fixed</td></tr>
+          <tr><td><strong style="color:#e74c6f">Ey &lt; 0</strong></td><td>Negative</td><td>Inferior goods (margarine, coarse grain)</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Numerical Example (Ebook)</div>
+      <div class="tags">
+        <span class="tag hi">Income: $50k → $40k (↓20%) | Cars: 10k → 5k (↓50%)</span>
+        <span class="tag hi">Ey = 50% / 20% = 2.5 → Luxury good</span>
+      </div>
+    </div>
+
+    <div class="analogy trade">
+      <span>📊 Trading analogy:</span> During market downturns, luxury stock demand crashes (high Ey) while FMCG/pharma holds (low Ey necessity goods).
+    </div>
+  </div>
+
+  <!-- CARD 5: CROSS ELASTICITY -->
+  <div class="card purple">
+    <div class="card-title">
+      <div class="card-icon">🔄</div>
+      <h2>Cross Elasticity of Demand</h2>
+    </div>
+
+    <div class="formula-box">Exy = % ΔQx / % ΔPy</div>
+
+    <div class="branch" style="margin-top:10px">
+      <div class="branch-label">Interpretation</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Exy</th><th>Relationship</th><th>Example</th></tr>
+          <tr><td><strong style="color:#43e97b">Positive (+)</strong></td><td>Substitutes</td><td>↑ Price of coffee → ↑ demand for tea</td></tr>
+          <tr><td><strong style="color:#e74c6f">Negative (−)</strong></td><td>Complements</td><td>↑ Price of coffee → ↓ demand for stir sticks</td></tr>
+          <tr><td><strong style="color:#ccc">Zero (0)</strong></td><td>Unrelated</td><td>Price of tea has no effect on car demand</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Strong vs Weak Substitutes</div>
+      <div class="tags">
+        <span class="tag hi">Same category (green tea brands) → high Exy</span>
+        <span class="tag">Different categories (tea vs coffee) → low Exy</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Managerial Use</div>
+      <div class="tags">
+        <span class="tag">No substitutes (Exy=0) → can price higher</span>
+        <span class="tag hi">Printers at loss → drives high-margin ink sales (complement strategy)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 6: REVENUE CONCEPTS -->
+  <div class="card orange wide">
+    <div class="card-title">
+      <div class="card-icon">💹</div>
+      <h2>Revenue Concepts — TR, AR, MR <span class="badge exam">EXAM HIGH-YIELD</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Concept</th><th>Formula</th><th>Key Relationship</th><th>Example (10 chairs @ ₹160)</th>
+        </tr>
+        <tr>
+          <td><strong style="color:#f5a623">TR (Total Revenue)</strong></td>
+          <td>TR = P × Q</td>
+          <td>TR = ΣMR</td>
+          <td>10 × ₹160 = ₹1,600</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#4ecdc4">AR (Average Revenue)</strong></td>
+          <td>AR = TR / Q = Price</td>
+          <td>AR Curve = Demand Curve</td>
+          <td>1600 / 10 = ₹160 = Price</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#e74c6f">MR (Marginal Revenue)</strong></td>
+          <td>MRn = TRn − TRn-1</td>
+          <td>MR = ΔTR / ΔQ</td>
+          <td>TR₁₁=₹1780; MR₁₁ = 1780−1600 = ₹180</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="branch" style="margin-top:12px">
+      <div class="branch-label">Key Proofs &amp; Relationships</div>
+      <div class="num-row">
+        <div class="num-box"><strong>AR = Price (always)</strong>AR = TR/Q = PQ/Q = P ✓</div>
+        <div class="num-box"><strong>TR = ΣMR</strong>Sum of all marginal revenues = Total revenue</div>
+        <div class="num-box"><strong>MR (multi-unit)</strong>ΔTR/ΔQ = (2200−1600)/(14−10) = ₹150</div>
+        <div class="num-box"><strong>Ed=1 → MR=0</strong>TR is maximised at unitary elasticity</div>
+      </div>
+    </div>
+
+    <div class="analogy trade" style="margin-top:10px">
+      <span>📊 Trading analogy:</span> MR = marginal profit per additional trade — when MR falls to 0, you've hit peak total return. Same logic as Ed = 1 point.
+    </div>
+  </div>
+
+  <!-- CARD 7: DEMAND FORECASTING -->
+  <div class="card indigo wide">
+    <div class="card-title">
+      <div class="card-icon">🔮</div>
+      <h2>Demand Forecasting — 7 Methods</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Method</th><th>Basis</th><th>Best For</th><th>Key Limitation</th>
+        </tr>
+        <tr>
+          <td><strong style="color:#667eea">Survey of Buyer's Intentions</strong></td>
+          <td>Direct consumer survey</td>
+          <td>Short-term; bulk goods</td>
+          <td>Costly; consumers can't foresee choices</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#43e97b">Sales Force Composite</strong></td>
+          <td>Salesperson estimates</td>
+          <td>New products; short-term</td>
+          <td>Subjective; not for long-term</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f5a623">Trend Projection</strong></td>
+          <td>Past data + least squares; O=TSCI</td>
+          <td>Long-term; stable trends</td>
+          <td>Fails at turning points</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#4ecdc4">Executive Judgment</strong></td>
+          <td>Top management opinion</td>
+          <td>When no data exists</td>
+          <td>No factual basis; inaccurate</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#e74c6f">Economic Indicators</strong></td>
+          <td>Link demand to indicators (income, contracts)</td>
+          <td>Products with time-lagged demand</td>
+          <td>Hard to find right indicator</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f857a6">Controlled Experiments</strong></td>
+          <td>Vary price/ads in test markets</td>
+          <td>Measuring price sensitivity</td>
+          <td>Expensive; risky; hard to control</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#7b61ff">Expert's Opinions</strong></td>
+          <td>External specialist views</td>
+          <td>New products; no past data</td>
+          <td>Subjective; no segment estimates</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="branch" style="margin-top:12px">
+      <div class="branch-label">Trend Projection Formula: O = T × S × C × I</div>
+      <div class="pill-row">
+        <span class="pill blue">T = Secular Trend</span>
+        <span class="pill orange">S = Seasonal Factor</span>
+        <span class="pill purple">C = Cyclical Element</span>
+        <span class="pill pink">I = Irregular Movement</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: QUICK EXAM REFERENCE -->
+  <div class="card yellow">
+    <div class="card-title">
+      <div class="card-icon">⚡</div>
+      <h2>Quick Exam Reference <span class="badge exam">REVISE LAST</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Formula / Concept</th><th>One-liner</th></tr>
+        <tr><td>Ed = % ΔQ / % ΔP</td><td>&gt;1 elastic, &lt;1 inelastic, =1 unitary, 0 perf. inelastic, ∞ perf. elastic</td></tr>
+        <tr><td>Ey = % ΔQ / % ΔY</td><td>&gt;1 luxury, 0–1 necessity, &lt;0 inferior, =0 essential</td></tr>
+        <tr><td>Exy = % ΔQx / % ΔPy</td><td>+ substitutes, − complements, 0 unrelated</td></tr>
+        <tr><td>AR = Price</td><td>Always true; AR curve = demand curve</td></tr>
+        <tr><td>MRn = TRn − TRn-1</td><td>Marginal revenue = incremental revenue from 1 more unit</td></tr>
+        <tr><td>TR = ΣMR</td><td>Total revenue = sum of all marginal revenues</td></tr>
+        <tr><td>Ed = 1 → MR = 0</td><td>TR maximised at unitary elasticity</td></tr>
+        <tr><td>Substitution effect</td><td>Switch to cheaper good when price rises</td></tr>
+        <tr><td>Income effect</td><td>Higher price → less real income → buy less</td></tr>
+        <tr><td>O = TSCI</td><td>Trend projection: Trend × Seasonal × Cyclical × Irregular</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+</body>
+</html>

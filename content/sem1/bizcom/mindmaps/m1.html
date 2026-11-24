@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BIZCOM Module 1 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #e74c6f, #f5a623, #4ecdc4, #7b61ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+
+  /* CARD TITLE */
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+
+  /* BRANCH */
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  /* TAGS */
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .tag.teal-hl   { background: rgba(78,205,196,0.15); color: #4ecdc4; border-color: rgba(78,205,196,0.3); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+
+  /* TABLE */
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem, 2vw, 0.75rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.62rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  /* ANALOGY */
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.72rem, 2vw, 0.75rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block; font-size: 0.6rem; padding: 2px 8px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+
+  /* CENTRAL */
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(123,97,255,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.6rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(79,172,254,0.15); color: #4facfe; border: 1px solid rgba(79,172,254,0.3); }
+  .c7 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+  .c8 { background: rgba(249,212,35,0.15); color: #f9d423; border: 1px solid rgba(249,212,35,0.3); }
+
+  /* WIDE */
+  .wide { grid-column: span 2; }
+
+  /* NUMBER BADGE */
+  .num-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 0.6rem; font-weight: 700; margin-right: 4px; flex-shrink: 0;
+  }
+  .red .num-badge    { background: rgba(231,76,111,0.25); color: #e74c6f; }
+  .orange .num-badge { background: rgba(245,166,35,0.25); color: #f5a623; }
+  .blue .num-badge   { background: rgba(79,172,254,0.25); color: #4facfe; }
+  .pink .num-badge   { background: rgba(248,87,166,0.25); color: #f857a6; }
+  .yellow .num-badge { background: rgba(249,212,35,0.25); color: #f9d423; }
+
+  .tip-row {
+    display: flex; align-items: flex-start; gap: 6px;
+    font-size: 0.73rem; color: #ccc; padding: 4px 0;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    line-height: 1.4;
+  }
+  .tip-row:first-child { border-top: none; }
+
+  /* MOBILE OVERRIDES */
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .mini-table { font-size: 0.72rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central { padding: 16px 12px; }
+    .central-chip { font-size: 0.7rem; padding: 4px 10px; }
+  }
+
+  /* TABLET */
+  @media (min-width: 481px) and (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .two-col { grid-template-columns: 1fr 1fr !important; }
+    .three-col { grid-template-columns: 1fr !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Business Communication — Module 1</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>BIZCOM Module 1: Introduction</h1>
+    <p>Exchanging information to promote organizational goals — a learned skill-set that improves with practice</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Definition & 8 Ways</span>
+      <span class="central-chip c2">Delivering Your Message</span>
+      <span class="central-chip c3">Verbal Communication</span>
+      <span class="central-chip c4">10 Barriers</span>
+      <span class="central-chip c5">Emphasis Strategies</span>
+      <span class="central-chip c6">Audience & Perception</span>
+      <span class="central-chip c7">Business Writing</span>
+      <span class="central-chip c8">10 Written Principles</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION + 8 WAYS -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">💬</div><h2>1. Definition &amp; 8 Ways to Improve</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.75rem;color:#ccc;line-height:1.5;">Exchanging information to promote an org's <b>goals, objectives, aims &amp; activities</b>. Covers both external (clients) and internal (employees) communication.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">8 Ways to Improve</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Strategy</th><th>Core Idea</th></tr>
+          <tr><td>1</td><td><b style="color:#e74c6f">Stop Assuming</b></td><td>Communicate needs openly</td></tr>
+          <tr><td>2</td><td><b style="color:#e74c6f">Teamwork</b></td><td>Put aside differences; common goal</td></tr>
+          <tr><td>3</td><td><b style="color:#e74c6f">Listen First</b></td><td>Don't plan reply while others speak</td></tr>
+          <tr><td>4</td><td><b style="color:#e74c6f">Ask Questions</b></td><td>Clarify and confirm understanding</td></tr>
+          <tr><td>5</td><td><b style="color:#e74c6f">Emotional Intelligence</b></td><td>Connect but stay respectful</td></tr>
+          <tr><td>6</td><td><b style="color:#e74c6f">Non-verbal Cues</b></td><td>Eye contact, silence, body language</td></tr>
+          <tr><td>7</td><td><b style="color:#e74c6f">Reinforce Positives</b></td><td>+ve reinforcement &gt; negative consequences</td></tr>
+          <tr><td>8</td><td><b style="color:#e74c6f">Be Patient</b></td><td>Strengthen relationships, not win</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: DELIVERING YOUR MESSAGE -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">📢</div><h2>2. Delivering Your Message — 5 Keys</h2></div>
+    <div class="branch">
+      <p style="font-size:0.72rem;color:#f5a623;font-style:italic;margin-bottom:8px;">"How we communicate is just as important as what we communicate" — Alan Greenspan</p>
+    </div>
+    <div class="branch">
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Be Clear on the Message</b> — Simple, inspiring, easy to relate to</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Prioritize</b> — Limit facts; use them to support message, not overwhelm</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Set Context &amp; Expectations</b> — Label the conversation; tell audience what's coming</div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b>Appearance</b> — Complements the message; directly affects credibility</div></div>
+      <div class="tip-row"><span class="num-badge">5</span><div><b>Body Language</b> — Eye contact, facial expression, gestures, posture, movement</div></div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Delivering bad news to a patient = message delivery. It's not just WHAT you say (diagnosis), it's HOW you say it (tone, posture, clarity) that determines how well it's received.
+    </div>
+  </div>
+
+  <!-- CARD 3: VERBAL COMMUNICATION — LANGUAGE RULES -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🗣️</div><h2>3. Principles of Verbal Communication</h2></div>
+    <div class="branch">
+      <div class="branch-label">Language Has Rules — 3 Types</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Rule</th><th>Governs</th></tr>
+          <tr><td><b style="color:#4ecdc4">Syntactic</b></td><td>Structure, word order, grammar of sentences</td></tr>
+          <tr><td><b style="color:#4ecdc4">Semantic</b></td><td>Meaning of words; how to interpret them</td></tr>
+          <tr><td><b style="color:#4ecdc4">Contextual</b></td><td>Meaning based on context and social custom</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">5 Properties of Language</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Property</th><th>Meaning</th></tr>
+          <tr><td><b style="color:#4ecdc4">Reality-shaping</b></td><td>Language determines how we perceive the world</td></tr>
+          <tr><td><b style="color:#4ecdc4">Arbitrary &amp; Symbolic</b></td><td>Words have no inherent meaning; humans assign it (Dog = Kutta = Kukur)</td></tr>
+          <tr><td><b style="color:#4ecdc4">Abstract</b></td><td>"Amazing beach" vs "hot beach" — abstract loses specificity</td></tr>
+          <tr><td><b style="color:#4ecdc4">Organizes Reality</b></td><td>Creates categories: male/female, young/old, tall/short</td></tr>
+          <tr><td><b style="color:#4ecdc4">Obstacle</b></td><td>Language barriers block communication across regions/departments</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Sign Theory (Saussure)</div>
+      <div class="tags">
+        <span class="tag teal-hl">Sign = Signifier + Signified</span>
+        <span class="tag">Signifier = Word/Sound</span>
+        <span class="tag">Signified = Concept/Image</span>
+        <span class="tag">No logical link between them</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: 10 BARRIERS — FULL WIDTH -->
+  <div class="card purple wide">
+    <div class="card-title"><div class="card-icon">🚧</div><h2>4. Barriers to Communication — 10 Types</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Barrier</th><th>Example</th></tr>
+          <tr><td><b style="color:#7b61ff">Language</b></td><td>Different linguistic skills in same workplace</td></tr>
+          <tr><td><b style="color:#7b61ff">Psychological</b></td><td>Stage fear, phobia, depression, speech disorders</td></tr>
+          <tr><td><b style="color:#7b61ff">Physical</b></td><td>Noise, poor lighting, faulty equipment</td></tr>
+          <tr><td><b style="color:#7b61ff">Cultural</b></td><td>Different cultural meanings for same values/gestures</td></tr>
+          <tr><td><b style="color:#7b61ff">Organizational</b></td><td>Misinformation, lack of training or supervision</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Barrier</th><th>Example</th></tr>
+          <tr><td><b style="color:#b39ddb">Attitude</b></td><td>Introversion, social anxiety, extreme emotions</td></tr>
+          <tr><td><b style="color:#b39ddb">Perception</b></td><td>Same message → different interpretation by different people</td></tr>
+          <tr><td><b style="color:#b39ddb">Physiological</b></td><td>Poor eyesight, hearing loss, voice disorders</td></tr>
+          <tr><td><b style="color:#b39ddb">Technological</b></td><td>Inability to keep up with new tech tools</td></tr>
+          <tr><td><b style="color:#b39ddb">Info Overload / Assumptions</b></td><td>Too much data at once; jumping to conclusions</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Communication barriers = "noise" in an ECG signal. The core message (QRS complex) is there — but physical noise, technical glitches, or perception errors distort the reading. Identify and filter the barrier first.
+    </div>
+  </div>
+
+  <!-- CARD 5: EMPHASIS STRATEGIES -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>5. Emphasis Strategies — 4 Types</h2></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Strategy</th><th>What it does</th></tr>
+          <tr><td><b style="color:#43e97b">Visual Communication</b></td><td>Charts, diagrams, infographics — make meaning visible; supports, doesn't replace words</td></tr>
+          <tr><td><b style="color:#43e97b">Signposts</b></td><td>Keywords guiding listener: "on the other hand", "in conclusion", "for example"</td></tr>
+          <tr><td><b style="color:#43e97b">Internal Summaries &amp; Foreshadowing</b></td><td>Summaries = what was covered; Foreshadowing = what's coming next</td></tr>
+          <tr><td><b style="color:#43e97b">Repetition</b></td><td>Direct = same message; Indirect = alternative ways of saying same point</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Rule for Visuals</div>
+      <p style="font-size:0.73rem;color:#ccc;line-height:1.5;">Visuals <b>support</b> your document/presentation — they do not replace it. "A picture may be worth a thousand words, but it is the words that really matter."</p>
+    </div>
+  </div>
+
+  <!-- CARD 6: IMPROVING VERBAL COMMUNICATION -->
+  <div class="card blue">
+    <div class="card-title"><div class="card-icon">🎙️</div><h2>6. Improving Verbal Communication — 10 Tips</h2></div>
+    <div class="branch">
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Think before you speak</b> — Organise thoughts; eliminate awkward pauses</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Be clear and concise</b> — Direct language; avoid complex sentences</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Speak with confidence</b> — Builds trust; command = subject mastery + eye contact</div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b>Vary vocal tone</b> — Avoid monotone; use inflection for emphasis</div></div>
+      <div class="tip-row"><span class="num-badge">5</span><div><b>Be a good listener</b> — As important as being a good speaker</div></div>
+      <div class="tip-row"><span class="num-badge">6</span><div><b>Non-verbal cues</b> — Gestures, expressions must align with words</div></div>
+      <div class="tip-row"><span class="num-badge">7</span><div><b>Audience perspective</b> — Come down to their level; don't assume expertise</div></div>
+      <div class="tip-row"><span class="num-badge">8</span><div><b>Don't rush</b> — Slow down; speak each word clearly</div></div>
+      <div class="tip-row"><span class="num-badge">9</span><div><b>Eye contact</b> — Shows confidence, truthfulness, alertness</div></div>
+      <div class="tip-row"><span class="num-badge">10</span><div><b>Use their name</b> — Remember and repeat name occasionally in conversation</div></div>
+    </div>
+  </div>
+
+  <!-- CARD 7: AUDIENCE + PERCEPTION -->
+  <div class="card pink">
+    <div class="card-title"><div class="card-icon">👥</div><h2>7. Audience &amp; Perception</h2></div>
+    <div class="branch">
+      <div class="branch-label">Understanding Your Audience — 4 Strategies</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Strategy</th><th>What it means</th></tr>
+          <tr><td><b style="color:#f857a6">Research</b></td><td>Know your audience beforehand via review of existing data</td></tr>
+          <tr><td><b style="color:#f857a6">Specificity</b></td><td>Target specific group with specific goals</td></tr>
+          <tr><td><b style="color:#f857a6">Need</b></td><td>Know their needs — not just your message</td></tr>
+          <tr><td><b style="color:#f857a6">Strategy</b></td><td>Audience determines your communication approach + timing</td></tr>
+        </table>
+      </div>
+      <p style="font-size:0.72rem;color:#f857a6;font-style:italic;margin-top:8px;">"A message aimed at everyone often appeals to no one"</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Perception</div>
+      <p style="font-size:0.73rem;color:#ccc;line-height:1.5;margin-bottom:6px;"><b>Definition:</b> Processing, interpreting, selecting, and organizing of information</p>
+      <div class="tags">
+        <span class="tag">Different backgrounds → different interpretations</span>
+        <span class="tag">Focus on what interests/is familiar</span>
+        <span class="tag">Physical, psychological, cultural factors</span>
+        <span class="tag highlight">Perceptual Set = Attitudes + Beliefs + Values</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 8: BUSINESS WRITING -->
+  <div class="card yellow">
+    <div class="card-title"><div class="card-icon">✍️</div><h2>8. Effective Business Writing — 9 Principles</h2></div>
+    <div class="branch">
+      <div class="branch-label">3 Fs of Tone <span class="badge star">⭐ MCQ Target</span></div>
+      <div class="tags">
+        <span class="tag orange-hl">Formal — Reports</span>
+        <span class="tag orange-hl">Friendly — Emails</span>
+        <span class="tag orange-hl">Familiar — Close colleagues</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">9 Principles</div>
+      <div class="tip-row"><span class="num-badge">1</span><div><b>Know your purpose</b> — Clarify goal before writing</div></div>
+      <div class="tip-row"><span class="num-badge">2</span><div><b>Know your audience</b> — Expert or layman? Adjust accordingly</div></div>
+      <div class="tip-row"><span class="num-badge">3</span><div><b>Keep it simple</b> — Short sentences; short paragraphs</div></div>
+      <div class="tip-row"><span class="num-badge">4</span><div><b>Logical structure</b> — One point flows to next</div></div>
+      <div class="tip-row"><span class="num-badge">5</span><div><b>Format it</b> — Headings, tables, bullets, bold</div></div>
+      <div class="tip-row"><span class="num-badge">6</span><div><b>Get the tone right</b> — Apply the 3 Fs above</div></div>
+      <div class="tip-row"><span class="num-badge">7</span><div><b>Plain and simple</b> — Plain English; avoid jargon</div></div>
+      <div class="tip-row"><span class="num-badge">8</span><div><b>Spelling &amp; Grammar</b> — Errors signal incompetence</div></div>
+      <div class="tip-row"><span class="num-badge">9</span><div><b>Proofread</b> — Print out; read twice (meaning + errors)</div></div>
+    </div>
+  </div>
+
+  <!-- CARD 9: PRINCIPLES OF WRITTEN COMMUNICATION — FULL WIDTH -->
+  <div class="card teal wide">
+    <div class="card-title"><div class="card-icon">📜</div><h2>9. Principles of Written Communication — 10</h2><span class="badge key">HIGH YIELD</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Principle</th><th>Essence</th></tr>
+          <tr><td>1</td><td><b style="color:#4ecdc4">Brevity</b></td><td>Concise and exact use of words</td></tr>
+          <tr><td>2</td><td><b style="color:#4ecdc4">Clarity</b></td><td>Easy to understand</td></tr>
+          <tr><td>3</td><td><b style="color:#4ecdc4">Communication</b></td><td>Language exists to inform, influence, communicate</td></tr>
+          <tr><td>4</td><td><b style="color:#4ecdc4">Emphasis</b></td><td>Strongest words in most important places</td></tr>
+          <tr><td>5</td><td><b style="color:#4ecdc4">Honesty</b></td><td>Write truthfully — reveals character</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Principle</th><th>Essence</th></tr>
+          <tr><td>6</td><td><b style="color:#a8edea">Passion &amp; Control</b></td><td>Passion drives action; control ensures correctness</td></tr>
+          <tr><td>7</td><td><b style="color:#a8edea">Reading</b></td><td>Read good writing to write well</td></tr>
+          <tr><td>8</td><td><b style="color:#a8edea">Revision</b></td><td>Most crucial post-writing step</td></tr>
+          <tr><td>9</td><td><b style="color:#a8edea">Sophistication &amp; Simplicity</b></td><td>Balance — don't overcomplicate</td></tr>
+          <tr><td>10</td><td><b style="color:#a8edea">Sound &amp; Rhythm</b></td><td>Makes writing interesting; "cherry on the cake"</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ TARGETS -->
+  <div class="card red wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>High-Yield MCQ Targets — Module 1</h2>
+      <span class="badge key">EXAM FOCUS</span>
+    </div>
+    <div class="three-col" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>8 ways to improve BC</td><td>Label + 1-line core idea</td></tr>
+          <tr><td>3 types of language rules</td><td>Syntactic / Semantic / Contextual</td></tr>
+          <tr><td>5 keys to deliver message</td><td>Sequence + label</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>10 barriers</td><td>Category + one example each</td></tr>
+          <tr><td>4 emphasis strategies</td><td>Visual / Signposts / Summaries / Repetition</td></tr>
+          <tr><td>3 Fs of Tone</td><td>Formal / Friendly / Familiar — match to format</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Topic</th><th>What to Know</th></tr>
+          <tr><td>10 written principles</td><td>Labels in order — Brevity to Sound</td></tr>
+          <tr><td>Perception definition</td><td>Processing + Interpreting + Selecting + Organizing</td></tr>
+          <tr><td>Arbitrary vs Abstract</td><td>Arbitrary = no inherent meaning; Abstract = non-sensory concept</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div style="text-align:center;margin-top:24px;color:#444;font-size:0.72rem;">
+  BIZCOM Module 1 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026
+</div>
+
+</body>
+</html>

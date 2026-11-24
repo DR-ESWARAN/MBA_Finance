@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OB Module 2 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  /* HEADER */
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #f5a623, #e74c6f, #7b61ff, #4ecdc4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  /* GRID */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* CARD */
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f77fe1,#fb9dcc); }
+  .card.gold::before   { background: linear-gradient(90deg,#f9d423,#f7971e); }
+
+  /* CARD TITLE */
+  .card-title {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    margin-top: 4px;
+  }
+  .card.orange .card-title { color: #f5a623; }
+  .card.red    .card-title { color: #e74c6f; }
+  .card.teal   .card-title { color: #4ecdc4; }
+  .card.purple .card-title { color: #a78bff; }
+  .card.green  .card-title { color: #43e97b; }
+  .card.blue   .card-title { color: #4facfe; }
+  .card.pink   .card-title { color: #f77fe1; }
+  .card.gold   .card-title { color: #f9d423; }
+
+  /* NODE / BRANCH */
+  .node {
+    background: rgba(255,255,255,0.04);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 7px;
+    font-size: 0.84rem;
+    line-height: 1.45;
+  }
+  .node:last-child { margin-bottom: 0; }
+
+  .node-label {
+    font-weight: 700;
+    font-size: 0.82rem;
+    margin-bottom: 4px;
+  }
+
+  .leaf {
+    padding: 3px 0 3px 12px;
+    font-size: 0.80rem;
+    color: #bbb;
+    border-left: 2px solid rgba(255,255,255,0.12);
+    margin-top: 3px;
+    line-height: 1.4;
+  }
+  .leaf b { color: #fff; }
+  .leaf span.hi { color: #ffd580; font-weight: 600; }
+
+  /* TABLE */
+  .mini-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin-top: 6px;
+  }
+  .mini-table th {
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+    font-weight: 700;
+    padding: 5px 8px;
+    text-align: left;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .mini-table td {
+    padding: 5px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: #bbb;
+    vertical-align: top;
+  }
+  .mini-table td b { color: #fff; }
+  .mini-table tr:last-child td { border-bottom: none; }
+
+  /* BADGE */
+  .badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 2px 9px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    margin: 2px 3px 2px 0;
+    color: #ddd;
+  }
+
+  /* CALLOUT */
+  .callout {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid #f5a623;
+    border-radius: 0 8px 8px 0;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    color: #ccc;
+    margin-top: 8px;
+    line-height: 1.5;
+  }
+  .callout b { color: #ffd580; }
+
+  /* SPAN 2 cols on wide screens */
+  @media (min-width: 700px) {
+    .span2 { grid-column: span 2; }
+  }
+
+  /* Mobile override */
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .card { padding: 13px; }
+    .mini-table th, .mini-table td { padding: 4px 6px; }
+    .card-title { font-size: 0.76rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>OB Module 2 — Diversity &amp; Motivation</h1>
+  <p>DY Patil MBA · Organizational Behaviour · Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- 1. WORKFORCE DIVERSITY -->
+  <div class="card orange">
+    <div class="card-title">1. Workforce Diversity</div>
+
+    <div class="node">
+      <div class="node-label">Definition</div>
+      <div class="leaf">Similarities &amp; differences among employees in: <b>age, culture, race, gender, religion, disability, sexual orientation</b></div>
+      <div class="leaf">Makes workforce <b>heterogeneous</b> → necessity + challenge</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">3 Key Drivers</div>
+      <div class="leaf"><b>Women in Workplace</b> — highest-ever participation; dual-income &amp; single-mother families</div>
+      <div class="leaf"><b>Organizational Restructuring</b> — downsizing/outsourcing → fewer people, more work</div>
+      <div class="leaf"><b>Legislation</b> — equal opportunity laws; both employer &amp; employee rights defined</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">Benefits</div>
+      <div class="leaf">Mutual respect → synergistic teams</div>
+      <div class="leaf">Economic empowerment of marginalized workers</div>
+      <div class="leaf">Reduces litigation; boosts creativity, recruitment, business image</div>
+      <div class="leaf">Diverse firms → <b>better financial performance</b> (research)</div>
+    </div>
+
+    <div class="callout"><b>Negative barriers:</b> Prejudice, stereotyping, discrimination → harm morale + invite lawsuits. Never use in hiring/termination.</div>
+  </div>
+
+  <!-- 2. MANAGING DIVERSITY -->
+  <div class="card red">
+    <div class="card-title">2. Managing Diversity</div>
+
+    <div class="node">
+      <div class="node-label">Structured Interview (15 Characteristics)</div>
+      <div class="leaf">Same questions for all · Job analysis basis · Multiple interviewers</div>
+      <div class="leaf">Anchored rating scales · Detailed notes · No discussion between interviews</div>
+      <div class="leaf">Statistical prediction · Training for interviewers</div>
+      <div class="leaf"><span class="hi">Similarity bias</span> = preferring candidates similar to oneself → mitigated by all 15 characteristics</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">Diversified Mentoring</div>
+      <div class="leaf">Mentor &amp; mentee differ in race, gender, class, disability, sexual orientation</div>
+      <div class="leaf"><b>Mutually beneficial</b> → both gain knowledge, empathy, cross-group skills</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">Diversity Training Evolution</div>
+      <div class="leaf"><b>1964:</b> Civil Rights Act → compliance-only</div>
+      <div class="leaf"><b>1980s–90s:</b> Women &amp; minorities focus (often backfired — singled out Whites)</div>
+      <div class="leaf"><b>Now:</b> (1) Cultural competencies (2) Valuing differences (3) Better business decisions</div>
+      <div class="leaf">Perspective-taking + goal-setting activities → pro-diversity attitudes persist months later</div>
+    </div>
+  </div>
+
+  <!-- 3. MANAGERIAL DECISION MAKING -->
+  <div class="card teal span2">
+    <div class="card-title">3. Managerial Decision Making — 5 Steps (EDIAE)</div>
+
+    <table class="mini-table">
+      <thead>
+        <tr><th>#</th><th>Step</th><th>Key Point</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td><b>Establish Objective</b></td><td>Private → profit max · Public → benefit-cost criterion</td></tr>
+        <tr><td>2</td><td><b>Define Problem</b></td><td>Identify ROOT CAUSE (e.g., why are profits falling?)</td></tr>
+        <tr><td>3</td><td><b>Identify Alternatives</b></td><td>List all possible solutions; consider variable relationships</td></tr>
+        <tr><td>4</td><td><b>Evaluate Alternatives</b></td><td>Regression, linear programming, cost-benefit; pick optimum under constraints</td></tr>
+        <tr><td>5</td><td><b>Implement Decision</b></td><td>Monitor continuously; corrective action if results diverge</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="border-color:#4ecdc4"><b>Constraints:</b> Legal · Financial · Infrastructure/Raw materials · Technological</div>
+  </div>
+
+  <!-- 4. BARRIERS -->
+  <div class="card purple">
+    <div class="card-title">4. Barriers to Effective Decision Making</div>
+
+    <table class="mini-table">
+      <thead><tr><th>Barrier</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><b>Bounded Rationality</b></td><td>Brain can't process all info; non-programmed decisions especially vulnerable</td></tr>
+        <tr><td><b>Escalation of Commitment</b></td><td>Continuing a bad decision despite worsening outcomes (sunk cost trap)</td></tr>
+        <tr><td><b>Time Constraints</b></td><td>Pressure → heuristics → suboptimal choices</td></tr>
+        <tr><td><b>Uncertainty</b></td><td>Cannot know outcome before choosing; must commit blind</td></tr>
+        <tr><td><b>Personal Bias</b></td><td>"Similar to me" bias; <span class="hi">Confirmation bias</span> = seeking info that confirms existing beliefs</td></tr>
+        <tr><td><b>Conflict</b></td><td>Discomfort avoidance → skip necessary hard decisions</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="border-color:#a78bff"><b>Clinical analogy:</b> Escalation of commitment = surgeon persisting with failing procedure instead of converting — sunk cost in the OR.</div>
+  </div>
+
+  <!-- 5. IMPROVING DECISION QUALITY -->
+  <div class="card green">
+    <div class="card-title">5. Improving Decision Quality</div>
+
+    <div class="node">
+      <div class="node-label">Good Decision = Right Person + Best Evidence + Sound Process</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">7 Strategies</div>
+      <div class="leaf"><b>Learn from experience</b> — record &amp; reflect on past decisions</div>
+      <div class="leaf"><b>Entertain doubt</b> — test against "what if 100% wrong?" scenarios</div>
+      <div class="leaf"><b>Give options</b> — optimal 3–4 alternatives; fewer = dilemma, more = paralysis</div>
+      <div class="leaf"><b>Argue it out</b> — assign devil's advocate; appoint red team</div>
+      <div class="leaf"><b>Understand context</b> — go to base data, not bullet summaries</div>
+      <div class="leaf"><b>Experiment / Pilots</b> — win-win: success = confidence; failure = prevent disaster</div>
+      <div class="leaf"><b>Pre-mortem (Gary Klein)</b> — "Pretend it already failed. What caused it?"</div>
+    </div>
+
+    <div class="callout" style="border-color:#43e97b"><b>Listening &gt; Talking:</b> Leader who speaks first biases group discussion. Hold opinion until others have fully spoken.</div>
+  </div>
+
+  <!-- 6. MOTIVATION FOR PERFORMANCE -->
+  <div class="card blue">
+    <div class="card-title">6. Work Motivation — 6 Strategies</div>
+
+    <table class="mini-table">
+      <thead><tr><th>#</th><th>Strategy</th><th>Theory Basis</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td><b>Make Expectations Clear</b></td><td>Expectancy Theory (Vroom) — know what to do &amp; how judged</td></tr>
+        <tr><td>2</td><td><b>Continuous Feedback</b></td><td>Goal-Setting Theory — progress = motivation; be specific</td></tr>
+        <tr><td>3</td><td><b>Correct Privately; Praise Publicly</b></td><td>Operant conditioning — public correction = demotivating</td></tr>
+        <tr><td>4</td><td><b>Believe in Employees</b></td><td>Transformational leadership — perceived trust is key</td></tr>
+        <tr><td>5</td><td><b>Make Rewards Achievable</b></td><td>Expectancy Theory — reward must be seen as POSSIBLE</td></tr>
+        <tr><td>6</td><td><b>Let Them Know the Fight</b></td><td>Purpose drives motivation — people join crusades, not companies</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. PROCESS THEORIES OF MOTIVATION -->
+  <div class="card pink span2">
+    <div class="card-title">7. Process Theories of Motivation</div>
+    <div class="node"><div class="node-label">Focus: WHY behaviours are initiated — how we choose a target &amp; exert effort toward it</div></div>
+
+    <table class="mini-table">
+      <thead><tr><th>Theory</th><th>Core Idea</th><th>Key Phrase</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><b>Operant Conditioning</b></td>
+          <td>Do what's rewarded; avoid what's punished</td>
+          <td><span class="hi">"Law of Effect"</span></td>
+        </tr>
+        <tr>
+          <td><b>Equity Theory</b></td>
+          <td>Motivation driven by perceived fairness compared to others (input/output ratio)</td>
+          <td>Unfairness destroys satisfaction instantly</td>
+        </tr>
+        <tr>
+          <td><b>Goal Theory</b></td>
+          <td>People attempt to achieve goals they INTEND to achieve; goals → greater effort &amp; direction</td>
+          <td><span class="hi">Strongest theory in OB</span></td>
+        </tr>
+        <tr>
+          <td><b>Expectancy Theory</b></td>
+          <td>Exert effort to achieve valued outcomes. Asks: (a) which alternative to choose? (b) how motivated to pursue?</td>
+          <td><span class="hi">Most comprehensive theory</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout" style="border-color:#f77fe1"><b>Clinical analogy (Equity):</b> Junior registrar paid same as senior consultant for same work → senior's motivation collapses. Perceived inequity = instant disengagement.</div>
+  </div>
+
+  <!-- 8. PERFORMANCE APPRAISAL -->
+  <div class="card gold">
+    <div class="card-title">8. Performance Appraisal</div>
+
+    <div class="node">
+      <div class="node-label">Arguments FOR</div>
+      <div class="leaf"><b>Direction</b> — aligns individual goals with org goals</div>
+      <div class="leaf"><b>Feedback</b> — formal one-to-one performance discussion</div>
+      <div class="leaf"><b>Training needs</b> — surfaces areas of weakness</div>
+      <div class="leaf"><b>Reward linked to performance</b> — motivates &amp; retains high achievers</div>
+      <div class="leaf"><b>Motivating goals</b> — challenging but achievable = stretch performance</div>
+    </div>
+
+    <div class="node">
+      <div class="node-label">Arguments AGAINST (Deming)</div>
+      <div class="leaf"><span class="hi">Performance equation:</span> Effort + Ability + System Capability + Training = Performance → system factors ignored in individual appraisals</div>
+      <div class="leaf"><b>Halo Effect</b> — reputation biases appraiser's judgment</div>
+      <div class="leaf"><b>Personal bias</b> — appraiser's likes/dislikes color scores</div>
+      <div class="leaf"><b>Lack of reproducibility</b> — same person rated differently by different managers</div>
+      <div class="leaf"><b>Targets unworkable:</b> Too low → caps aspiration · Too high → cheating/blame-shifting · Negotiated targets → "aiming for mediocrity"</div>
+    </div>
+
+    <div class="callout" style="border-color:#f9d423"><b>Deming's verdict:</b> Measurement should improve the SYSTEM, not just evaluate individuals. Using targets to judge people = negative reactions that undermine performance.</div>
+  </div>
+
+  <!-- HIGH YIELD BOX -->
+  <div class="card red span2" style="background:#1a0f17;">
+    <div class="card-title" style="color:#ff8a80;">⚡ High-Yield MCQ Targets — Module 2</div>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;">
+      <span class="badge">Diversity definition</span>
+      <span class="badge">3 drivers of diversity</span>
+      <span class="badge">Similarity bias</span>
+      <span class="badge">15 structured interview characteristics</span>
+      <span class="badge">Diversified mentoring = mutual benefit</span>
+      <span class="badge">Diversity training evolution</span>
+      <span class="badge">5-step decision making (EDIAE)</span>
+      <span class="badge">Bounded rationality</span>
+      <span class="badge">Escalation of commitment</span>
+      <span class="badge">Confirmation bias</span>
+      <span class="badge">Pre-mortem (Gary Klein)</span>
+      <span class="badge">3–4 options = optimal</span>
+      <span class="badge">4 process motivation theories</span>
+      <span class="badge">Goal Theory = strongest in OB</span>
+      <span class="badge">Expectancy Theory = most comprehensive</span>
+      <span class="badge">Equity Theory = unfairness</span>
+      <span class="badge">Law of Effect</span>
+      <span class="badge">Correct privately; praise publicly</span>
+      <span class="badge">Halo Effect (appraisal)</span>
+      <span class="badge">Deming's performance equation</span>
+      <span class="badge">Targets → mediocrity trap</span>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+</body>
+</html>

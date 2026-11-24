@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ECON Module 1 — Mind Map</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #140b24;
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px 14px 60px;
+  }
+
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 {
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-weight: 800;
+    background: linear-gradient(90deg, #4facfe, #f5a623, #43e97b, #f857a6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    line-height: 1.3;
+  }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 14px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .card {
+    border-radius: 14px;
+    padding: 16px;
+    border: 1px solid rgba(255,255,255,0.07);
+    background: #1f1433;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card.indigo::before { background: linear-gradient(90deg,#667eea,#764ba2); }
+
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon {
+    width: 34px; height: 34px; min-width: 34px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem;
+  }
+  .red .card-icon    { background: rgba(231,76,111,0.2); }
+  .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); }
+  .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); }
+  .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); }
+  .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .indigo .card-icon { background: rgba(102,126,234,0.2); }
+
+  .card-title h2 { font-size: clamp(0.82rem, 2.5vw, 0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2    { color: #e74c6f; }
+  .orange .card-title h2 { color: #f5a623; }
+  .teal .card-title h2   { color: #4ecdc4; }
+  .purple .card-title h2 { color: #7b61ff; }
+  .green .card-title h2  { color: #43e97b; }
+  .blue .card-title h2   { color: #4facfe; }
+  .pink .card-title h2   { color: #f857a6; }
+  .yellow .card-title h2 { color: #f9d423; }
+  .indigo .card-title h2 { color: #667eea; }
+
+  .branch { margin-bottom: 10px; }
+  .branch-label {
+    font-size: 0.72rem; font-weight: 600; color: #ccc;
+    margin-bottom: 5px; display: flex; align-items: center; gap: 5px;
+  }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag {
+    font-size: 0.72rem; padding: 4px 11px; border-radius: 20px;
+    font-weight: 500; border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.05); color: #ddd;
+  }
+  .tag.hi { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.25); }
+
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.68rem, 2vw, 0.74rem); min-width: 240px; }
+  .mini-table th {
+    padding: 5px 8px; text-align: left;
+    background: rgba(255,255,255,0.05); color: #aaa;
+    font-weight: 600; text-transform: uppercase;
+    font-size: 0.6rem; letter-spacing: 0.4px;
+  }
+  .mini-table td {
+    padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05);
+    color: #ccc; vertical-align: top; line-height: 1.4;
+  }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .analogy {
+    background: rgba(78,205,196,0.08);
+    border: 1px dashed rgba(78,205,196,0.3);
+    border-radius: 10px; padding: 10px 12px;
+    font-size: clamp(0.70rem, 2vw, 0.74rem);
+    color: #a8edea; margin-top: 10px; line-height: 1.5;
+  }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+
+  .formula-box {
+    background: rgba(123,97,255,0.1);
+    border: 1px solid rgba(123,97,255,0.25);
+    border-radius: 10px; padding: 10px 14px;
+    font-size: clamp(0.78rem, 2.5vw, 0.85rem);
+    color: #c5b8ff; margin-top: 8px; font-family: monospace;
+    letter-spacing: 0.3px; text-align: center;
+  }
+
+  .badge {
+    display: inline-block; font-size: 0.58rem; padding: 2px 7px;
+    border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle;
+  }
+  .badge.exam { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .badge.key  { background: rgba(249,212,35,0.2); color: #f9d423; }
+
+  .central {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg,#1f1433,#281a40);
+    border: 1px solid rgba(79,172,254,0.3);
+    border-radius: 18px; padding: 20px; text-align: center;
+  }
+  .central h1 {
+    font-size: clamp(1.1rem, 4vw, 1.7rem);
+    font-weight: 800;
+    background: linear-gradient(90deg,#4facfe,#f5a623,#43e97b,#f857a6);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 6px; line-height: 1.3;
+  }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 13px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background: rgba(231,76,111,0.15); color: #e74c6f; border: 1px solid rgba(231,76,111,0.3); }
+  .c2 { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+  .c3 { background: rgba(78,205,196,0.15); color: #4ecdc4; border: 1px solid rgba(78,205,196,0.3); }
+  .c4 { background: rgba(123,97,255,0.15); color: #7b61ff; border: 1px solid rgba(123,97,255,0.3); }
+  .c5 { background: rgba(67,233,123,0.15); color: #43e97b; border: 1px solid rgba(67,233,123,0.3); }
+  .c6 { background: rgba(248,87,166,0.15); color: #f857a6; border: 1px solid rgba(248,87,166,0.3); }
+
+  .wide { grid-column: span 2; }
+
+  .pill-row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 8px; }
+  .pill {
+    font-size: 0.7rem; padding: 5px 12px; border-radius: 20px;
+    font-weight: 600; border: 1px solid;
+  }
+  .pill.red    { background: rgba(231,76,111,0.12); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .pill.orange { background: rgba(245,166,35,0.12); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .pill.teal   { background: rgba(78,205,196,0.12); color: #4ecdc4; border-color: rgba(78,205,196,0.3); }
+  .pill.purple { background: rgba(123,97,255,0.12); color: #7b61ff; border-color: rgba(123,97,255,0.3); }
+  .pill.green  { background: rgba(67,233,123,0.12); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .pill.blue   { background: rgba(79,172,254,0.12); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .pill.pink   { background: rgba(248,87,166,0.12); color: #f857a6; border-color: rgba(248,87,166,0.3); }
+
+  .divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 10px 0; }
+
+  .key-formula {
+    background: rgba(67,233,123,0.08);
+    border: 1px solid rgba(67,233,123,0.2);
+    border-radius: 10px; padding: 8px 12px;
+    font-size: 0.78rem; color: #a8f5c8;
+    margin-top: 8px; font-family: monospace;
+    text-align: center; font-weight: 600;
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 14px 10px 50px; }
+    .grid { gap: 12px; grid-template-columns: 1fr; }
+    .wide { grid-column: span 1; }
+    .card { padding: 14px 12px; border-radius: 12px; }
+    .card-title h2 { font-size: 0.85rem; }
+    .branch-label { font-size: 0.74rem; }
+    .tag { font-size: 0.72rem; padding: 4px 10px; }
+    .central h1 { font-size: 1.2rem; }
+    .pill { font-size: 0.68rem; padding: 4px 10px; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ECON</a><span style="flex:1"></span><a href="notes-m1.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m1.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">M2 ›</a></div>
+
+<div class="header">
+  <h1>Managerial Economics — Module 1</h1>
+  <p>Nature &amp; Scope | Firm Objectives | Economic Concepts | Exam: 15 May 2026</p>
+</div>
+
+<div class="grid">
+
+  <!-- CENTRAL NODE -->
+  <div class="card central">
+    <h1>🏛️ Managerial Economics</h1>
+    <p>Application of economic principles &amp; methodologies to business decision-making</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Definition &amp; Nature</span>
+      <span class="central-chip c2">Types &amp; Principles</span>
+      <span class="central-chip c3">Scope</span>
+      <span class="central-chip c4">Firm Objectives</span>
+      <span class="central-chip c5">5 Economic Concepts</span>
+      <span class="central-chip c6">Exam Formulas</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION & NATURE -->
+  <div class="card blue">
+    <div class="card-title">
+      <div class="card-icon">📖</div>
+      <h2>Definition &amp; Nature</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Key Scholars</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Scholar</th><th>Essence</th></tr>
+          <tr><td>Mansfield</td><td>Rational decision-making via economics</td></tr>
+          <tr><td>Spencer</td><td>Integration of theory + business practice</td></tr>
+          <tr><td>Douglas</td><td>Rules to attain economic goals of management</td></tr>
+          <tr><td>Haynes et al.</td><td>Tools relevant to firm's decisions</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Nature — 3 Dimensions</div>
+      <div class="pill-row">
+        <span class="pill blue">Science — systematic, tested, universal</span>
+        <span class="pill teal">Art — applied judgment</span>
+        <span class="pill orange">Admin tool — rational decisions</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Components</div>
+      <div class="pill-row">
+        <span class="pill green">Micro — firm-level (demand, price, output)</span>
+        <span class="pill purple">Macro — external (policy, cycle, FX)</span>
+        <span class="pill pink">Dynamic — changes with human behaviour</span>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <span>🫀 Clinical analogy:</span> Like evidence-based medicine — applying research principles (economics) to bedside decisions (management).
+    </div>
+  </div>
+
+  <!-- CARD 2: TYPES + MANKIW -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">⚖️</div>
+      <h2>Types &amp; Mankiw's 10 Principles</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">3 Types of Managerial Economics</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Type</th><th>Focus</th></tr>
+          <tr><td><strong style="color:#f5a623">Liberal</strong></td><td>Follow market demand; customer-driven</td></tr>
+          <tr><td><strong style="color:#4ecdc4">Normative</strong></td><td>Real-world experience; practical approach</td></tr>
+          <tr><td><strong style="color:#f857a6">Radical</strong></td><td>Change status quo; satisfaction &gt; profit</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="branch">
+      <div class="branch-label">How People Decide (4)</div>
+      <div class="tags">
+        <span class="tag hi">Tradeoffs</span>
+        <span class="tag hi">Opportunity Cost</span>
+        <span class="tag hi">Marginalism</span>
+        <span class="tag hi">Incentives</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">How People Interact (3)</div>
+      <div class="tags">
+        <span class="tag">Trade benefits all</span>
+        <span class="tag">Markets organise activity</span>
+        <span class="tag">Govt improves outcomes</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">How Economy Works (3)</div>
+      <div class="tags">
+        <span class="tag">Productivity = Living standards</span>
+        <span class="tag">Money → Inflation</span>
+        <span class="tag">Inflation-Unemployment tradeoff (Phillips Curve)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: SCOPE -->
+  <div class="card teal">
+    <div class="card-title">
+      <div class="card-icon">🔭</div>
+      <h2>Scope of Managerial Economics</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Micro — Operational Issues</div>
+      <div class="tags">
+        <span class="tag hi">Demand Theory</span>
+        <span class="tag hi">Production &amp; Cost</span>
+        <span class="tag hi">Pricing &amp; Market Structure</span>
+        <span class="tag hi">Profit Analysis</span>
+        <span class="tag hi">Capital &amp; Investment</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Macro — Business Environment</div>
+      <div class="pill-row">
+        <span class="pill blue">Economic (GDP, policy)</span>
+        <span class="pill teal">Social (employment, unions)</span>
+        <span class="pill purple">Political (regulation, stability)</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Key Characteristics</div>
+      <div class="tags">
+        <span class="tag">Pragmatic (not theoretical)</span>
+        <span class="tag">Normative &amp; Applied</span>
+        <span class="tag">Scientific Art</span>
+        <span class="tag">Goal-oriented</span>
+        <span class="tag">Decision under uncertainty</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: FIRM OBJECTIVES COMPARISON -->
+  <div class="card purple wide">
+    <div class="card-title">
+      <div class="card-icon">🎯</div>
+      <h2>Objectives of the Firm <span class="badge exam">EXAM HIGH-YIELD</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Model</th>
+          <th>Economist</th>
+          <th>Primary Goal</th>
+          <th>Key Constraint</th>
+          <th>Exam Hook</th>
+        </tr>
+        <tr>
+          <td><strong style="color:#e74c6f">Profit Max</strong></td>
+          <td>Traditional</td>
+          <td>Maximise π</td>
+          <td>MR = MC (MC from below)</td>
+          <td>FOC + SOC conditions</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f5a623">Baumol</strong></td>
+          <td>W.J. Baumol</td>
+          <td>Maximise Sales Revenue (TR)</td>
+          <td>Minimum profit constraint</td>
+          <td>Sales-max output &gt; Profit-max output; lower price</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#4ecdc4">Marris</strong></td>
+          <td>Robin Marris</td>
+          <td>Maximise balanced growth G = Gd = Gc</td>
+          <td>Managerial + Financial</td>
+          <td>Growth of demand = Growth of capital supply</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#7b61ff">Williamson</strong></td>
+          <td>O.E. Williamson</td>
+          <td>Max Manager Utility U = f(S, M, D)</td>
+          <td>Min shareholder profit (π₀)</td>
+          <td>S=Staff, M=Slack, D=Discretionary; D = πR − π₀ − T</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#43e97b">Cyert &amp; March</strong></td>
+          <td>Cyert &amp; March</td>
+          <td>Satisfice multiple goals</td>
+          <td>Organisational slack</td>
+          <td>5 goals; aspiration levels revised up/down</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- CARD 5: BAUMOL DETAIL -->
+  <div class="card orange">
+    <div class="card-title">
+      <div class="card-icon">📈</div>
+      <h2>Baumol's Sales Maximisation</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Why Managers Prefer Sales over Profit</div>
+      <div class="tags">
+        <span class="tag">Manager's salary tied to sales</span>
+        <span class="tag">Banks gauge firms by sales</span>
+        <span class="tag">Prestige from growing sales</span>
+        <span class="tag">HR issues resolved easily</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Model Without Advertising</div>
+      <div class="tags">
+        <span class="tag hi">Sales-max output (OD) &gt; Profit-max output (OQ)</span>
+        <span class="tag hi">Price lower under sales-max</span>
+        <span class="tag">Must cover minimum profit constraint (PP')</span>
+        <span class="tag">OZ exceeds output where TP covers minimum profit</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Model With Advertising</div>
+      <div class="tags">
+        <span class="tag hi">Sales-maximiser spends MORE on ads than profit-maximiser</span>
+        <span class="tag hi">Earns higher revenue (DE &gt; QB)</span>
+        <span class="tag">Ad spend limited only by profit constraint PP'</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Criticisms</div>
+      <div class="tags">
+        <span class="tag">Ignores oligopoly interdependence</span>
+        <span class="tag">No industry equilibrium shown</span>
+        <span class="tag">Ignores potential competition</span>
+      </div>
+    </div>
+
+    <div class="analogy">
+      <span>📊 Trading analogy:</span> Like a broker maximising AUM (assets under management) subject to minimum revenue — not same as maximising own P&amp;L.
+    </div>
+  </div>
+
+  <!-- CARD 6: WILLIAMSON + CYERT -->
+  <div class="card green">
+    <div class="card-title">
+      <div class="card-icon">🏢</div>
+      <h2>Williamson &amp; Cyert–March</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Williamson — Manager Utility U = f(S, M, D)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Variable</th><th>Meaning</th></tr>
+          <tr><td><strong style="color:#43e97b">S</strong></td><td>Staff expenditure (salary + subordinates)</td></tr>
+          <tr><td><strong style="color:#4facfe">M</strong></td><td>Managerial slack (perks, cars, expenses)</td></tr>
+          <tr><td><strong style="color:#f857a6">D</strong></td><td>Discretionary investment (manager's choice funds)</td></tr>
+        </table>
+      </div>
+      <div class="key-formula">D = πR − π₀ − T</div>
+      <div class="tags" style="margin-top:8px">
+        <span class="tag">Equilibrium: tangency of utility curve &amp; feasibility curve</span>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="branch">
+      <div class="branch-label">Cyert &amp; March — 5 Goals <span class="badge key">KEY</span></div>
+      <div class="pill-row">
+        <span class="pill green">Production</span>
+        <span class="pill blue">Inventory</span>
+        <span class="pill orange">Sales</span>
+        <span class="pill purple">Market Share</span>
+        <span class="pill pink">Profit</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Key Concepts</div>
+      <div class="tags">
+        <span class="tag hi">Satisficing — aspiration levels revised, not maximised</span>
+        <span class="tag hi">Organisational Slack — excess payments; acts as cushion</span>
+        <span class="tag">Side payments resolve coalition conflicts</span>
+        <span class="tag">Decision: top mgmt sets goals, lower levels implement</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: 5 ECONOMIC CONCEPTS -->
+  <div class="card red wide">
+    <div class="card-title">
+      <div class="card-icon">🔑</div>
+      <h2>5 Fundamental Economic Concepts <span class="badge exam">EXAM HIGH-YIELD</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr>
+          <th>Concept</th>
+          <th>Core Idea</th>
+          <th>Formula / Rule</th>
+          <th>Application</th>
+        </tr>
+        <tr>
+          <td><strong style="color:#e74c6f">Incremental</strong></td>
+          <td>Accept if ΔRevenue &gt; ΔCost; ignore sunk costs</td>
+          <td>Profit if IR &gt; IC</td>
+          <td>Accept low-price orders when idle capacity exists</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#f5a623">Time Perspective</strong></td>
+          <td>Balance short-run gains vs long-run consequences</td>
+          <td>SR: AC ≠ AR | LR: AC = AR</td>
+          <td>Don't accept below-cost orders that damage brand long-term</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#4ecdc4">Opportunity Cost</strong></td>
+          <td>Cost of next best alternative foregone</td>
+          <td>Notional; not in books</td>
+          <td>Pricing, factor remuneration, resource allocation</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#7b61ff">Discounting (TVM)</strong></td>
+          <td>₹ today &gt; ₹ tomorrow; future cash flows discounted</td>
+          <td><strong>V = A / (1+i)ⁿ</strong></td>
+          <td>Capital budgeting, investment planning, DCF valuation</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#43e97b">Equimarginal</strong></td>
+          <td>Allocate resources so VMP is equal across all uses</td>
+          <td><strong>VMPLA = VMPLB = … = VMPLE</strong></td>
+          <td>Budget allocation, portfolio investment, production mix</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="analogy" style="margin-top:12px">
+      <span>🫀 Clinical analogy (Equimarginal):</span> Like allocating cath lab time — marginal benefit per PCI case equalised across patient priority groups (primary PCI vs elective PCI).
+    </div>
+    <div class="analogy" style="margin-top:8px; background: rgba(123,97,255,0.08); border-color: rgba(123,97,255,0.3); color: #c5b8ff;">
+      <span style="color:#7b61ff">📊 Trading analogy (TVM):</span> Exactly how DCF models work in equity valuation — the core of intrinsic value calculation.
+    </div>
+  </div>
+
+  <!-- CARD 8: PROFIT MAXIMISATION CONDITIONS -->
+  <div class="card pink">
+    <div class="card-title">
+      <div class="card-icon">⚡</div>
+      <h2>Profit Maximisation Conditions</h2>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">First-Order Condition (FOC)</div>
+      <div class="formula-box">MR = MC</div>
+    </div>
+
+    <div class="branch" style="margin-top:10px">
+      <div class="branch-label">Second-Order Condition (SOC)</div>
+      <div class="tags">
+        <span class="tag hi">MC must cut MR from below</span>
+        <span class="tag hi">MR falling, MC rising at equilibrium</span>
+        <span class="tag">d²π / dQ² &lt; 0</span>
+      </div>
+    </div>
+
+    <div class="branch">
+      <div class="branch-label">Williamson Profit Types</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Profit Type</th><th>Formula</th></tr>
+          <tr><td>Actual (πA)</td><td>R − C − S</td></tr>
+          <tr><td>Reported (πR)</td><td>πA − M</td></tr>
+          <tr><td>Min Required (π₀)</td><td>Minimum shareholders demand</td></tr>
+          <tr><td>Discretionary (D)</td><td>πR − π₀ − T</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 9: QUICK EXAM REFERENCE -->
+  <div class="card yellow">
+    <div class="card-title">
+      <div class="card-icon">⚡</div>
+      <h2>Quick Exam Reference <span class="badge exam">REVISE LAST</span></h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="mini-table">
+        <tr><th>Term</th><th>One-liner</th></tr>
+        <tr><td>Managerial Economics</td><td>Economics applied to business decisions</td></tr>
+        <tr><td>Baumol</td><td>Max sales revenue (not profit) subject to min profit</td></tr>
+        <tr><td>Marris</td><td>Max balanced growth G = Gd = Gc</td></tr>
+        <tr><td>Williamson</td><td>Max U = f(S, M, D); D = πR − π₀ − T</td></tr>
+        <tr><td>Cyert &amp; March</td><td>Satisfice 5 goals; organisational slack as buffer</td></tr>
+        <tr><td>Incremental rule</td><td>Accept if ΔR &gt; ΔC (ignore fixed/sunk costs)</td></tr>
+        <tr><td>TVM formula</td><td>V = A / (1+i)ⁿ</td></tr>
+        <tr><td>Equimarginal</td><td>VMPLA = VMPLB = … (equal VMP across all uses)</td></tr>
+        <tr><td>Opportunity cost</td><td>Benefit of next best foregone; not in books</td></tr>
+        <tr><td>Profit max</td><td>MR = MC; MC cuts MR from below</td></tr>
+        <tr><td>Org. slack</td><td>Excess payments; stabiliser during downturns</td></tr>
+        <tr><td>Satisficing</td><td>Aspiration levels revised — not max, just "good enough"</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /grid -->
+</body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Introduction to Accounting"
+    },
+    {
+      "n": 2,
+      "title": "Primary Book (Journal)"
+    },
+    {
+      "n": 3,
+      "title": "Subsidiary Books"
+    },
+    {
+      "n": 4,
+      "title": "Trial Balance"
+    },
+    {
+      "n": 5,
+      "title": "Final Accounts"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": "real.js"
+}

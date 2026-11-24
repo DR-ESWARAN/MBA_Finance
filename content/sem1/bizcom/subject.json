@@ -1,0 +1,26 @@
+{
+  "modules": [
+    {
+      "n": 1,
+      "title": "Communication Basics"
+    },
+    {
+      "n": 2,
+      "title": "Business Writing"
+    },
+    {
+      "n": 3,
+      "title": "Business Writing in Action"
+    },
+    {
+      "n": 4,
+      "title": "Presentation"
+    },
+    {
+      "n": 5,
+      "title": "Crisis, International & Group Communication"
+    }
+  ],
+  "lmsPractice": "lms.js",
+  "lmsGraded": "real.js"
+}

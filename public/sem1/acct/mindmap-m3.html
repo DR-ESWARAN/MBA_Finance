@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ACCT Module 3 — Subsidiary Books</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #140b24; color: #fff; min-height: 100vh; padding: 20px 14px 60px; }
+  .header { text-align: center; margin-bottom: 28px; }
+  .header h1 { font-size: clamp(1.2rem, 5vw, 2rem); font-weight: 800; background: linear-gradient(90deg,#43e97b,#4facfe,#f5a623,#e74c6f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.3; }
+  .header p { color: #888; font-size: 0.78rem; margin-top: 5px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; max-width: 1400px; margin: 0 auto; }
+  .card { border-radius: 14px; padding: 16px; border: 1px solid rgba(255,255,255,0.07); background: #1f1433; position: relative; overflow: hidden; }
+  .card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; border-radius: 14px 14px 0 0; }
+  .card.red::before    { background: linear-gradient(90deg,#e74c6f,#ff8a80); }
+  .card.orange::before { background: linear-gradient(90deg,#f5a623,#ffd580); }
+  .card.teal::before   { background: linear-gradient(90deg,#4ecdc4,#a8edea); }
+  .card.purple::before { background: linear-gradient(90deg,#7b61ff,#b39ddb); }
+  .card.green::before  { background: linear-gradient(90deg,#43e97b,#38f9d7); }
+  .card.blue::before   { background: linear-gradient(90deg,#4facfe,#00f2fe); }
+  .card.pink::before   { background: linear-gradient(90deg,#f857a6,#ff5858); }
+  .card.yellow::before { background: linear-gradient(90deg,#f9d423,#f83600); }
+  .card-title { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .card-icon { width: 34px; height: 34px; min-width: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+  .red .card-icon    { background: rgba(231,76,111,0.2); } .orange .card-icon { background: rgba(245,166,35,0.2); }
+  .teal .card-icon   { background: rgba(78,205,196,0.2); } .purple .card-icon { background: rgba(123,97,255,0.2); }
+  .green .card-icon  { background: rgba(67,233,123,0.2); } .blue .card-icon   { background: rgba(79,172,254,0.2); }
+  .pink .card-icon   { background: rgba(248,87,166,0.2); } .yellow .card-icon { background: rgba(249,212,35,0.2); }
+  .card-title h2 { font-size: clamp(0.82rem,2.5vw,0.95rem); font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; }
+  .red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+  .purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+  .pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; }
+  .branch { margin-bottom: 10px; }
+  .branch-label { font-size: 0.72rem; font-weight: 600; color: #ccc; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .branch-label::before { content: '▸'; font-size: 0.62rem; opacity: 0.6; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .tag { font-size: 0.72rem; padding: 4px 11px; border-radius: 20px; font-weight: 500; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: #ddd; }
+  .tag.highlight { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.2); }
+  .tag.green-hl  { background: rgba(67,233,123,0.15); color: #43e97b; border-color: rgba(67,233,123,0.3); }
+  .tag.red-hl    { background: rgba(231,76,111,0.15); color: #e74c6f; border-color: rgba(231,76,111,0.3); }
+  .tag.blue-hl   { background: rgba(79,172,254,0.15); color: #4facfe; border-color: rgba(79,172,254,0.3); }
+  .tag.orange-hl { background: rgba(245,166,35,0.15); color: #f5a623; border-color: rgba(245,166,35,0.3); }
+  .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-top: 6px; }
+  .mini-table { width: 100%; border-collapse: collapse; font-size: clamp(0.7rem,2vw,0.75rem); min-width: 240px; }
+  .mini-table th { padding: 5px 8px; text-align: left; background: rgba(255,255,255,0.05); color: #aaa; font-weight: 600; text-transform: uppercase; font-size: 0.62rem; letter-spacing: 0.4px; }
+  .mini-table td { padding: 6px 8px; border-top: 1px solid rgba(255,255,255,0.05); color: #ccc; vertical-align: top; line-height: 1.4; }
+  .mini-table tr:hover td { background: rgba(255,255,255,0.03); }
+  .analogy { background: rgba(78,205,196,0.08); border: 1px dashed rgba(78,205,196,0.3); border-radius: 10px; padding: 10px 12px; font-size: clamp(0.72rem,2vw,0.75rem); color: #a8edea; margin-top: 10px; line-height: 1.5; }
+  .analogy span { font-weight: 700; color: #4ecdc4; }
+  .badge { display: inline-block; font-size: 0.6rem; padding: 2px 8px; border-radius: 20px; font-weight: 700; margin-left: 6px; vertical-align: middle; }
+  .badge.star { background: rgba(249,212,35,0.2); color: #f9d423; }
+  .badge.key  { background: rgba(231,76,111,0.2); color: #e74c6f; }
+  .central { grid-column: 1/-1; background: linear-gradient(135deg,#1f1433,#281a40); border: 1px solid rgba(67,233,123,0.3); border-radius: 18px; padding: 20px; text-align: center; }
+  .central h1 { font-size: clamp(1.1rem,4vw,1.6rem); font-weight: 800; background: linear-gradient(90deg,#43e97b,#4facfe,#f5a623,#e74c6f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 6px; line-height: 1.3; }
+  .central p { color: #888; font-size: 0.78rem; }
+  .central-chips { display: flex; justify-content: center; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+  .central-chip { padding: 5px 12px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; }
+  .c1 { background:rgba(231,76,111,0.15); color:#e74c6f; border:1px solid rgba(231,76,111,0.3); }
+  .c2 { background:rgba(245,166,35,0.15); color:#f5a623; border:1px solid rgba(245,166,35,0.3); }
+  .c3 { background:rgba(78,205,196,0.15); color:#4ecdc4; border:1px solid rgba(78,205,196,0.3); }
+  .c4 { background:rgba(123,97,255,0.15); color:#7b61ff; border:1px solid rgba(123,97,255,0.3); }
+  .c5 { background:rgba(67,233,123,0.15); color:#43e97b; border:1px solid rgba(67,233,123,0.3); }
+  .c6 { background:rgba(79,172,254,0.15); color:#4facfe; border:1px solid rgba(79,172,254,0.3); }
+  .wide { grid-column: span 2; }
+  .cashbox { border-radius: 10px; padding: 10px 12px; margin-top: 6px; }
+  .cashbox.single  { background:rgba(79,172,254,0.08); border:1px solid rgba(79,172,254,0.25); }
+  .cashbox.double  { background:rgba(67,233,123,0.08); border:1px solid rgba(67,233,123,0.25); }
+  .cashbox.triple  { background:rgba(248,87,166,0.08); border:1px solid rgba(248,87,166,0.25); }
+  .cashbox.petty   { background:rgba(249,212,35,0.08); border:1px solid rgba(249,212,35,0.25); }
+  .cashbox-title { font-size: 0.75rem; font-weight: 700; margin-bottom: 4px; }
+  .cashbox p { font-size: 0.7rem; color: #bbb; line-height: 1.5; }
+  @media (max-width:480px) {
+    body { padding:14px 10px 50px; }
+    .grid { gap:12px; grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr !important; }
+    .three-col { grid-template-columns:1fr !important; }
+    .card { padding:14px 12px; border-radius:12px; }
+    .card-title h2 { font-size:0.85rem; }
+    .mini-table { font-size:0.72rem; }
+    .tag { font-size:0.72rem; padding:4px 10px; }
+    .central { padding:16px 12px; }
+    .central-chip { font-size:0.7rem; padding:4px 10px; }
+  }
+  @media (min-width:481px) and (max-width:768px) {
+    .grid { grid-template-columns:1fr; }
+    .wide { grid-column:span 1; }
+    .two-col { grid-template-columns:1fr 1fr !important; }
+  }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ ACCT</a><span style="flex:1"></span><a href="notes-m3.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m3.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">‹ M2</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">M4 ›</a></div>
+<div class="header">
+  <h1>Principles of Accounting — Module 3</h1>
+  <p>DY Patil Online MBA · Sem 1 · Exam: 15 May 2026 · Dr. Eswaran</p>
+</div>
+<div class="grid">
+
+  <!-- CENTRAL -->
+  <div class="central">
+    <h1>ACCT Module 3: Subsidiary Books</h1>
+    <p>Sub-division of Journal by Nature of Transaction · Books of Original Entry · Prime Entry</p>
+    <div class="central-chips">
+      <span class="central-chip c5">What & Why?</span>
+      <span class="central-chip c2">Purchase Book</span>
+      <span class="central-chip c1">Purchase Return</span>
+      <span class="central-chip c3">Sales Book</span>
+      <span class="central-chip c4">Sales Return</span>
+      <span class="central-chip c6">Cash Book (4 types)</span>
+      <span class="central-chip c2">Documents Used</span>
+    </div>
+  </div>
+
+  <!-- CARD 1: DEFINITION -->
+  <div class="card green">
+    <div class="card-title"><div class="card-icon">📚</div><h2>1. Subsidiary Books — What & Why</h2></div>
+    <div class="branch">
+      <div class="branch-label">Definition</div>
+      <p style="font-size:0.75rem;color:#bbb;line-height:1.5;">Books of <b>prime entry</b> where transactions of a <b>particular/similar category</b> are recorded separately. Sub-division of Journal based on <b>nature</b> of transaction.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Also Called</div>
+      <div class="tags">
+        <span class="tag highlight">Special Journals</span>
+        <span class="tag highlight">Day Books</span>
+        <span class="tag">Books of Original Entry</span>
+        <span class="tag">Books of Prime Entry</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">When needed?</div>
+      <div class="tags">
+        <span class="tag green-hl">Small biz → 1 Journal sufficient</span>
+        <span class="tag orange-hl">Large biz → Journal becomes bulky → Sub-divide</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">5 Main Types</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>#</th><th>Book</th><th>Records</th></tr>
+          <tr><td>1</td><td><b style="color:#f5a623">Purchase Book</b></td><td>Credit purchases of goods</td></tr>
+          <tr><td>2</td><td><b style="color:#e74c6f">Purchase Return</b></td><td>Goods returned to suppliers</td></tr>
+          <tr><td>3</td><td><b style="color:#4ecdc4">Sales Book</b></td><td>Credit sales of goods</td></tr>
+          <tr><td>4</td><td><b style="color:#7b61ff">Sales Return</b></td><td>Goods returned by customers</td></tr>
+          <tr><td>5</td><td><b style="color:#4facfe">Cash Book</b></td><td>All cash + cheque transactions</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 2: NEEDS & USES -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">💡</div><h2>2. Needs & Uses</h2></div>
+    <div class="branch">
+      <div class="branch-label">7 Reasons for Subsidiary Books</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>✅ Saves clerical labour</td><td>Similar transactions grouped together</td></tr>
+          <tr><td>✅ Easier ledger posting</td><td>Specific book → specific ledger entries</td></tr>
+          <tr><td>✅ Internal check</td><td>One clerk's book verified by another</td></tr>
+          <tr><td>✅ Avoids bulky journal</td><td>Large volume split into manageable books</td></tr>
+          <tr><td>✅ Division of labour</td><td>Different staff → different books</td></tr>
+          <tr><td>✅ Prompt information</td><td>Quick access to category-specific data</td></tr>
+          <tr><td>✅ Easy error detection</td><td>Trial balance disagrees → check relevant book</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 3: PURCHASE BOOK -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">🛒</div><h2>3. Purchase Book</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="branch-label">Records</div>
+      <div class="tags"><span class="tag green-hl">✅ Credit purchases of goods ONLY</span></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Does NOT Record</div>
+      <div class="tags">
+        <span class="tag red-hl">❌ Cash purchases → Cash Book</span>
+        <span class="tag red-hl">❌ Credit purchase of non-goods (furniture, equipment) → Journal</span>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Key Rules</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>Document</td><td><b>Inward Invoice</b> (received with goods)</td></tr>
+          <tr><td>Value</td><td><b>Net Value</b> = Invoice Price − Trade Discount</td></tr>
+          <tr><td>Totalling</td><td>End of each month → posted to Purchases A/c (Dr)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Format Columns</div>
+      <div class="tags">
+        <span class="tag">Date</span><span class="tag">Supplier Name</span><span class="tag">Invoice No.</span><span class="tag">L.F.</span><span class="tag">Amount</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 4: PURCHASE RETURN + SALES BOOK -->
+  <div class="card red">
+    <div class="card-title"><div class="card-icon">↩️</div><h2>4. Purchase Return Book</h2></div>
+    <div class="branch">
+      <div class="branch-label">Also called</div>
+      <div class="tags"><span class="tag highlight">Returns Outward Book</span></div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Records</div>
+      <p style="font-size:0.73rem;color:#bbb;line-height:1.5;">Goods returned to supplier (purchased on credit). Reasons: defective, wrong spec, quality issue.</p>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Documents</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td><b style="color:#e74c6f">Debit Note</b></td><td>Prepared by <b>Buyer</b> → sent to supplier</td></tr>
+          <tr><td><b style="color:#43e97b">Credit Note</b></td><td>Prepared by <b>Supplier</b> → sent to buyer</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Posting</div>
+      <div class="tags"><span class="tag highlight">Total → Purchase Returns A/c (Cr)</span></div>
+    </div>
+  </div>
+
+  <!-- CARD 5: SALES BOOK + SALES RETURN -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🏷️</div><h2>5. Sales Book & Sales Return Book</h2></div>
+    <div class="branch">
+      <div class="branch-label">Sales Book (Sales Day Book / Sales Journal)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>Records</td><td style="color:#43e97b;"><b>Credit sales of goods ONLY</b></td></tr>
+          <tr><td>Not recorded</td><td style="color:#e74c6f;">Cash sales → Cash Book | Sale of non-goods → Journal</td></tr>
+          <tr><td>Document</td><td><b>Outward Invoice</b> (sent with goods)</td></tr>
+          <tr><td>Value</td><td>Net value = Invoice − Trade Discount</td></tr>
+          <tr><td>Posting</td><td>Total → Sales A/c (Cr); Customer A/c (Dr)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="branch">
+      <div class="branch-label">Sales Return Book (Returns Inward Book)</div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><td>Records</td><td>Goods returned <b>by customers</b> (from credit sales)</td></tr>
+          <tr><td><b style="color:#43e97b;">Credit Note</b></td><td>Prepared by <b>Seller</b></td></tr>
+          <tr><td><b style="color:#e74c6f;">Debit Note</b></td><td>Prepared by <b>Buyer</b> (in acknowledgement)</td></tr>
+          <tr><td>Posting</td><td>Total → Returns Inward A/c (Dr); Customer A/c (Cr)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🎯 Key Rule:</span> Credit Note → Seller | Debit Note → Buyer. Flip it and you're wrong in MCQ.
+    </div>
+  </div>
+
+  <!-- CARD 6: CASH BOOK — WIDE -->
+  <div class="card blue wide">
+    <div class="card-title"><div class="card-icon">💵</div><h2>6. Cash Book — 4 Types</h2><span class="badge star">⭐ HIGH YIELD</span></div>
+    <div class="branch">
+      <div class="branch-label">Definition & Dual Nature</div>
+      <div class="tags">
+        <span class="tag highlight">Records all cash + cheque transactions</span>
+        <span class="tag blue-hl">Journal (book of original entry) + Ledger (cash account) = Dual purpose</span>
+        <span class="tag">No separate Cash A/c in Ledger needed</span>
+        <span class="tag">Left (Dr) = Receipts | Right (Cr) = Payments</span>
+      </div>
+    </div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px;">
+      <div>
+        <div class="cashbox single">
+          <div class="cashbox-title" style="color:#4facfe;">1. Single Column (Simple) Cash Book</div>
+          <p>Cash receipts + cash payments only. 1 amount column each side. Suitable for small traders.</p>
+          <p style="margin-top:4px;">Dr side: "To" | Cr side: "By" | Opening → "To Balance b/d"</p>
+        </div>
+        <div class="cashbox double" style="margin-top:8px;">
+          <div class="cashbox-title" style="color:#43e97b;">2. Double Column Cash Book</div>
+          <p>Adds <b>Bank column</b> on each side. Bank A/c = Personal A/c (can have Dr or Cr balance).</p>
+          <p style="margin-top:4px;"><b>Overdraft</b> = Cr &gt; Dr in bank → "To Balance c/d" on receipt side</p>
+        </div>
+      </div>
+      <div>
+        <div class="cashbox triple">
+          <div class="cashbox-title" style="color:#f857a6;">3. Triple Column Cash Book</div>
+          <p>Adds <b>Discount column</b> on each side. <b>7 columns per side.</b></p>
+          <p style="margin-top:4px;">Dr discount = Discount Allowed (expense) | Cr discount = Discount Received (income)</p>
+          <p style="margin-top:4px;color:#f9d423;"><b>⚠️ Discount column: Totalled NOT balanced</b> (not an account)</p>
+        </div>
+        <div class="cashbox petty" style="margin-top:8px;">
+          <div class="cashbox-title" style="color:#f9d423;">4. Petty Cash Book</div>
+          <p>"Petty" from French <b>"Petit"</b> = small. Maintained by Petty Cashier for small expenses (stationery, postage, refreshments).</p>
+          <p style="margin-top:4px;">Types: Simple | Analytical Columnar</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CARD 7: DOCUMENTS TABLE -->
+  <div class="card yellow">
+    <div class="card-title"><div class="card-icon">📄</div><h2>7. Documents Summary</h2><span class="badge key">MCQ TARGET</span></div>
+    <div class="branch">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Book</th><th>Document Used</th><th>By Whom</th></tr>
+          <tr><td>Purchase Book</td><td><b>Inward Invoice</b></td><td>Received from Supplier</td></tr>
+          <tr><td>Purchase Return</td><td><b style="color:#e74c6f;">Debit Note</b></td><td><b>Buyer</b> prepares → sends to supplier</td></tr>
+          <tr><td>Sales Book</td><td><b>Outward Invoice</b></td><td>Issued to customer</td></tr>
+          <tr><td>Sales Return</td><td><b style="color:#43e97b;">Credit Note</b></td><td><b>Seller</b> prepares → sends to buyer</td></tr>
+          <tr><td>Cash Book</td><td>Receipts, Vouchers, Pay-in-slips, Cheque counterfoil</td><td>Various</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="analogy">
+      <span>🫀 Clinical Analogy:</span> Subsidiary Books = Specialised departments (cath lab, OT, OPD). Each records its own transactions. Central records (Journal) would be overwhelmed without this division of labour.
+    </div>
+  </div>
+
+  <!-- CARD 8: HIGH YIELD -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>High-Yield Exam Targets</h2><span class="badge star">⭐ EXAM FOCUS</span></div>
+    <div class="two-col" style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Point</th><th>Key Fact</th></tr>
+          <tr><td>Subsidiary Books = ?</td><td>Sub-division of Journal by nature of transaction</td></tr>
+          <tr><td>Purchase Book records</td><td>Credit purchases of goods ONLY</td></tr>
+          <tr><td>Sales Book records</td><td>Credit sales of goods ONLY</td></tr>
+          <tr><td>Cash Book purpose</td><td>Journal + Ledger (dual purpose)</td></tr>
+          <tr><td>Credit Note</td><td>Prepared by SELLER</td></tr>
+          <tr><td>Debit Note</td><td>Prepared by BUYER</td></tr>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <table class="mini-table">
+          <tr><th>Cash Book Type</th><th>Key Feature</th></tr>
+          <tr><td>Single Column</td><td>Cash only | 1 column each side</td></tr>
+          <tr><td>Double Column</td><td>Cash + Bank | 2 columns each side</td></tr>
+          <tr><td>Triple Column</td><td>Cash + Bank + Discount | 7 columns each side</td></tr>
+          <tr><td>Petty Cash</td><td>"Petit" = small | Small expenses only</td></tr>
+          <tr><td>Discount column</td><td>Totalled NOT balanced</td></tr>
+          <tr><td>Opening balance</td><td>"To Balance b/d" on Receipt (Dr) side</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div style="text-align:center;color:#444;font-size:0.7rem;margin-top:30px;padding-bottom:20px;">ACCT Module 3 · DY Patil Online MBA Finance · Dr. Eswaran · Exam: 15 May 2026</div>
+</body>
+</html>

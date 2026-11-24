@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MGMT Module 3 — Social & Ethical Responsibilities</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',system-ui,-apple-system,sans-serif; background:#140b24; color:#fff; min-height:100vh; padding:20px 14px 60px; }
+.header { text-align:center; margin-bottom:28px; }
+.header h1 { font-size:clamp(1.2rem,5vw,2rem); font-weight:800; background:linear-gradient(90deg,#e74c6f,#f5a623,#4ecdc4,#7b61ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.3; }
+.header p { color:#888; font-size:0.78rem; margin-top:5px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; max-width:1400px; margin:0 auto; }
+.card { border-radius:14px; padding:16px; border:1px solid rgba(255,255,255,0.07); background:#1f1433; position:relative; overflow:hidden; }
+.card::before { content:''; position:absolute; top:0; left:0; right:0; height:4px; border-radius:14px 14px 0 0; }
+.card.red::before    { background:linear-gradient(90deg,#e74c6f,#ff8a80); }
+.card.orange::before { background:linear-gradient(90deg,#f5a623,#ffd580); }
+.card.teal::before   { background:linear-gradient(90deg,#4ecdc4,#a8edea); }
+.card.purple::before { background:linear-gradient(90deg,#7b61ff,#b39ddb); }
+.card.green::before  { background:linear-gradient(90deg,#43e97b,#38f9d7); }
+.card.blue::before   { background:linear-gradient(90deg,#4facfe,#00f2fe); }
+.card.pink::before   { background:linear-gradient(90deg,#f857a6,#ff5858); }
+.card.yellow::before { background:linear-gradient(90deg,#f9d423,#f83600); }
+.card.indigo::before { background:linear-gradient(90deg,#667eea,#764ba2); }
+.card-title { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.card-icon { width:34px; height:34px; min-width:34px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1rem; }
+.red .card-icon    { background:rgba(231,76,111,0.2); } .orange .card-icon { background:rgba(245,166,35,0.2); }
+.teal .card-icon   { background:rgba(78,205,196,0.2); } .purple .card-icon { background:rgba(123,97,255,0.2); }
+.green .card-icon  { background:rgba(67,233,123,0.2); } .blue .card-icon   { background:rgba(79,172,254,0.2); }
+.pink .card-icon   { background:rgba(248,87,166,0.2); } .yellow .card-icon { background:rgba(249,212,35,0.2); }
+.indigo .card-icon { background:rgba(102,126,234,0.2); }
+.card-title h2 { font-size:clamp(0.82rem,2.5vw,0.95rem); font-weight:700; text-transform:uppercase; letter-spacing:0.4px; }
+.red .card-title h2 { color:#e74c6f; } .orange .card-title h2 { color:#f5a623; } .teal .card-title h2 { color:#4ecdc4; }
+.purple .card-title h2 { color:#7b61ff; } .green .card-title h2 { color:#43e97b; } .blue .card-title h2 { color:#4facfe; }
+.pink .card-title h2 { color:#f857a6; } .yellow .card-title h2 { color:#f9d423; } .indigo .card-title h2 { color:#667eea; }
+.branch { margin-bottom:10px; }
+.branch-label { font-size:0.72rem; font-weight:600; color:#ccc; margin-bottom:5px; display:flex; align-items:center; gap:5px; }
+.branch-label::before { content:'▸'; font-size:0.62rem; opacity:0.6; }
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:4px; }
+.tag { font-size:0.72rem; padding:4px 11px; border-radius:20px; font-weight:500; border:1px solid rgba(255,255,255,0.1); background:rgba(255,255,255,0.05); color:#ddd; }
+.tag.hl { background:rgba(255,255,255,0.1); color:#fff; border-color:rgba(255,255,255,0.2); }
+.table-wrap { overflow-x:auto; -webkit-overflow-scrolling:touch; margin-top:6px; }
+.mini-table { width:100%; border-collapse:collapse; font-size:clamp(0.68rem,2vw,0.74rem); }
+.mini-table th { padding:5px 8px; text-align:left; background:rgba(255,255,255,0.05); color:#aaa; font-weight:600; text-transform:uppercase; font-size:0.62rem; letter-spacing:0.4px; }
+.mini-table td { padding:6px 8px; border-top:1px solid rgba(255,255,255,0.05); color:#ccc; vertical-align:top; line-height:1.4; }
+.mini-table td strong { color:#fff; }
+.analogy { background:rgba(78,205,196,0.08); border:1px dashed rgba(78,205,196,0.3); border-radius:10px; padding:10px 12px; font-size:clamp(0.7rem,2vw,0.74rem); color:#a8edea; margin-top:10px; line-height:1.5; }
+.analogy span { font-weight:700; color:#4ecdc4; }
+.badge { display:inline-block; font-size:0.6rem; padding:2px 8px; border-radius:20px; font-weight:700; margin-left:6px; vertical-align:middle; }
+.badge.star { background:rgba(249,212,35,0.2); color:#f9d423; }
+.badge.key { background:rgba(231,76,111,0.2); color:#e74c6f; }
+.central { grid-column:1/-1; background:linear-gradient(135deg,#1f1433,#281a40); border:1px solid rgba(123,97,255,0.3); border-radius:18px; padding:20px; text-align:center; }
+.central h1 { font-size:clamp(1.1rem,4vw,1.6rem); font-weight:800; background:linear-gradient(90deg,#7b61ff,#4ecdc4,#f5a623); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:6px; line-height:1.3; }
+.central p { color:#888; font-size:0.78rem; }
+.central-chips { display:flex; justify-content:center; flex-wrap:wrap; gap:7px; margin-top:12px; }
+.central-chip { padding:5px 12px; border-radius:20px; font-size:0.72rem; font-weight:600; }
+.c1 { background:rgba(231,76,111,0.15); color:#e74c6f; border:1px solid rgba(231,76,111,0.3); }
+.c2 { background:rgba(245,166,35,0.15); color:#f5a623; border:1px solid rgba(245,166,35,0.3); }
+.c3 { background:rgba(78,205,196,0.15); color:#4ecdc4; border:1px solid rgba(78,205,196,0.3); }
+.c4 { background:rgba(123,97,255,0.15); color:#7b61ff; border:1px solid rgba(123,97,255,0.3); }
+.c5 { background:rgba(67,233,123,0.15); color:#43e97b; border:1px solid rgba(67,233,123,0.3); }
+.c6 { background:rgba(79,172,254,0.15); color:#4facfe; border:1px solid rgba(79,172,254,0.3); }
+.wide { grid-column:span 2; }
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.col-card { border-radius:10px; padding:10px; border:1px solid rgba(255,255,255,0.06); }
+.col-title { font-size:0.75rem; font-weight:700; text-align:center; margin-bottom:7px; padding:4px; border-radius:6px; }
+.col-for { background:rgba(67,233,123,0.08); } .col-for .col-title { background:rgba(67,233,123,0.15); color:#43e97b; }
+.col-against { background:rgba(231,76,111,0.08); } .col-against .col-title { background:rgba(231,76,111,0.15); color:#e74c6f; }
+.col-item { font-size:0.65rem; color:#bbb; padding:3px 0; line-height:1.4; border-bottom:1px solid rgba(255,255,255,0.04); }
+.col-item:last-child { border-bottom:none; }
+.col-item::before { content:'• '; color:#555; }
+.stakeholder-grid { display:grid; grid-template-columns:1fr 1fr; gap:7px; margin-top:8px; }
+.sh-item { border-radius:8px; padding:9px 10px; border:1px solid rgba(255,255,255,0.06); }
+.sh-name { font-size:0.74rem; font-weight:700; margin-bottom:3px; }
+.sh-stake { font-size:0.63rem; color:#bbb; line-height:1.4; }
+.sh1 { background:rgba(231,76,111,0.08); } .sh1 .sh-name { color:#e74c6f; }
+.sh2 { background:rgba(245,166,35,0.08); } .sh2 .sh-name { color:#f5a623; }
+.sh3 { background:rgba(78,205,196,0.08); } .sh3 .sh-name { color:#4ecdc4; }
+.sh4 { background:rgba(123,97,255,0.08); } .sh4 .sh-name { color:#a78bfa; }
+.sh5 { background:rgba(67,233,123,0.08); } .sh5 .sh-name { color:#43e97b; }
+.sh6 { background:rgba(79,172,254,0.08); } .sh6 .sh-name { color:#4facfe; }
+.kohl-grid { margin-top:8px; }
+.kohl-level { margin-bottom:10px; }
+.kohl-level-title { font-size:0.72rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; padding:4px 10px; border-radius:6px; display:inline-block; margin-bottom:6px; }
+.kl1 { background:rgba(231,76,111,0.15); color:#e74c6f; }
+.kl2 { background:rgba(245,166,35,0.15); color:#f5a623; }
+.kl3 { background:rgba(67,233,123,0.15); color:#43e97b; }
+.kohl-stages { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+.kohl-stage { border-radius:8px; padding:8px 9px; border:1px solid rgba(255,255,255,0.06); }
+.kohl-num { font-size:0.65rem; font-weight:700; margin-bottom:3px; }
+.kohl-name { font-size:0.72rem; font-weight:700; margin-bottom:3px; }
+.kohl-desc { font-size:0.63rem; color:#999; line-height:1.3; }
+.ks1 { background:rgba(231,76,111,0.08); } .ks1 .kohl-num,.ks1 .kohl-name { color:#e74c6f; }
+.ks2 { background:rgba(248,87,166,0.08); } .ks2 .kohl-num,.ks2 .kohl-name { color:#f857a6; }
+.ks3 { background:rgba(245,166,35,0.08); } .ks3 .kohl-num,.ks3 .kohl-name { color:#f5a623; }
+.ks4 { background:rgba(249,212,35,0.08); } .ks4 .kohl-num,.ks4 .kohl-name { color:#f9d423; }
+.ks5 { background:rgba(67,233,123,0.08); } .ks5 .kohl-num,.ks5 .kohl-name { color:#43e97b; }
+.ks6 { background:rgba(78,205,196,0.08); } .ks6 .kohl-num,.ks6 .kohl-name { color:#4ecdc4; }
+@media (max-width:480px) {
+  body { padding:14px 10px 50px; }
+  .grid { gap:12px; grid-template-columns:1fr; }
+  .wide { grid-column:span 1; }
+  .card { padding:14px 12px; border-radius:12px; }
+  .two-col { grid-template-columns:1fr; }
+  .stakeholder-grid { grid-template-columns:1fr; }
+  .kohl-stages { grid-template-columns:1fr; }
+  .central { padding:16px 12px; }
+}
+@media (min-width:481px) and (max-width:768px) { .grid { grid-template-columns:1fr; } .wide { grid-column:span 1; } }
+</style>
+<style>:root{--bg:#140b24;--card:#1f1433;--card2:#281a40;--accent:#b48cff;--accent4:#e9c25a;--line:#3a2a58;--muted:#a99cc4}header{background:linear-gradient(135deg,#3b1670,#5b2a9e)!important;border-color:#e9c25a66!important}header .sub{color:#e9c25a!important}</style></head>
+<body><div style="position:sticky;top:0;z-index:9;display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:10px 12px;margin:-14px -14px 14px;background:#22093fee;border-bottom:1px solid #e9c25a;font:600 14px -apple-system,Segoe UI,Roboto,sans-serif"><a href="./" style="color:#e9c25a;text-decoration:none">‹ MGMT</a><span style="flex:1"></span><a href="notes-m3.html" style="color:#c9d1d9;text-decoration:none">Notes</a><a href="cheat-m3.html" style="color:#c9d1d9;text-decoration:none">Cheat sheet</a><a href="mindmap-m2.html" style="color:#c9d1d9;text-decoration:none">‹ M2</a><a href="mindmap-m4.html" style="color:#c9d1d9;text-decoration:none">M4 ›</a></div>
+<div class="header">
+  <h1>Principles of Management — Module 3</h1>
+  <p>Social & Ethical Responsibilities · DY Patil Online MBA · Sem 1 · Exam: 15 May 2026</p>
+</div>
+<div class="grid">
+
+  <div class="central">
+    <h1>Social & Ethical Responsibilities of Management</h1>
+    <p>Obligation to enhance society + own interests — 6 stakeholders, ethical conduct, Kohlberg's stages</p>
+    <div class="central-chips">
+      <span class="central-chip c1">Social Responsibility</span>
+      <span class="central-chip c2">For vs Against</span>
+      <span class="central-chip c3">6 Stakeholders</span>
+      <span class="central-chip c4">Social Audit</span>
+      <span class="central-chip c5">Managerial Ethics</span>
+      <span class="central-chip c6">Kohlberg's Stages</span>
+    </div>
+  </div>
+
+  <!-- FOR vs AGAINST -->
+  <div class="card green wide">
+    <div class="card-title"><div class="card-icon">⚖️</div><h2>Social Responsibility — For vs Against <span class="badge key">⭐</span></h2></div>
+    <div class="two-col">
+      <div class="col-card col-for">
+        <div class="col-title">✅ FOR (10 arguments)</div>
+        <div class="col-item">Business is part of society</div>
+        <div class="col-item">Long-term self-interest of business</div>
+        <div class="col-item">Moral justification (take → give back)</div>
+        <div class="col-item">Better public image → attracts stakeholders</div>
+        <div class="col-item">Avoidance of govt. regulation</div>
+        <div class="col-item">Maintenance of society</div>
+        <div class="col-item">Balance of power & responsibility</div>
+        <div class="col-item">New profit avenues (conservation, recycling)</div>
+        <div class="col-item">Best use of business resources</div>
+        <div class="col-item">Prevention better than cure</div>
+      </div>
+      <div class="col-card col-against">
+        <div class="col-title">❌ AGAINST (9 arguments)</div>
+        <div class="col-item">Contrary to basic function (Milton Friedman)</div>
+        <div class="col-item">Conflict with profit motive</div>
+        <div class="col-item">Distortion of resource allocation</div>
+        <div class="col-item">Imposition of business values</div>
+        <div class="col-item">System inefficiency</div>
+        <div class="col-item">Operational problems — ambiguous</div>
+        <div class="col-item">Excessive costs → higher prices for consumers</div>
+        <div class="col-item">Lack of accountability to society</div>
+        <div class="col-item">Business lacks skills for social problems</div>
+      </div>
+    </div>
+    <div class="analogy"><span>Verdict:</span> Economic & social concerns are NOT opposites — broad overlap area exists. Business DOES have SR; the key is identifying it clearly.</div>
+  </div>
+
+  <!-- 6 STAKEHOLDERS -->
+  <div class="card orange">
+    <div class="card-title"><div class="card-icon">👥</div><h2>6 Social Stakeholders <span class="badge key">⭐</span></h2></div>
+    <div class="stakeholder-grid">
+      <div class="sh-item sh1"><div class="sh-name">📈 Shareholders</div><div class="sh-stake">Capital providers; expect good ROI; timely information about functioning</div></div>
+      <div class="sh-item sh2"><div class="sh-name">👷 Employees</div><div class="sh-stake">Biggest asset; income, benefits, health & safety protection mandatory</div></div>
+      <div class="sh-item sh3"><div class="sh-name">🛍️ Customers</div><div class="sh-stake">Product/service quality & value; consumerism growing; keep customers happy</div></div>
+      <div class="sh-item sh4"><div class="sh-name">🏭 Creditors & Suppliers</div><div class="sh-stake">Provide raw materials & capital; management must fulfil obligations to them</div></div>
+      <div class="sh-item sh5"><div class="sh-name">🌍 Society</div><div class="sh-stake">Orgs draw resources from society → must preserve & enhance member well-being</div></div>
+      <div class="sh-item sh6"><div class="sh-name">🏛️ Government</div><div class="sh-stake">Taxes + GDP; provides basic infrastructure; monitors & controls business systems</div></div>
+    </div>
+    <div class="analogy"><span>Jack Ma's priority:</span> Customers → Employees → Investors</div>
+  </div>
+
+  <!-- SOCIAL AUDIT -->
+  <div class="card teal">
+    <div class="card-title"><div class="card-icon">🔍</div><h2>Social Responsiveness & Audit <span class="badge star">⭐</span></h2></div>
+    <div class="branch">
+      <div class="branch-label">Measurement Categories</div>
+      <div class="tags">
+        <span class="tag hl">Contributions</span><span class="tag hl">Fund-raising</span><span class="tag hl">Volunteerism</span>
+        <span class="tag">Recycling</span><span class="tag">Diversity Policies</span><span class="tag">Direct Corporate Investment</span>
+        <span class="tag">Quality of Work Life</span><span class="tag">Attention to Consumers</span><span class="tag">Pollution Control</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Social Audit — Definition</div>
+      <div style="font-size:0.72rem; color:#a8edea; padding:6px; background:rgba(78,205,196,0.08); border-radius:6px; margin-top:4px;">"Systematic study & evaluation of the social, rather than the economic, performance of an organisation"</div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">2 Types</div>
+      <div class="tags"><span class="tag hl">1. Government-required</span><span class="tag hl">2. Voluntary</span></div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">5 Steps</div>
+      <div class="tags">
+        <span class="tag">1. Frame programmes</span><span class="tag">2. Monitor activities</span>
+        <span class="tag">3. Measure performance</span><span class="tag">4. Evaluate</span><span class="tag">5. Frame future strategies</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:8px;">
+      <div class="branch-label">5 Objectives</div>
+      <div class="tags">
+        <span class="tag">Assess gaps in needs vs resources</span><span class="tag">Create stakeholder awareness</span>
+        <span class="tag">Increase efficiency of programmes</span><span class="tag">Assess corporate policy decisions</span>
+        <span class="tag">Estimate opportunity cost</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MANAGERIAL ETHICS -->
+  <div class="card purple">
+    <div class="card-title"><div class="card-icon">🧭</div><h2>Managerial Ethics</h2></div>
+    <div class="branch">
+      <div class="branch-label">2 Types</div>
+    </div>
+    <div class="two-col" style="margin-top:6px;">
+      <div style="background:rgba(79,172,254,0.08); border-radius:10px; padding:9px; border:1px solid rgba(79,172,254,0.15);">
+        <div style="font-size:0.74rem; font-weight:700; color:#4facfe; margin-bottom:5px;">⚖️ Legal Ethics</div>
+        <div style="font-size:0.64rem; color:#bbb; line-height:1.5;">Based on laws & regulations. Fair hiring, safe workplace, fair pay, OSHA compliance. Minimum that must be met.</div>
+      </div>
+      <div style="background:rgba(123,97,255,0.08); border-radius:10px; padding:9px; border:1px solid rgba(123,97,255,0.15);">
+        <div style="font-size:0.74rem; font-weight:700; color:#a78bfa; margin-bottom:5px;">💡 Moral Ethics</div>
+        <div style="font-size:0.64rem; color:#bbb; line-height:1.5;">Beyond legal minimum. E.g. paternity leave not required by law but offered ethically. How complaints are handled.</div>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:12px;">
+      <div class="branch-label">5 Factors Affecting Ethics</div>
+      <div class="tags">
+        <span class="tag hl">Stage of moral development</span><span class="tag hl">Individual characteristics</span>
+        <span class="tag">Structural variables (rules)</span><span class="tag">Organisational culture</span>
+        <span class="tag">Intensity of the issue</span>
+      </div>
+    </div>
+    <div class="branch" style="margin-top:10px;">
+      <div class="branch-label">Ethical Guidelines (8)</div>
+      <div class="tags">
+        <span class="tag">Ethics is a process</span><span class="tag">Bottom line = behaviours</span><span class="tag">Prevention first</span>
+        <span class="tag">Group decisions + make public</span><span class="tag">Integrate with mgmt</span>
+        <span class="tag">Cross-functional teams</span><span class="tag">Value forgiveness</span><span class="tag">Trying counts</span>
+      </div>
+    </div>
+    <div class="analogy"><span>Importance:</span> People follow what leaders do. Ethics vacuum at top → ↓ morale → ↑ turnover → ↑ HR costs → ↓ customer loyalty.</div>
+  </div>
+
+  <!-- KOHLBERG -->
+  <div class="card blue wide">
+    <div class="card-title"><div class="card-icon">🧠</div><h2>Kohlberg's Stages of Moral Development <span class="badge key">⭐ 3 Levels, 6 Stages</span></h2></div>
+    <div class="kohl-grid">
+      <div class="kohl-level">
+        <span class="kohl-level-title kl1">Level 1 — Pre-Conventional (External Control)</span>
+        <div class="kohl-stages">
+          <div class="kohl-stage ks1">
+            <div class="kohl-num">Stage 1</div>
+            <div class="kohl-name">Obedience-Punishment</div>
+            <div class="kohl-desc">Avoid punishment. Wrongness = severity of punishment. Obey rules to escape consequences.</div>
+          </div>
+          <div class="kohl-stage ks2">
+            <div class="kohl-num">Stage 2</div>
+            <div class="kohl-name">Instrumental Orientation</div>
+            <div class="kohl-desc">"What's in it for me?" Self-interest. Limited concern for others — only if it benefits self. Scratch my back / I'll scratch yours.</div>
+          </div>
+        </div>
+      </div>
+      <div class="kohl-level">
+        <span class="kohl-level-title kl2">Level 2 — Conventional (Social Relationships)</span>
+        <div class="kohl-stages">
+          <div class="kohl-stage ks3">
+            <div class="kohl-num">Stage 3</div>
+            <div class="kohl-name">Good Boy / Nice Girl</div>
+            <div class="kohl-desc">Seek approval of others; avoid disapproval. Be "nice." Emphasis on good behaviour.</div>
+          </div>
+          <div class="kohl-stage ks4">
+            <div class="kohl-num">Stage 4</div>
+            <div class="kohl-name">Law & Order</div>
+            <div class="kohl-desc">Blindly follows rules to maintain social order. Duty to uphold law. <strong>MOST active members of society remain here.</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="kohl-level">
+        <span class="kohl-level-title kl3">Level 3 — Post-Conventional (Abstract Principles)</span>
+        <div class="kohl-stages">
+          <div class="kohl-stage ks5">
+            <div class="kohl-num">Stage 5</div>
+            <div class="kohl-name">Social Contract</div>
+            <div class="kohl-desc">Laws = social contracts; can be changed if they don't serve the greater good. Basis of democratic government.</div>
+          </div>
+          <div class="kohl-stage ks6">
+            <div class="kohl-num">Stage 6</div>
+            <div class="kohl-name">Universal Ethical Principles</div>
+            <div class="kohl-desc">Abstract principles — equality, dignity, justice. May disobey unjust laws. Acts morally because it is right. Rare to achieve.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="analogy" style="margin-top:10px;"><span>Criticism:</span> Carol Gilligan — biased toward male/Western perspective. Women focus more on maintaining relationships, not just justice. Also: culturally biased; doesn't account for inconsistency in moral judgements.</div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div class="card red wide">
+    <div class="card-title"><div class="card-icon">🎯</div><h2>High-Yield Exam Summary</h2></div>
+    <div class="table-wrap">
+      <table class="mini-table">
+        <thead><tr><th>Topic</th><th>What to Know</th></tr></thead>
+        <tbody>
+          <tr><td><strong>6 Stakeholders</strong></td><td>Names + one-liner stake each — Shareholders, Employees, Customers, Creditors/Suppliers, Society, Government</td></tr>
+          <tr><td><strong>FOR SR</strong></td><td>At least 6 — business is part of society, long-term self-interest, moral justification, public image, avoid govt regulation, maintenance of society</td></tr>
+          <tr><td><strong>AGAINST SR</strong></td><td>Milton Friedman's argument (contrary to basic function), conflict with profit, excessive costs</td></tr>
+          <tr><td><strong>Social Audit</strong></td><td>Definition + 2 types (govt-required & voluntary) + 5 steps + 5 objectives</td></tr>
+          <tr><td><strong>Ethics Types</strong></td><td>Legal vs Moral — one example each; 5 factors affecting ethics</td></tr>
+          <tr><td><strong>Kohlberg</strong></td><td>3 levels + 6 stages + key idea per stage. Stage 4 = most common. Stage 6 = rare.</td></tr>
+          <tr><td><strong>Ethical Guidelines</strong></td><td>8 guidelines — esp. ethics is a process, prevention, forgiveness</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>

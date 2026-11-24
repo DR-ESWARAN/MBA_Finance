@@ -29,7 +29,7 @@ function page({ title, depth, crumbs = [], body, hero = "", scripts = "" }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${up}assets/style.css">
 </head><body>
-<header class="bar"><div class="in"><a class="logo" href="${up}"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="${up}sem2/">Sem 2</a></div></header>
+<header class="bar"><div class="in"><a class="logo" href="${up}"><span class="mk">MBA</span><span>Finance <b>Study Hub</b></span></a><span class="sp"></span><a class="lnk" href="${up}sem1/">Sem 1</a><a class="lnk" href="${up}sem2/">Sem 2</a></div></header>
 <div class="wrap">
 ${cr ? `<div class="top">${cr}</div>` : ""}
 ${hero}
