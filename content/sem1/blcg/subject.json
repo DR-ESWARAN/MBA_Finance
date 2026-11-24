@@ -21,6 +21,6 @@
       "title": "Membership"
     }
   ],
-  "lmsPractice": null,
+  "lmsPractice": "lms.js",
   "lmsGraded": null
 }

@@ -6,7 +6,7 @@
       "id": "sem1",
       "name": "Semester 1",
       "status": "done",
-      "note": "Exams over. Notes, cheat sheets, mind maps, AI questions, LMS assignments and 70-question mocks for juniors.",
+      "note": "Exams over. Notes, mind maps, AI questions, LMS assignments and 70-question mocks for juniors.",
       "subjects": [
         {
           "id": "ob",
